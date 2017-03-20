@@ -11,10 +11,10 @@ class TargetCollection extends Backbone.Collection
   model: TargetModel
 
 targetData = [
-  { id: 1, firstName: 'John' }
-  { id: 2, firstName: 'Alex' }
-  { id: 3, firstName: 'Johnson' }
-  { id: 4, firstName: 'Anne' }
+  { '@id': 1, '@type': 'Person', firstName: 'John', employer: 'RPI' }
+  { '@id': 2, '@type': 'Person', firstName: 'Alex', employer: 'RPI' }
+  { '@id': 3, '@type': 'Person', firstName: 'Johnson', employer: 'RPI' }
+  { '@id': 4, '@type': 'Person', firstName: 'Anne', employer: 'RPI' }
 ]
 
 targetCollection = new TargetCollection(targetData)
@@ -33,19 +33,76 @@ class RuleCollection extends Backbone.Collection
 # # # # #
 
 # Defines rules leveraged by the utility
+
+# TODO - ordered rules
+# TODO - ordered conditions
+# TODO - rule validations (which rules are predicated on others?)
+# TODO - rename to Attribute (source), Contraint (operation), and Query (value)?
 ruleData = [
 
   # LastName rule definition
-  # TODO - ordered rules?
   {
     targetAttr: 'lastName'
     conditions: [ # TODO - should conditions be models as well?
-      { source: 'firstName', operation: 'match', value: 'Alex', result: 'Schwartzberg' } # TODO - order conditions?
-      { source: 'firstName', operation: 'match', value: 'Johnson', result: 'Samuel' }
-      { source: 'id', operation: 'match', value: 1, result: 'Erickson' }
-      { source: 'id', operation: 'match', value: 4, result: 'Hynes' }
+      { source: 'firstName', operation: 'exact_match', value: 'Alex', result: 'Schwartzberg' } # TODO - *required* attribute
+      { source: 'firstName', operation: 'exact_match', value: 'Johnson', result: 'Samuel' }
+      { source: '@id', operation: 'exact_match', value: 1, result: 'Erickson' }
+      { source: '@id', operation: 'exact_match', value: 4, result: 'Hynes' }
     ]
   }
+
+  # TESTING REPLACE OPERATION
+  {
+    targetAttr: 'employer'
+    conditions: [{ source: 'employer', operation: 'replace', value: 'RPI', result: 'Rensselaer Polytechnic Institute' }]
+  }
+
+  # TESTING FORMAT OPERATION
+  {
+    targetAttr: 'upper_employer'
+    conditions: [{ source: 'employer', operation: 'format_uppercase' }]
+  }
+
+  # # # # # # # # # #
+  # LastName
+  # TODO - this is going the be the preferred format going forward
+  # {
+  #   targetAttr: 'lastName'
+  #   formatters: [{ source: 'employer', operation: 'format_lowercase' }]
+  #   definitions: [
+  #     {
+  #       conditions: [{ source: 'firstName', operation: 'exact_match', value: 'Alex' }]
+  #       result: 'Schwartzberg'
+  #     },
+  #     {
+  #       conditions: [{ source: 'firstName', operation: 'exact_match', value: 'Johnson' }]
+  #       result: 'Samuel'
+  #     }
+  #   ]
+  # }
+  # # # # # # # # # #
+
+  # TESTING FORMAT OPERATION
+  {
+    targetAttr: 'lower_employer'
+    conditions: [{ source: 'employer', operation: 'format_lowercase' }]
+  }
+
+  # TESTING FORMAT OPERATION
+  {
+    targetAttr: 'last_regex'
+    conditions: [{ source: 'firstName', operation: 'regex_match', value: /alex/ig, result: 'ALEX MATCHED' }]
+  }
+
+  # OPERATION TYPES
+  # - [ ] fuzzy_match
+  # - [ ] is_substring_of
+  # - [ ] regex_capture (?)
+  # - [X] regex_match
+  # - [X] exact_match
+  # - [X] format_lowercase
+  # - [X] format_uppercase
+  # - [X] replace
 
 ]
 
@@ -63,7 +120,8 @@ class SearchSettingsRoute extends require 'hn_routing/lib/route'
     { text: 'Sandbox' }
   ]
 
-  render: ->
+  # TODO - abstract elsewhere - into rules collection, maybe?
+  applyRules: ->
 
     # Iterates over each rule...
     for rule in rulesCollection.models
@@ -77,33 +135,51 @@ class SearchSettingsRoute extends require 'hn_routing/lib/route'
         targetAttr = rule.get('targetAttr')
         conditions = rule.get('conditions')
 
-        # Iterates over each condition?
+        # Iterates over each condition
+        # TODO - continue to next target if condition is matched
+        # i.e., short-circuit conditions loop if match is found
         for condition in conditions
 
-          # console.log condition
-
+          # Isolates pertinant variables
+          # TODO - not all of these are used by every operation
+          # This should be simplified to cache ONLY what's used.
           source    = target.get(condition.source)
           operation = condition.operation
           value     = condition.value
           result    = condition.result
 
-          # console.log source
-          # console.log operation
-          # console.log value
-          # console.log result
+          # # # # # # # # # # # # # # # # # # # #
+          # TODO - this operation should be abstracted into RuleModel
 
-          if operation == 'match'
+          # EXACT MATCH
+          if operation == 'exact_match'
+            target.set(targetAttr, result) if source == value
 
-            if source == value
-              target.set(targetAttr, result)
-            else
-              console.log 'NO MATCH'
+          # REPLACE
+          if operation == 'replace'
+            replaced = source.replace(value, result)
+            target.set(targetAttr, replaced) if replaced
 
-        # var myString = "something format_abc";
-        # var myRegexp = /(?:^|\s)format_(.*?)(?:\s|$)/g;
-        # var match = myRegexp.exec(myString);
-        # console.log(match[1]); // abc
+          # FORMAT UPPERCASE
+          if operation == 'format_uppercase'
+            formatted = source.toUpperCase()
+            target.set(targetAttr, formatted) if formatted
 
+          # FORMAT UPPERCASE
+          if operation == 'format_lowercase'
+            formatted = source.toLowerCase()
+            target.set(targetAttr, formatted) if formatted
+
+          # REGEX MATCH
+          if operation == 'regex_match'
+            matched = value.exec(source)
+            target.set(targetAttr, result) if matched
+
+          #
+          # # # # # # # # # # # # # # # # # # # #
+
+  render: ->
+    @applyRules()
     @container.show new LayoutView({ collection: targetCollection })
 
 

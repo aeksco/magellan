@@ -26,7 +26,6 @@ class RuleLayout extends Marionette.LayoutView
     listRegion: '[data-region=list]'
 
   onRender: ->
-    console.log @collection
     @listRegion.show new TargetCollectionView({ collection: @collection })
 
 # # # # #
