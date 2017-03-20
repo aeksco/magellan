@@ -2,6 +2,7 @@ require './factory'
 
 RDFRoute = require './rdf_new/route'
 SettingsRoute = require './settings/route'
+SandboxRoute = require './sandbox/route'
 
 # # # # #
 
@@ -9,14 +10,18 @@ SettingsRoute = require './settings/route'
 class HomeRouter extends require 'hn_routing/lib/router'
 
   routes:
-    'rdf(/)':     'rdfViewer'
+    'rdf(/)':       'rdfViewer'
     'settings(/)':  'settings'
+    'sandbox(/)':   'sandbox'
 
   rdfViewer: ->
     new RDFRoute({ container: @container })
 
   settings: ->
     new SettingsRoute({ container: @container })
+
+  sandbox: ->
+    new SandboxRoute({ container: @container })
 
 # # # # #
 
