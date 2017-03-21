@@ -28,20 +28,23 @@ class DatasetSearchRoute extends require 'hn_routing/lib/route'
         # Assigns dataset to @model
         @model = model
 
-        # Gets FacetCollection from Dataset
-        @model.ensureFacets().then (facetCollection) =>
-          @facetCollection = facetCollection
+        # Fetches datapoints contained within the dataset
+        @model.fetchDatapoints().then (datapoints) =>
 
           # Gets all items for Faceted Search
-          # TODO - abstract into DataSet model?
-          @items = new ItemCollection(@model.get('graph'))
+          # TODO - abstract into DataSet model
+          @items = new ItemCollection(datapoints)
 
-          # Gets SearchResultCollection
-          Backbone.Radio.channel('search:result').request('collection')
-          .then (collection) => @collection = collection
+          # Gets FacetCollection from Dataset
+          @model.ensureFacets(datapoints).then (facetCollection) =>
+            @facetCollection = facetCollection
 
-          # Resolves outter promise
-          resolve()
+            # Gets SearchResultCollection
+            Backbone.Radio.channel('search:result').request('collection')
+            .then (collection) => @collection = collection
+
+            # Resolves outter promise
+            resolve()
 
   render: ->
     @container.show new SearchView({ model: @model, collection: @collection, items: @items, facetCollection: @facetCollection })

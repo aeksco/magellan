@@ -23,9 +23,9 @@ class RecordTable extends Mn.LayoutView
       @$('[data-toggle=aggregates]').show()
       @aggregatesShown = true
 
-  serializeData: ->
-    d = super
-    return { data: d }
+  # serializeData: ->
+  #   d = super
+  #   return { data: d }
 
 # # # # #
 

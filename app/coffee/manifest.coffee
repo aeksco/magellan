@@ -85,13 +85,15 @@ new SearchRouter({ container: AppLayout.main })
 # Defines the tables and indexed attributes
 # used by the application
 dexieConfiguration =
-  db:     'dexie_database_01'
+  # db:     'dexie_database_01'
+  db:     'dexie_database_alpha'
 
   # Schema documentation:
   # http://dexie.org/docs/Version/Version.stores().html
   schema:  [
     { name: 'facets',   attrs: 'id, order,label,tooltip' }
     { name: 'datasets', attrs: 'id, label' }
+    { name: 'datapoints', attrs: 'id, dataset_id' }
     { name: 'ontologies', attrs: 'id' }
   ]
 

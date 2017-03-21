@@ -50,23 +50,30 @@ class NewDatasetLayout extends Mn.LayoutView
   onJsonUpload: (parsedJson) =>
     # Sets context and graph attributes on dataset model
     @model.set('context', parsedJson['@context'])
-    @model.set('graph', parsedJson['@graph'])
+    # @model.set('graph', parsedJson['@graph'])
+
+    # TODO - best way to manage this?
+    @uploadedGraph = parsedJson['@graph']
+
     @enableSubmit()
 
   onSubmit: ->
-    data = Backbone.Syphon.serialize(@)
-    data.id = data.label.toLowerCase().replace(' ', '_')
-    @model.set(data)
-    @saveToDexie()
+    data    = Backbone.Syphon.serialize(@)
+    data.id = data.label.toLowerCase().replace(' ', '_') # TODO - not replacing all? Use Underscore.String
+    # @model.set(data)
+
+    console.log @model.toJSON()
+    console.log @uploadedGraph
+    # @saveToDexie()
+
+    @model.save(data, @uploadedGraph)
 
   # TODO - abstract into DexieService
   # TODO - should this be abstracted into a Dexie model?
   # Or should the DexieService fire the required events
   # on the Backbone.Model?
   saveToDexie: ->
-    table = 'datasets' # MODEL.urlRoot
-
-    window.db[table].add(@model.toJSON())
+    window.db['datasets'].add(@model.toJSON())
     .then (model_id) => Backbone.Radio.channel('app').trigger('redirect', '#datasets')
 
     .catch (err) => console.log 'ERROR CAUGHT'

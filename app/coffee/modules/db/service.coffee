@@ -6,6 +6,10 @@
 # - requests background app to populate the DB (TODO)
 class DexieService extends Marionette.Service
 
+  radioRequests:
+    'db add': 'addDocument'
+    'db db':  'getDb'
+
   initialize: (options={})->
 
     # Initializes new Dexie DB
@@ -124,6 +128,14 @@ class DexieService extends Marionette.Service
       # console.log 'NO BACKGROUND APP DETECTED'
 
     @startApp() # TODO - this must happen AFTER the DB is populated
+
+  # Adds a document to the named table
+  # Returns a promise
+  addDocument: (table, doc) ->
+    @db[table].add(doc)
+
+  getDb: ->
+    return @db
 
 # # # # #
 

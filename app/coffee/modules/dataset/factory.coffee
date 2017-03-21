@@ -10,6 +10,7 @@ class DatasetFactory extends Marionette.Service
   radioRequests:
     'dataset model':       'getModel'
     'dataset collection':  'getCollection'
+    'dataset datapoints':  'getDatapoints'
 
   initialize: ->
     @cached = new Entities.Collection()
@@ -42,6 +43,18 @@ class DatasetFactory extends Marionette.Service
 
       # Gets @cached and returns
       return @getCollection().then () => resolve(@cached.get(id))
+
+  getDatapoints: (id) ->
+    return new Promise (resolve, reject) =>
+
+      # DexieDB dependency injection
+      db = Backbone.Radio.channel('db').request('db')
+
+      # Queries DB
+      db.datapoints.where('dataset_id').equals(id).toArray()
+      # TODO - should return a collection of datapoints, rather than the RAW json
+      .then (datapoints) -> return resolve(datapoints)
+      # TODO - catch statement
 
 # # # # #
 

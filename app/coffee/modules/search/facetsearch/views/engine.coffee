@@ -63,6 +63,9 @@ setZeroCounts = ->
   # Iterate over each item
   for item in settings.items
 
+    # Aliases item
+    item = item.data
+
     # intialize the count to be zero
     for facet in settings.facets
 
@@ -142,8 +145,11 @@ resetFacetCount = ->
 filterSingleItem = (item) ->
   # Bool for _.select / _.filter
   filtersApply = true
-  # Iterates over each filter
 
+  # Aliases item.data
+  item = item.data
+
+  # Iterates over each filter
   for facet, filter of settings.state.filters
 
     # TODO - abstract this elsewhere, repeated
@@ -188,6 +194,8 @@ updateFacetCollection = ->
     # Iterates over each currentResult
 
     for item in settings.currentResults
+
+      item = item.data
 
       # TODO - abstract this logic elswhere
       # TODO - document what's happening here...

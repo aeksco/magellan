@@ -67,8 +67,8 @@ class RecordChild extends Mn.LayoutView
   onClipboardSuccess: -> @flashSuccess()
   onClipboardError: -> @flashError()
 
-  serializeData: ->
-    return {data: super()}
+  # serializeData: ->
+  #   return {data: super()}
 
   onRender: ->
     @viewerRegion.show new ResultViewer({ model: @model })
