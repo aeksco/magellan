@@ -42,6 +42,10 @@ class NewDatasetLayout extends Mn.LayoutView
   regions:
     uploadRegion: '[data-region=upload]'
 
+  modelEvents:
+    'ensured:dataset':    'onDatasetEnsured'
+    'ensured:datapoints': 'onDatapointsEnsured'
+
   onRender: ->
     uploadWidget = new UploadWidget()
     uploadWidget.on 'parse', @onJsonUpload # TODO
@@ -76,6 +80,20 @@ class NewDatasetLayout extends Mn.LayoutView
   onSync: ->
     console.log 'ON SYNC!!'
     # Backbone.Radio.channel('app').trigger('redirect', '#ontologies')
+
+  onError: (err) ->
+    console.log 'ERROR'
+    console.log err
+
+  onRequest: ->
+    console.log 'ON REQUEST'
+
+  onDatasetEnsured: ->
+    console.log 'onDatasetEnsured'
+
+  onDatapointsEnsured: ->
+    console.log 'onDatapointsEnsured'
+
 
 # # # # #
 

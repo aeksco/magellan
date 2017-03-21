@@ -51,7 +51,7 @@ class DatasetCreator extends Backbone.Model
       # Assembles a new facet
       attrs =
         id:         _.uniqueId('fc_')
-        dataset_id: dataset.id
+        dataset_id: dataset_id
         attribute:  facet
         label:      facet
         order:      index
@@ -76,6 +76,10 @@ class DatasetCreator extends Backbone.Model
     # Passed to Bluebird's Promise.each method, returns a Promise
     saveDatapoint = (datapoint) ->
 
+      console.log 'SAVING DATAPOINT'
+      console.log datapoint
+      console.log dataset_id
+
       # Assembles a new datapoint
       attrs =
         id:         _.uniqueId('dp_')
@@ -96,8 +100,6 @@ class DatasetCreator extends Backbone.Model
 
   # deploy
   # Used to persist Dataset, Datapoints, and Facets to the database
-  # TODO - thoughout the method we may want to trigger some model events
-  # for corresponding UI updates (large uploads may be slow)
   deploy: (dataset, datapoints) ->
 
     # Sets count attribute defined from length of graph parameter
@@ -110,17 +112,27 @@ class DatasetCreator extends Backbone.Model
     dataset.trigger('request')
 
     # Adds the Dataset record to Dexie
-    @ensureDataset(dataset).then (model_id) =>
+    @ensureDataset(dataset).then (dataset_id) =>
+
+      # Triggers 'ensured:dataset' event on Dataset model  (UI related)
+      dataset.trigger('ensured:dataset')
 
       # Iterate over all datapoints
       # Format and add each to database
       @ensureDatapoints(dataset_id, datapoints).then () =>
 
+        # Triggers 'ensured:datapoints' event on Dataset model (UI related)
+        dataset.trigger('ensured:datapoints')
+
         # Generate the facets from the datapoints
         # Formats and adds each to database
         @ensureFacets(dataset_id, datapoints).then () =>
 
+          # Triggers 'ensured:facets' event on Dataset model (UI related)
+          dataset.trigger('ensured:facets')
+
           # DONE.
+          # Triggers 'sync' event on the Dataset model
           dataset.trigger('sync')
 
         # Error handling.
