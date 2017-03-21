@@ -8,9 +8,9 @@ class DatasetFactory extends Marionette.Service
 
   # Defines radioRequests
   radioRequests:
-    'dataset model':       'getModel'
-    'dataset collection':  'getCollection'
-    'dataset datapoints':  'getDatapoints'
+    'dataset model':      'getModel'
+    'dataset collection': 'getCollection'
+    'dataset datapoints': 'getDatapoints'
 
   initialize: ->
     @cached = new Entities.Collection()
@@ -40,6 +40,9 @@ class DatasetFactory extends Marionette.Service
       # Gets @cached and returns
       return @getCollection().then () => resolve(@cached.get(id))
 
+  # getDatapoints
+  # Returns a collection of Datapoints belonging to this dataset
+  # TODO - should this be abstracted into the Datapoint factory?
   getDatapoints: (id) ->
     return new Promise (resolve, reject) =>
 

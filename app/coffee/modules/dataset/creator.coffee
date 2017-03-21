@@ -4,42 +4,43 @@ class DatasetCreator extends Backbone.Model
   # TODO - this should be abstracted elsewhere.
   # This functionality is really geared towards 'linking' a
   # facet to an ontology attribute.
-  getFacet: (ont_id, ont_attr, id, index) ->
-    return new Promise (resolve, reject) =>
-      Backbone.Radio.channel('ontology').request('attribute', ont_id, ont_attr)
-      .then (attribute) =>
+  # getFacet: (ont_id, ont_attr, id, index) ->
+  #   return new Promise (resolve, reject) =>
+  #     Backbone.Radio.channel('ontology').request('attribute', ont_id, ont_attr)
+  #     .then (attribute) =>
 
-        # In ontology attribute is defined (i.e. FOUND)
-        if attribute
-          label   = attribute['rdfs:label']
-          tooltip = attribute['rdfs:comment']
+  #       # In ontology attribute is defined (i.e. FOUND)
+  #       if attribute
+  #         label   = attribute['rdfs:label']
+  #         tooltip = attribute['rdfs:comment']
 
-        # Ontology attribute was not found
-        # We define placeholder label and tooltip
-        else
-          label   = id
-          tooltip = ''
+  #       # Ontology attribute was not found
+  #       # We define placeholder label and tooltip
+  #       else
+  #         label   = id
+  #         tooltip = ''
 
-        # Assembles individual facet object
-        facet =
-          id:       id
-          label:    label
-          order:    index
-          enabled:  true
-          tooltip:  tooltip
+  #       # Assembles individual facet object
+  #       facet =
+  #         id:       id
+  #         label:    label
+  #         order:    index
+  #         enabled:  true
+  #         tooltip:  tooltip
 
-        # Returns the generated facet
-        return resolve(facet)
+  #       # Returns the generated facet
+  #       return resolve(facet)
 
   # They may be re-generated, though stateful
   # properties will be lost in the process
+  # TODO - we will need a process to UPDATE or RE-GENERATE facets
   ensureFacets: (dataset_id, datapoints) ->
 
     # Isolates unique keys from the datapoints
     # These unique keys will be used to generate facets
     allKeys = []
     for el in datapoints
-      allKeys = _.union(allKeys, _.keys(el.data) )
+      allKeys = _.union(allKeys, _.keys(el) )
 
     # Adds an index to each facet for correct ordering
     index = 0
@@ -65,7 +66,7 @@ class DatasetCreator extends Backbone.Model
       return Backbone.Radio.channel('db').request('add', 'facets', attrs)
 
     # Iterates over each id in allKeys returns a promise
-    return Promise.each(datapoints, saveFacet)
+    return Promise.each(allKeys, saveFacet)
 
   # ensureDatapoints
   # Populates Dexie with the datapoints from the uploaded JSON
@@ -75,10 +76,6 @@ class DatasetCreator extends Backbone.Model
     # Save Datapoint function
     # Passed to Bluebird's Promise.each method, returns a Promise
     saveDatapoint = (datapoint) ->
-
-      console.log 'SAVING DATAPOINT'
-      console.log datapoint
-      console.log dataset_id
 
       # Assembles a new datapoint
       attrs =

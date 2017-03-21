@@ -15,7 +15,7 @@ class DatasetSearchRoute extends require 'hn_routing/lib/route'
       { text: "#{@model.get('label')}" }
     ]
 
-  # TODO - this needs to be cleaned up dramatically.
+  # TODO - this needs to be cleaned up. The promise chain here is all out of whack.
   # DatasetModel.ensureFacets() should be done inside the view
   # to gracefully load the collection in a non-blocking way
   fetch: (id) ->
@@ -37,7 +37,9 @@ class DatasetSearchRoute extends require 'hn_routing/lib/route'
           @items = new ItemCollection(datapoints)
 
           # Gets FacetCollection from Dataset
-          @model.ensureFacets(datapoints).then (facetCollection) =>
+          @model.fetchFacets().then (facetCollection) =>
+
+            # Assigns @facetCollection
             @facetCollection = facetCollection
 
             # Gets SearchResultCollection
@@ -45,7 +47,7 @@ class DatasetSearchRoute extends require 'hn_routing/lib/route'
             .then (collection) => @collection = collection
 
             # Resolves outter promise
-            resolve()
+            return resolve()
 
   render: ->
     @container.show new SearchView({ model: @model, collection: @collection, items: @items, facetCollection: @facetCollection })

@@ -1,24 +1,37 @@
-# TODO - phase out this file
-# Facets are now generated from the dataset
-# facetData = require './facetData'
+FacetCollection = require './facetEntities'
 
 # # # # #
 
 class FacetFactory extends Marionette.Service
-  collectionPrototype:  require './facetEntities'
 
   radioRequests:
     'facet collection':  'getCollection'
 
-  # initialize: ->
-  #   @cached = new @collectionPrototype()
+  initialize: ->
+    @facetCollection = new FacetCollection()
 
-  getCollection: (facetData) ->
-    return new @collectionPrototype(facetData)
-    # return @cached if @cached._synced
-    # @cached.reset(facetData)
-    # @cached._synced = true
-    # return @cached
+  getCollection: (dataset_id) ->
+    return new Promise (resolve, reject) =>
+
+      # DexieDB dependency injection
+      db = Backbone.Radio.channel('db').request('db')
+
+      # Queries DB
+      db.facets.where('dataset_id').equals(dataset_id).toArray()
+
+      # TODO - should return a collection of facets, rather than the RAW json
+      .then (facets) =>
+
+        console.log facets
+
+        # Resets the collection of facets
+        @facetCollection.reset(facets)
+
+        # Resolves the Promise and returns the FacetCollection
+        return resolve(@facetCollection)
+
+      # Error handling
+      .catch (err) => return reject(err)
 
 # # # # #
 

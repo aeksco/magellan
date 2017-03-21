@@ -77,6 +77,7 @@ class NewDatasetLayout extends Mn.LayoutView
     @model.set(data)
     @options.creator.deploy(@model, @uploadedGraph)
 
+  # TODO - handle these model event callbacks
   onSync: ->
     console.log 'ON SYNC!!'
     # Backbone.Radio.channel('app').trigger('redirect', '#ontologies')
