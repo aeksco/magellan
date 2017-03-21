@@ -5,12 +5,14 @@ class DatasetModel extends Backbone.Model
 
   # Default attributes
   # TODO - validations
+  # TODO - uploaded_at timestamp
   defaults:
     id:       ''
     label:    ''
     context:  {}
     # facets:   []  # TODO - GENERATE AFTER SAVE
 
+  # TODO - this should be abstracted elsewhere.
   getFacet: (ont_id, ont_attr, id, index) ->
     return new Promise (resolve, reject) =>
       Backbone.Radio.channel('ontology').request('attribute', ont_id, ont_attr)
@@ -76,55 +78,14 @@ class DatasetModel extends Backbone.Model
         console.log all
 
         # Assigns facets to facet collection
+        # TODO - pass @id to FacetFactory to fetch FacetCollection
+        #   return Backbone.Radio.channel('facet').request('collection', @id)
         @facetCollection = Backbone.Radio.channel('facet').request('collection', all)
         return resolve(@facetCollection)
 
+  # TODO - should return the Datapoint collection
   fetchDatapoints: ->
     return Backbone.Radio.channel('dataset').request('datapoints', @id)
-
-  # Overwritten save method
-  # TODO - abstract into DexieModel?
-  save: (attrs={}, graph=[]) ->
-
-    # Sets count attribute defined from
-    # length of graph parameter
-    attrs.count = graph.length
-
-    # Sets attributes before save
-    @set(attrs)
-
-    # Triggers 'request' event (important for views to function correctly)
-    @trigger('request')
-
-    # Adds the record to Dexie
-    Backbone.Radio.channel('db').request('add', @urlRoot, @toJSON())
-    .then (model_id) =>
-
-      # Iterate over each datapoint, return a promise
-      # TODO - abstract into @populateDatapoints method?
-      Promise.each(graph, (datapoint) ->
-
-        # Assemble a new datapoint
-        attrs =
-          id:         _.uniqueId('dp_')
-          raw:        datapoint
-          data:       datapoint
-          dataset_id: model_id
-
-        # Returns 'add' Promise from DB service
-        return Backbone.Radio.channel('db').request('add', 'datapoints', attrs)
-
-      )
-
-      # After all datapoints have been addded...
-      .then () =>
-
-        # TODO - ENSURES FACETS
-        # TODO - this is turning into callback/promise hell
-        @trigger('sync')
-
-      .catch (err) => @trigger('error', err)
-    .catch (err) => @trigger('error', err)
 
 # # # # #
 

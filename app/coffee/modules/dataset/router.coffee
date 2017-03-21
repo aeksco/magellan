@@ -1,4 +1,5 @@
 require './factory'
+require './creator'
 
 ListRoute = require './list/route'
 SearchRoute = require './search/route'

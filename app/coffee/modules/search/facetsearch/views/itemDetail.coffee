@@ -28,10 +28,6 @@ class RdfDetailView extends Mn.LayoutView
     @trigger 'hide:underlay'
     @trigger 'hide'
 
-  # TODO - this should be part of the decorator
-  # serializeData: ->
-  #   return { data: super() }
-
   onRender: ->
     # TODO - abstract this elsewhere.
     # TODO - overlay should be a region

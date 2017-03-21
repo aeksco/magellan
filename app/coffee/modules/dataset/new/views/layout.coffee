@@ -36,6 +36,7 @@ class NewDatasetLayout extends Mn.LayoutView
   className: 'container-fluid'
 
   behaviors:
+    ModelEvents: {}
     SubmitButton: {}
 
   regions:
@@ -47,36 +48,34 @@ class NewDatasetLayout extends Mn.LayoutView
     @uploadRegion.show uploadWidget
     @disableSubmit()
 
+  # onJsonUpload
+  # Invoked as a callback when a JSON file has
   onJsonUpload: (parsedJson) =>
     # Sets context and graph attributes on dataset model
     @model.set('context', parsedJson['@context'])
-    # @model.set('graph', parsedJson['@graph'])
 
-    # TODO - best way to manage this?
+    # TODO - is there a better way to manage this?
+    # We'll need some additional logic to manage the state of the uploaded dataset
     @uploadedGraph = parsedJson['@graph']
 
+    # Enables submitButton
+    # TODO - there should be a validate method that
+    # manages submitButton state
     @enableSubmit()
 
+  # onSubmit (from SubmitButton behavior)
   onSubmit: ->
-    data    = Backbone.Syphon.serialize(@)
-    data.id = data.label.toLowerCase().replace(' ', '_') # TODO - not replacing all? Use Underscore.String
-    # @model.set(data)
 
-    console.log @model.toJSON()
-    console.log @uploadedGraph
-    # @saveToDexie()
+    # TODO - this should be abstracted into a behavior...or has it been at some point?
+    data = Backbone.Syphon.serialize(@)
 
-    @model.save(data, @uploadedGraph)
+    # Saves Dataset model to Dexie
+    @model.set(data)
+    @options.creator.deploy(@model, @uploadedGraph)
 
-  # TODO - abstract into DexieService
-  # TODO - should this be abstracted into a Dexie model?
-  # Or should the DexieService fire the required events
-  # on the Backbone.Model?
-  saveToDexie: ->
-    window.db['datasets'].add(@model.toJSON())
-    .then (model_id) => Backbone.Radio.channel('app').trigger('redirect', '#datasets')
-
-    .catch (err) => console.log 'ERROR CAUGHT'
+  onSync: ->
+    console.log 'ON SYNC!!'
+    # Backbone.Radio.channel('app').trigger('redirect', '#ontologies')
 
 # # # # #
 

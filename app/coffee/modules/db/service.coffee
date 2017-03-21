@@ -7,7 +7,8 @@
 class DexieService extends Marionette.Service
 
   radioRequests:
-    'db add': 'addDocument'
+    'db add':     'addDocument'
+    'db delete':  'deleteDocument'
     'db db':  'getDb'
 
   initialize: (options={})->
@@ -133,6 +134,11 @@ class DexieService extends Marionette.Service
   # Returns a promise
   addDocument: (table, doc) ->
     @db[table].add(doc)
+
+  # Deletes a document to the named table
+  # Returns a promise
+  deleteDocument: (table, document_id) ->
+    @db[table].delete(document_id)
 
   getDb: ->
     return @db

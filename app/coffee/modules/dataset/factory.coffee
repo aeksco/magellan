@@ -15,22 +15,18 @@ class DatasetFactory extends Marionette.Service
   initialize: ->
     @cached = new Entities.Collection()
 
-  # TODO - this should accept a query
+  # TODO - this should accept a query?
   getCollection: ->
     return new Promise (resolve, reject) =>
 
+      # TODO - abstract into:
+      # Backbone.Radio.channel('db').request('all')
       table = 'datasets' # MODEL.urlRoot
       window.db[table].toArray().then (models) =>
         @cached.reset(models)
         @cached._synced = true
         return resolve(@cached)
       # TODO - catch statement
-
-  # getCollection: ->
-  #   return @cached if @cached._synced
-  #   @cached.reset(datasets)
-  #   @cached._synced = true
-  #   return @cached
 
   getModel: (id) ->
     return new Promise (resolve, reject) =>

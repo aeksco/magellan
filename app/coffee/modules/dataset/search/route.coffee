@@ -32,7 +32,8 @@ class DatasetSearchRoute extends require 'hn_routing/lib/route'
         @model.fetchDatapoints().then (datapoints) =>
 
           # Gets all items for Faceted Search
-          # TODO - abstract into DataSet model
+          # TODO - abstract into DataSet model,
+          # constructor call should not be in route
           @items = new ItemCollection(datapoints)
 
           # Gets FacetCollection from Dataset
