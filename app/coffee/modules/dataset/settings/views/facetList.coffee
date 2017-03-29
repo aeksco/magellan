@@ -58,6 +58,9 @@ class FacetChild extends Mn.LayoutView
     # TODO - don't SWAP indicies. Rather, we should INSERT AT INDEX
     swapIndicies(@model.collection, ev.oldIndex, ev.newIndex)
 
+    # TODO - we should save the model after this
+    # HOW SHOULD WE DO THAT??
+
   showEditModal: ->
     formView = new FacetForm({ model: @model })
     formView.on 'submitted', => @render()

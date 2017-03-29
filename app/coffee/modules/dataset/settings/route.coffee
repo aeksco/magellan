@@ -29,7 +29,9 @@ class SearchSettingsRoute extends require 'hn_routing/lib/route'
         @model = model
 
         # Gets FacetCollection from Dataset
-        @model.ensureFacets().then (facetCollection) =>
+        @model.fetchFacets().then (facetCollection) =>
+
+          # Assigns @facetCollection
           @collection = facetCollection
 
           # Resolves outter promise

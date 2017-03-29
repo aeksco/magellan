@@ -2,6 +2,7 @@ FacetCollection = require './facetEntities'
 
 # # # # #
 
+# TODO - this should be abstracted into its own module
 class FacetFactory extends Marionette.Service
 
   radioRequests:

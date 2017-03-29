@@ -1,11 +1,13 @@
 
+# TODO - this class probably needs some apply/evaluate-against method?
+# TODO - should the applyRule method belong here?
+# The KnowledgeRuleCollection should just ITERATE over each rule, invoking the method defined here.
 class KnowledgeRuleModel extends Backbone.Model
-  # TODO - this class probably needs some apply/evaluate-against method?
 
 # # # # #
 
 class KnowledgeRuleCollection extends Backbone.Collection
-  model: RuleModel
+  model: KnowledgeRuleModel
 
   # applyRules
   # Applies the defined KnowledgeRules to the TargetCollection
@@ -30,7 +32,8 @@ class KnowledgeRuleCollection extends Backbone.Collection
           # Isolates pertinant variables
           # TODO - not all of these are used by every operation
           # This should be simplified to cache ONLY what's used.
-          source    = target.get(condition.source)
+          data      = target.get('data')
+          source    = data[condition.source]
           operation = condition.operation
           value     = condition.value
           result    = condition.result
@@ -40,27 +43,43 @@ class KnowledgeRuleCollection extends Backbone.Collection
 
           # EXACT MATCH
           if operation == 'exact_match'
-            target.set(targetAttr, result) if source == value
+            if source == value
+              data[targetAttr] = result
+              target.set('data', data)
 
           # REPLACE
           if operation == 'replace'
             replaced = source.replace(value, result)
-            target.set(targetAttr, replaced) if replaced
+            if replaced
+              data[targetAttr] = replaced
+              target.set('data', data)
 
           # FORMAT UPPERCASE
           if operation == 'format_uppercase'
             formatted = source.toUpperCase()
-            target.set(targetAttr, formatted) if formatted
+            if formatted
+              data[targetAttr] = formatted
+              target.set('data', data)
 
           # FORMAT UPPERCASE
           if operation == 'format_lowercase'
             formatted = source.toLowerCase()
-            target.set(targetAttr, formatted) if formatted
+            if formatted
+              data[targetAttr] = formatted
+              target.set('data', data)
 
           # REGEX MATCH
+          # TODO - MUST PICK WHICH ARRAY INDEX IN MATCHED REGEX
           if operation == 'regex_match'
             matched = value.exec(source)
-            target.set(targetAttr, result) if matched
+            if matched
+              data[targetAttr] = matched
+              target.set('data', data)
+
+          # TODO - save EACH dataset model after setting the data
+          # THIS Save method should return a promise.
+          # So that logic should be abstracted into the KnowledgeRuleModel class.
+          # And this method should return a Promise.each()
 
 # # # # #
 
