@@ -57,7 +57,7 @@ class SearchSettingsRoute extends require 'hn_routing/lib/route'
 
   render: ->
     @ruleCollection.applyRules(targetCollection)
-    @container.show new LayoutView({ collection: targetCollection })
+    @container.show new LayoutView({ collection: targetCollection, ruleCollection: @ruleCollection })
 
 
 # # # # #

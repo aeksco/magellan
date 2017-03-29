@@ -39,6 +39,7 @@ class RuleChild extends Mn.LayoutView
 
   behaviors:
     ModelEvents: {}
+    SelectableChild: {}
 
   ui:
     checkbox: 'input[type=checkbox]'
@@ -100,4 +101,30 @@ class RuleList extends Mn.CompositeView
 
 # # # # #
 
-module.exports = RuleList
+class RuleDetail extends Mn.LayoutView
+  className: 'card card-block'
+  template: require './templates/rule_detail'
+
+# # # # #
+
+class RuleLayout extends Mn.LayoutView
+  className: 'row'
+  template: require './templates/layout'
+
+  regions:
+    listRegion:   '[data-region=list]'
+    detailRegion: '[data-region=detail]'
+
+  onRender: ->
+    listView = new RuleList({ collection: @collection })
+    listView.on 'childview:selected', (view) => @showDetail(view.model)
+    @listRegion.show(listView)
+    @collection.at(0)?.trigger('selected')
+
+  showDetail: (model) ->
+    console.log 'SHOW DETAIL'
+    console.log model
+
+# # # # #
+
+module.exports = RuleLayout

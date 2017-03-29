@@ -29,12 +29,12 @@ module.exports = [
   }
 
   # TESTING FORMAT OPERATION
-  {
-    order: 3
-    enabled: true
-    targetAttr: 'upper_employer'
-    conditions: [{ source: 'employer', operation: 'format_uppercase' }]
-  }
+  # {
+  #   order: 3
+  #   enabled: true
+  #   targetAttr: 'upper_employer'
+  #   conditions: [{ source: 'employer', operation: 'format_uppercase' }]
+  # }
 
   # # # # # # # # # #
   # LastName
@@ -56,20 +56,21 @@ module.exports = [
   # # # # # # # # # #
 
   # TESTING FORMAT OPERATION
-  {
-    order: 4
-    enabled: true
-    targetAttr: 'lower_employer'
-    conditions: [{ source: 'employer', operation: 'format_lowercase' }]
-  }
+  # {
+  #   order: 4
+  #   enabled: true
+  #   targetAttr: 'lower_employer'
+  #   conditions: [{ source: 'employer', operation: 'format_lowercase' }]
+  # }
 
   # TESTING FORMAT OPERATION
-  {
-    order: 5
-    enabled: true
-    targetAttr: 'last_regex'
-    conditions: [{ source: 'firstName', operation: 'regex_match', value: /alex/ig, result: 'ALEX MATCHED' }]
-  }
+  # TODO - this MUST be reworked.
+  # {
+  #   order: 5
+  #   enabled: true
+  #   targetAttr: 'last_regex'
+  #   conditions: [{ source: 'firstName', operation: 'regex_match', value: /alex/ig, result: 'ALEX MATCHED' }]
+  # }
 
   # OPERATION TYPES
   # - [ ] fuzzy_match

@@ -3,6 +3,7 @@
 # TODO - should the applyRule method belong here?
 # The KnowledgeRuleCollection should just ITERATE over each rule, invoking the method defined here.
 class KnowledgeRuleModel extends Backbone.Model
+  # TODO - do we want to manage nested conditions as a Backbone.Relational Collection?
 
 # # # # #
 
