@@ -77,15 +77,6 @@ class NewDatasetLayout extends Mn.LayoutView
     @model.set(data)
     @options.creator.deploy(@model, @uploadedGraph)
 
-  # TODO - handle these model event callbacks
-  onSync: ->
-    console.log 'ON SYNC!!'
-    # Backbone.Radio.channel('app').trigger('redirect', '#ontologies')
-
-  onError: (err) ->
-    console.log 'ERROR'
-    console.log err
-
   onRequest: ->
     console.log 'ON REQUEST'
 
@@ -95,6 +86,13 @@ class NewDatasetLayout extends Mn.LayoutView
   onDatapointsEnsured: ->
     console.log 'onDatapointsEnsured'
 
+  # TODO - handle these model event callbacks
+  onSync: ->
+    Backbone.Radio.channel('app').trigger('redirect', '#datasets')
+
+  onError: (err) ->
+    console.log 'ERROR'
+    console.log err
 
 # # # # #
 
