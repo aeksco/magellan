@@ -1,10 +1,7 @@
-
-# TODO - facetModel
 Entities = require './entities'
 
 # # # # #
 
-# TODO - this should be abstracted into its own module
 class FacetFactory extends Marionette.Service
 
   radioRequests:
@@ -24,10 +21,8 @@ class FacetFactory extends Marionette.Service
       # Queries DB
       db.facets.where('dataset_id').equals(dataset_id).toArray()
 
-      # TODO - should return a collection of facets, rather than the RAW json
+      # Resets the collection and resolves the promise
       .then (facets) =>
-
-        console.log facets
 
         # Resets the collection of facets
         @facetCollection.reset(facets)
@@ -61,7 +56,9 @@ class FacetFactory extends Marionette.Service
         return resolve()
 
       # Error handling
-      .catch (err) => model.trigger('error', err)
+      .catch (err) =>
+        model.trigger('error', err)
+        return reject(err)
 
 # # # # #
 

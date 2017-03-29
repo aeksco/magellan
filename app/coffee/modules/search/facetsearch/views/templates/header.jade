@@ -7,7 +7,12 @@
 
   .col-xs-6.text-xs-right
     .btn-group
-      a.btn.btn-primary-outline( href="#datasets/#{id}/settings" data-click='settings')
+      a.btn.btn-primary-outline( href="#datasets/#{id}/knowledge_rules" )
+        i.fa.fa-fw.fa-check-circle-o
+        | &nbsp;
+        | Knowledge Rules
+
+      a.btn.btn-primary-outline( href="#datasets/#{id}/settings" )
         i.fa.fa-fw.fa-cog
         | &nbsp;
         | Settings

@@ -1,5 +1,12 @@
 
 //- Mixins
+
+mixin arrayRow(attr)
+  if data[attr]
+    tr
+      td #{attr}:
+      td #{data[attr].join(', ')}
+
 mixin attrRow(attr)
   if data[attr]
     tr
@@ -14,14 +21,6 @@ mixin idRow(attr)
         a(data-relation=data[attr]['@id']) #{data[attr]['@id']}
 
 //- Outputs attributes using mixins
-//- +attrRow('@id')
-//- +attrRow('@type')
-//- +attrRow('rdfs:Label')
-//- +attrRow('dmoa:FileType')
-//- +attrRow('dmoi:resultType')
-//- +idRow('dmo:isResultOf')
-//- +idRow('dmo:belongsTo')
-
 //- if data.hasAggregates
 //-   tr
 //-     td aggregates:
@@ -41,7 +40,10 @@ mixin idRow(attr)
 //- TODO - array?
 each val, key in data
 
-  if typeof val == 'object'
+  if Array.isArray(val)
+    +arrayRow(key)
+
+  else if typeof val == 'object'
     +idRow(key)
 
   else

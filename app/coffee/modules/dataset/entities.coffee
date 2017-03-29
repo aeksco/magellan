@@ -21,6 +21,9 @@ class DatasetModel extends Backbone.Model
   fetchDatapoints: ->
     return Backbone.Radio.channel('dataset').request('datapoints', @id)
 
+  fetchKnowledgeRules: ->
+    return Backbone.Radio.channel('knowledge:rule').request('collection', @id)
+
 # # # # #
 
 class DatasetCollection extends Backbone.Collection
