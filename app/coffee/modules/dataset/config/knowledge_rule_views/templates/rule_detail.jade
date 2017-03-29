@@ -1,1 +1,34 @@
 h4.card-title Rule Detail
+
+p.lead Order: #{order}
+p.lead Enabled: #{enabled}
+p.lead Target: #{targetAttr}
+
+hr
+
+p.lead Conditions: #{conditions.length}
+
+//- Condition Mixin
+mixin conditionItem(c)
+  li.list-group-item
+    .row
+      .col-xs-6 Source: #{c.source}
+      .col-xs-6 Operation: #{c.operation}
+    .row
+      .col-xs-6 Value: #{c.value}
+      .col-xs-6 Result: #{c.result}
+
+each condition in conditions
+  +conditionItem(condition)
+
+  //- {
+  //-   order: 1
+  //-   enabled: true
+  //-   targetAttr: 'lastName'
+  //-   conditions: [ # TODO - should conditions be models as well?
+  //-     { source: 'firstName', operation: 'exact_match', value: 'Alex', result: 'Schwartzberg' } # TODO - *required* attribute
+  //-     { source: 'firstName', operation: 'exact_match', value: 'Johnson', result: 'Samuel' }
+  //-     { source: '@id', operation: 'exact_match', value: 1, result: 'Erickson' }
+  //-     { source: '@id', operation: 'exact_match', value: 4, result: 'Hynes' }
+  //-   ]
+  //- }

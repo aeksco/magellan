@@ -122,8 +122,7 @@ class RuleLayout extends Mn.LayoutView
     @collection.at(0)?.trigger('selected')
 
   showDetail: (model) ->
-    console.log 'SHOW DETAIL'
-    console.log model
+    @detailRegion.show new RuleDetail({ model: model })
 
 # # # # #
 
