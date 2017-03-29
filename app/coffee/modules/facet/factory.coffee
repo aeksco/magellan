@@ -18,6 +18,7 @@ class FacetFactory extends Marionette.Service
     return new Promise (resolve, reject) =>
 
       # DexieDB dependency injection
+      # TODO - you should rethink this pattern right hurr (used twice in this file)
       db = Backbone.Radio.channel('db').request('db')
 
       # Queries DB
@@ -37,10 +38,30 @@ class FacetFactory extends Marionette.Service
       # Error handling
       .catch (err) => return reject(err)
 
-  saveFacet: (facetModel) ->
+  # TODO - perhaps this should be abstracted into a
+  # more generic implementation
+  saveFacet: (model) ->
     return new Promise (resolve, reject) =>
-      console.log 'SAVING FACET'
-      resolve()
+
+      # Triggers 'request' event on model
+      model.trigger('request')
+
+      # Inserts item into Dexie table
+      table = 'facets'
+      item = model.toJSON()
+
+      # DexieDB dependency injection
+      # TODO - you should rethink this pattern right hurr (used twice in this file)
+      db = Backbone.Radio.channel('db').request('db')
+
+      # Updates the record in the table (or saves a new)
+      db[table].put(item)
+      .then (model_id) =>
+        model.trigger('sync')
+        return resolve()
+
+      # Error handling
+      .catch (err) => model.trigger('error', err)
 
 # # # # #
 

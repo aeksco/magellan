@@ -37,6 +37,9 @@ class FacetChild extends Mn.LayoutView
   template: require './templates/facet_child'
   className: 'list-group-item'
 
+  behaviors:
+    ModelEvents: {}
+
   ui:
     checkbox: 'input[type=checkbox]'
     edit:     '[data-click=edit]'
@@ -46,8 +49,12 @@ class FacetChild extends Mn.LayoutView
     'switchChange.bootstrapSwitch @ui.checkbox':  'onEnabledChange'
     'click @ui.edit': 'showEditModal'
 
+  modelEvents:
+    'change:order': 'onOrderChange'
+
   onEnabledChange: ->
     @model.set(Backbone.Syphon.serialize(@))
+    @model.save()
 
   onRender: ->
     Backbone.Syphon.deserialize( @, @model.attributes )
@@ -58,15 +65,23 @@ class FacetChild extends Mn.LayoutView
     # TODO - don't SWAP indicies. Rather, we should INSERT AT INDEX
     swapIndicies(@model.collection, ev.oldIndex, ev.newIndex)
 
-    # TODO - we should save the model after this
-    # TODO - this should be done through the factory/service patter
-    # That method should be responsible for managing the model events associated with a typical save method call
-    # Backbone.Radio.channel('facet').request('save', @model)
+  onOrderChange: ->
+    @model.save()
 
   showEditModal: ->
     formView = new FacetForm({ model: @model })
-    formView.on 'submitted', => @render()
-    Backbone.Radio.channel('modal').trigger('show', formView )
+    formView.on 'submitted', => @model.save()
+    Backbone.Radio.channel('modal').trigger('show', formView)
+
+  # TODO - better
+  onRequest: ->
+    console.log 'onRequest'
+
+  onSync: ->
+    @render()
+
+  onError: ->
+    console.log 'onError'
 
 # # # # #
 
