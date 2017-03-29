@@ -1,6 +1,6 @@
 
 class FacetModel extends Backbone.Model
-  url: 'facet'
+  urlRoot: 'facet'
 
 # # # # #
 
@@ -16,4 +16,6 @@ class FacetCollection extends Backbone.Collection
 
 # # # # #
 
-module.exports = FacetCollection
+module.exports =
+  Model:      FacetModel
+  Collection: FacetCollection

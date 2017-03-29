@@ -1,4 +1,6 @@
-FacetCollection = require './facetEntities'
+
+# TODO - facetModel
+Entities = require './entities'
 
 # # # # #
 
@@ -6,10 +8,11 @@ FacetCollection = require './facetEntities'
 class FacetFactory extends Marionette.Service
 
   radioRequests:
-    'facet collection':  'getCollection'
+    'facet collection': 'getCollection'
+    'facet save':       'saveFacet'
 
   initialize: ->
-    @facetCollection = new FacetCollection()
+    @facetCollection = new Entities.Collection()
 
   getCollection: (dataset_id) ->
     return new Promise (resolve, reject) =>
@@ -33,6 +36,11 @@ class FacetFactory extends Marionette.Service
 
       # Error handling
       .catch (err) => return reject(err)
+
+  saveFacet: (facetModel) ->
+    return new Promise (resolve, reject) =>
+      console.log 'SAVING FACET'
+      resolve()
 
 # # # # #
 

@@ -59,7 +59,9 @@ class FacetChild extends Mn.LayoutView
     swapIndicies(@model.collection, ev.oldIndex, ev.newIndex)
 
     # TODO - we should save the model after this
-    # HOW SHOULD WE DO THAT??
+    # TODO - this should be done through the factory/service patter
+    # That method should be responsible for managing the model events associated with a typical save method call
+    # Backbone.Radio.channel('facet').request('save', @model)
 
   showEditModal: ->
     formView = new FacetForm({ model: @model })

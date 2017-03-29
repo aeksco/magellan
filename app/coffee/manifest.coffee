@@ -61,6 +61,13 @@ new FlashComponent({ container: AppLayout.flash })
 
 # # # # #
 
+# Factories
+require './modules/search/factory'
+require './modules/facet/factory'
+require './modules/knowledge_rule/factory'
+
+# # # # #
+
 # Modules
 # Modules represent collections of endpoints in the application.
 # They have routes and entities (models and collections)
@@ -69,17 +76,15 @@ DatasetRouter   = require './modules/dataset/router'
 HomeRouter      = require './modules/home/router'
 IframeRouter    = require './modules/iframe/router'
 OntologyRouter  = require './modules/ontology/router'
-SearchRouter    = require './modules/search/router'
 new DatasetRouter({ container: AppLayout.main })
 new HomeRouter({ container: AppLayout.main })
 new IframeRouter({ container: AppLayout.main })
 new OntologyRouter({ container: AppLayout.main })
-new SearchRouter({ container: AppLayout.main })
 
 # TODO - remove this after testing
 # require './modules/base/dexieModel'
 
-# # # # # #
+# # # # #
 
 # DexieService configuration
 # Defines the tables and indexed attributes
@@ -95,6 +100,7 @@ dexieConfiguration =
     { name: 'datasets', attrs: 'id, label' }
     { name: 'datapoints', attrs: 'id, dataset_id' }
     { name: 'ontologies', attrs: 'id' }
+    { name: 'knowledge_rules', attrs: 'id, dataset_id' }
   ]
 
 # # # # # #

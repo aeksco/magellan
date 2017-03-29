@@ -1,5 +1,4 @@
 LayoutView  = require './views/layout'
-require '../../knowledge_rule/factory'
 
 # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # # # # # # # # # # # # #
