@@ -9,6 +9,8 @@ module.exports = [
 
   # LastName rule definition
   {
+    order: 1
+    enabled: true
     targetAttr: 'lastName'
     conditions: [ # TODO - should conditions be models as well?
       { source: 'firstName', operation: 'exact_match', value: 'Alex', result: 'Schwartzberg' } # TODO - *required* attribute
@@ -20,12 +22,16 @@ module.exports = [
 
   # TESTING REPLACE OPERATION
   {
+    order: 2
+    enabled: true
     targetAttr: 'employer'
     conditions: [{ source: 'employer', operation: 'replace', value: 'RPI', result: 'Rensselaer Polytechnic Institute' }]
   }
 
   # TESTING FORMAT OPERATION
   {
+    order: 3
+    enabled: true
     targetAttr: 'upper_employer'
     conditions: [{ source: 'employer', operation: 'format_uppercase' }]
   }
@@ -51,12 +57,16 @@ module.exports = [
 
   # TESTING FORMAT OPERATION
   {
+    order: 4
+    enabled: true
     targetAttr: 'lower_employer'
     conditions: [{ source: 'employer', operation: 'format_lowercase' }]
   }
 
   # TESTING FORMAT OPERATION
   {
+    order: 5
+    enabled: true
     targetAttr: 'last_regex'
     conditions: [{ source: 'firstName', operation: 'regex_match', value: /alex/ig, result: 'ALEX MATCHED' }]
   }

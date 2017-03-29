@@ -8,8 +8,8 @@ include ../../../../base/partials/form_helpers
   .col-xs-3
     +formInput({ formGroupCss: 'm-b-0', name: 'enabled', type: 'checkbox', value: enabled })
 
-  .col-xs-4= label
-  .col-xs-3= attribute
+  .col-xs-4= targetAttr
+  .col-xs-3= conditions.length
 
   .col-xs-1
     .btn.btn-sm.btn-secondary(data-click='edit')
