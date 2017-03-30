@@ -31,9 +31,13 @@ class RuleLayout extends Mn.LayoutView
     @showRuleList()
 
   showRuleList: ->
-    # TODO - add 'EDIT' event for RuleList
     ruleList = new RuleList({ collection: @collection })
+    ruleList.on 'edit', (ruleModel) => @editRule(ruleModel)
     @contentRegion.show ruleList
+
+  editRule: (ruleModel) =>
+    return @showDefinerForm(ruleModel) if ruleModel.get('type') == 'definer'
+    return @showDecoratorForm(ruleModel)
 
   newRule: ->
 
@@ -58,18 +62,18 @@ class RuleLayout extends Mn.LayoutView
 
   # TODO - these two methods have a lot of repetition
   # This should be simplified as a helper method
-  showDecoratorForm: ->
-    model = @buildNewRule('decorator')
-    formView = new DecoratorForm({ model: model })
+  showDecoratorForm: (model) ->
+    formModel = model || @buildNewRule('decorator')
+    formView = new DecoratorForm({ model: formModel })
     formView.on 'cancel', => @showRuleList()
     formView.on 'submit', => console.log 'SUBMIT RULE FORM'
     @contentRegion.show formView
 
   # TODO - these two methods have a lot of repetition
   # This should be simplified as a helper method
-  showDefinerForm: ->
-    model = @buildNewRule('definer')
-    formView = new DefinerForm({ model: model })
+  showDefinerForm: (model) ->
+    formModel = model || @buildNewRule('definer')
+    formView = new DefinerForm({ model: formModel })
     formView.on 'cancel', => @showRuleList()
     formView.on 'submit', => console.log 'SUBMIT RULE FORM'
     @contentRegion.show formView

@@ -79,7 +79,9 @@ class RuleLayout extends Mn.LayoutView
     @collection.at(0)?.trigger('selected')
 
   showDetail: (model) ->
-    @detailRegion.show new RuleViewer({ model: model })
+    ruleViewer = new RuleViewer({ model: model })
+    ruleViewer.on 'edit', (view) => @trigger('edit', view.model)
+    @detailRegion.show ruleViewer
 
 # # # # #
 

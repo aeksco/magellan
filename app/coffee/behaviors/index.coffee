@@ -7,6 +7,7 @@ module.exports =
   Confirmations:      require './confirmations'
   CopyToClipboard:    require 'hn_behaviors/lib/copyToClipboard'
   Flashes:            require 'hn_behaviors/lib/flashes'
+  FormSerialize:      require 'hn_behaviors/lib/formSerialize'
   ModelEvents:        require 'hn_behaviors/lib/modelEvents'
   SelectableChild:    require './selectableChild'
   SubmitButton:       require 'hn_behaviors/lib/submitButton'

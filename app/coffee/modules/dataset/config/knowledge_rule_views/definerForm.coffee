@@ -23,11 +23,9 @@ class DefinerForm extends Mn.LayoutView
 
   initialize: ->
     # TODO - this collection MUST come from Backbone.Relational
-    @collection = new Backbone.Collection()
+    @collection = new Backbone.Collection(@model.get('conditions'))
 
   addToCollection: (condition) ->
-    console.log 'ADD TO COLLECTION'
-    console.log condition
     @collection.add(condition)
     @showConditionList()
 
@@ -53,13 +51,18 @@ class DefinerForm extends Mn.LayoutView
     @conditionsRegion.show new ConditionList({ collection: @collection })
 
   onRender: ->
+    Backbone.Syphon.deserialize( @, @model.attributes )
     @showConditionList()
 
   onCancel: ->
     @trigger 'cancel'
 
   onSubmit: ->
-    console.log 'ON SUBMIT'
+    data = Backbone.Syphon.serialize(@)
+    data.conditions = @collection.toJSON()
+    @model.set(data)
+    console.log @model.toJSON()
+    @trigger 'submit', @model
 
 # # # # #
 

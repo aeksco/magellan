@@ -1,0 +1,51 @@
+.row
+  .col-xs-8
+    h4.card-title
+      i.fa.fa-fw(class=icon)
+      | &nbsp;
+      | Rule Details
+
+  .col-xs-4.text-xs-right
+    button.btn.btn-sm.btn-secondary.m-r-1( data-click='edit' )
+      i.fa.fa-fw.fa-pencil
+      | &nbsp;
+      | Edit
+
+    button.btn.btn-sm.btn-danger-outline( data-click='destroy' )
+      i.fa.fa-fw.fa-trash
+      | &nbsp;
+      | Destroy
+
+  .col-xs-12
+    hr
+
+.row
+  .col-xs-12
+    //- p.lead Order: #{order}
+    p.lead Enabled: #{enabled}
+    //- p.lead Type: #{type}
+    p.lead Target: #{targetAttr}
+
+    hr
+
+    p.lead Conditions: #{conditions.length}
+
+    //- Condition Mixin
+    mixin conditionItem(c)
+      li.list-group-item
+        .row
+          .col-xs-3= c.source
+          .col-xs-3= c.operation
+          .col-xs-3= c.value
+          .col-xs-3= c.result
+
+    ul.list-group
+      li.list-group-item(style='background-color: #F3F3F3;')
+        .row
+          .col-xs-3 Source
+          .col-xs-3 Operation
+          .col-xs-3 Value
+          .col-xs-3 Result
+
+      each condition in conditions
+        +conditionItem(condition)
