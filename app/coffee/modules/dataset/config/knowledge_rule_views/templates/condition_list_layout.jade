@@ -1,18 +1,24 @@
-.col-xs-4
+.col-xs-4( data-region='list' )
+
+.col-xs-8
+
+  //- .row
+  //-   .col-xs-12.text-xs-right
+  //-     button.btn.btn-sm.btn-primary-outline( data-click='add' )
+  //-       i.fa.fa-fw.fa-plus-circle
+  //-       | &nbsp;
+  //-       | Add Condition
+
+  //- .row
+  //-   .col-xs-12
+  //-     hr
 
   .row
-    .col-xs-12
-      button.btn.btn-primary-outline.w-100( data-click='add' )
-        i.fa.fa-fw.fa-plus-circle
-        | &nbsp;
-        | Add Condition
+    .col-xs-12(data-region='detail')
+      .alert.alert-warning No Conditions Defined.
 
-    .col-xs-12.m-t-1( data-region='list' )
+  //- button.btn.btn-primary-outline.w-100( data-click='add' )
+  //-   i.fa.fa-fw.fa-plus-circle
+  //-   | &nbsp;
+  //-   | Add Condition
 
-.col-xs-8(data-region='detail')
-  .alert.alert-warning No Conditions Defined.
-
-  button.btn.btn-primary-outline.w-100( data-click='add' )
-    i.fa.fa-fw.fa-plus-circle
-    | &nbsp;
-    | Add Condition

@@ -2,7 +2,21 @@ include ../../../../base/partials/form_helpers
 
 .col-xs-12
   .card.card-block
+
     .row
+
+      .col-xs-6
+        p.lead Edit Condition
+
+      .col-xs-6.text-xs-right
+        button.btn.btn-sm.btn-danger-outline( data-click='discard' )
+          i.fa.fa-fw.fa-trash
+          | &nbsp;
+          | Discard Condition
+
+      .col-xs-12
+        hr
+
       .col-xs-6
 
         //- TODO - should be a select box
@@ -16,7 +30,3 @@ include ../../../../base/partials/form_helpers
         +formInput({ label: 'Value', placeholder: 'Value', name: 'value', type: 'text' })
 
         +formInput({ label: 'Result', placeholder: 'Result', name: 'result', type: 'text' })
-
-      .col-xs-12
-        +cancelButton({})
-        +submitButton({})
