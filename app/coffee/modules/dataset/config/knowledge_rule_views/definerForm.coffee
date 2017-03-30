@@ -21,11 +21,6 @@ class DefinerForm extends Mn.LayoutView
   regions:
     conditionsRegion: '[data-region=conditions]'
 
-  # initialize: ->
-  #   # TODO - this collection MUST come from Backbone.Relational
-  #   console.log @model.get('conditions')
-  #   # @collection = new Backbone.Collection(@model.get('conditions'))
-
   addToCollection: (condition) ->
     @collection.add(condition)
     @showConditionList()

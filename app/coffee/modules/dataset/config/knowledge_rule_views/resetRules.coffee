@@ -7,6 +7,9 @@ class ResetRulesView extends Mn.LayoutView
     CancelButton: {}
     SubmitButton: {}
 
+  onCancel: ->
+    @trigger 'cancel'
+
 # # # # #
 
 module.exports = ResetRulesView

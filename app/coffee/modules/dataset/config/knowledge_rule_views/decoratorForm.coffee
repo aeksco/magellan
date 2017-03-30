@@ -7,10 +7,15 @@ class DecoratorForm extends Mn.LayoutView
     CancelButton: {}
     SubmitButton: {}
 
+  onRender: ->
+    Backbone.Syphon.deserialize(@, @model.attributes)
+
   onCancel: ->
     @trigger 'cancel'
 
   onSubmit: ->
+    data = Backbone.Syphon.serialize(@)
+    console.log data
     console.log 'ON SUBMIT'
 
 # # # # #

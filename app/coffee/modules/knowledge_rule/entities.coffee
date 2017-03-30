@@ -27,18 +27,6 @@ class ConditionModel extends Backbone.RelationalModel
 # The KnowledgeRuleCollection should just ITERATE over each rule, invoking the method defined here.
 class KnowledgeRuleModel extends Backbone.RelationalModel
 
-  # Decorator assignment
-  decorator: KnowledgeRuleDecorator
-
-  # Backbone.Relational relations definition
-  relations: [
-      type: Backbone.HasMany
-      key: 'conditions'
-      relatedModel: ConditionModel
-      # collectionType: require './metric/collection'
-      # includeInJSON: true # QUESTION - is this needed anywhere?
-  ]
-
   # Model defaults
   defaults:
     order:      0
@@ -46,13 +34,25 @@ class KnowledgeRuleModel extends Backbone.RelationalModel
     targetAttr: 'UNDEFINED'
     conditions: []
 
+  # Decorator assignment
+  decorator: KnowledgeRuleDecorator
+
+  # Backbone.Relational relations definition
+  relations: [
+      type:         Backbone.HasMany
+      key:          'conditions'
+      relatedModel: ConditionModel
+  ]
+
 # # # # #
 
+# KnowledgeRuleCollection definition
 class KnowledgeRuleCollection extends Backbone.Collection
   model: KnowledgeRuleModel
 
   # applyRules
   # Applies the defined KnowledgeRules to the TargetCollection
+  # TODO - targetCollection.models should be the outer loop, and rules the inner
   applyRules: (targetCollection) ->
 
     # Iterates over each rule...
