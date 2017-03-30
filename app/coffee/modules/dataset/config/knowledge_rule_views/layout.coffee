@@ -1,6 +1,6 @@
 
 RuleList = require './ruleList'
-RuleFormSelector = require './ruleForm'
+RuleFormSelector = require './ruleFormSelector'
 
 ApplyRulesView = require './applyRules'
 ResetRulesView = require './resetRules'

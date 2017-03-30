@@ -1,4 +1,7 @@
 
+# RuleFormSelector class definition
+# Provides an interface to select between different
+# types of new KnowledgeRules
 class RuleFormSelector extends Mn.LayoutView
   className: 'row'
   template: require './templates/rule_form_selector'
@@ -12,13 +15,9 @@ class RuleFormSelector extends Mn.LayoutView
   events:
     'click @ui.typeSelector': 'onTypeSelected'
 
-  # TODO - this should be an event that is handled in this view's parent
   onTypeSelected: (e) ->
     el = $(e.currentTarget)
     type = el.data('type')
-
-    # Sets the type attribute on the new rule
-    @model.set('type', type)
 
     # Decides the form to be rendered
     return @trigger('new:definer') if type == 'definer'
