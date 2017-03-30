@@ -2,6 +2,7 @@
 # Marionette Behavior Manifest
 module.exports =
   BindInputs:         require 'hn_behaviors/lib/bindInputs'
+  CancelButton:       require './cancelButton'
   ClickableRelations: require './clickableRelations'
   Confirmations:      require './confirmations'
   CopyToClipboard:    require 'hn_behaviors/lib/copyToClipboard'

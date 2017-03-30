@@ -2,6 +2,9 @@
 RuleList = require './ruleList'
 RuleForm = require './ruleForm'
 
+ApplyRulesView = require './applyRules'
+ResetRulesView = require './resetRules'
+
 # # # # #
 
 class RuleLayout extends Mn.LayoutView
@@ -21,6 +24,12 @@ class RuleLayout extends Mn.LayoutView
   regions:
     contentRegion: '[data-region=content]'
 
+  onRender: ->
+    @showRuleList()
+
+  showRuleList: ->
+    @contentRegion.show new RuleList({ collection: @collection })
+
   newRule: ->
 
     # TODO - this doesn't sit right - not a great pattern for
@@ -34,10 +43,23 @@ class RuleLayout extends Mn.LayoutView
     @contentRegion.show(ruleForm)
 
   applyRules: ->
-    console.log 'applyRules'
+    applyView = new ApplyRulesView()
+
+    applyView.on 'cancel', =>
+      console.log 'ON CANCEL'
+      @showRuleList()
+
+    @contentRegion.show(applyView)
 
   resetDataset: ->
     console.log 'resetDataset'
+    resetView = new ResetRulesView()
+
+    resetView.on 'cancel', =>
+      console.log 'ON CANCEL'
+      @showRuleList()
+
+    @contentRegion.show(resetView)
 
 # # # # #
 

@@ -59,7 +59,7 @@ module.exports = [
 
   # TESTING FORMAT OPERATION
   {
-    order:      4
+    order:      3
     enabled:    true
     type:       'decorator'
     targetAttr: 'lower_employer'
