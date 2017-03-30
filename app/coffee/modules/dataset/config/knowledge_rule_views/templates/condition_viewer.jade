@@ -7,10 +7,15 @@
         p.lead Condition
 
       .col-xs-6.text-xs-right
-        button.btn.btn-sm.btn-secondary( data-click='edit' )
+        button.btn.btn-sm.btn-secondary.m-r-1( data-click='edit' )
           i.fa.fa-fw.fa-pencil
           | &nbsp;
-          | Edit Condition
+          | Edit
+
+        button.btn.btn-sm.btn-danger-outline( data-click='discard' )
+          i.fa.fa-fw.fa-trash
+          | &nbsp;
+          | Discard
 
       .col-xs-12
         hr

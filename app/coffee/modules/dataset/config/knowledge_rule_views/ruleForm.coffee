@@ -52,6 +52,9 @@ class RuleForm extends Mn.LayoutView
     # @trigger 'submitted'
     # @trigger 'hide'
 
+  onCancel: ->
+    @trigger 'cancel'
+
   # onRender: ->
   #   Backbone.Syphon.deserialize(@, @model.toJSON())
 

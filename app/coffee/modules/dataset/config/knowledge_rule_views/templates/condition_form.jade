@@ -5,20 +5,12 @@ include ../../../../base/partials/form_helpers
 
     .row
 
-      .col-xs-6
-        p.lead Edit Condition
-
-      .col-xs-6.text-xs-right
-
-        button.btn.btn-sm.btn-secondary( data-click='cancel' )
-          i.fa.fa-fw.fa-times
-          | &nbsp;
-          | Cancel Edit
-
-        button.btn.btn-sm.btn-danger-outline( data-click='discard' )
-          i.fa.fa-fw.fa-trash
-          | &nbsp;
-          | Discard Condition
+      .col-xs-12
+        p.lead.m-b-0
+          if isNew
+            | New Condition
+          else
+            | Edit Condition
 
       .col-xs-12
         hr
@@ -36,3 +28,8 @@ include ../../../../base/partials/form_helpers
         +formInput({ label: 'Value', placeholder: 'Value', name: 'value', type: 'text' })
 
         +formInput({ label: 'Result', placeholder: 'Result', name: 'result', type: 'text' })
+
+      //- TODO - these buttons should be custom-made for this particular form
+      .col-xs-12.text-xs-right
+        +cancelButton({})
+        +submitButton({})

@@ -1,28 +1,35 @@
 
+
+# TODO - this form requires validations
+# Validations should be defined on the Backbone.Model
 class ConditionForm extends Mn.LayoutView
   className: 'row'
   template: require './templates/condition_form'
 
   behaviors:
+    CancelButton: {}
     SubmitButton: {}
 
-  ui:
-    cancel:   '[data-click=cancel]'
-    discard:  '[data-click=discard]'
+  templateHelpers: ->
+    return { isNew: @options.isNew }
 
-  events:
-    'click @ui.cancel':   'cancelEditing'
-    'click @ui.discard':  'confirmDiscard'
+  onRender: ->
 
-  confirmDiscard: ->
-    console.log 'CONFIRM DISCARD'
-    console.log @model
-    console.log @model.collection
-    @model.collection.remove(@model)
+    # TODO - FormSerialize Behavior
+    Backbone.Syphon.deserialize( @, @model.attributes )
 
-  cancelEditing: (e) ->
+  onCancel: (e) ->
     e.stopPropagation()
     @trigger 'cancel', @
+
+  onSubmit: (e) ->
+    e.stopPropagation()
+
+    # TODO - FormSerialize Behavior
+    data = Backbone.Syphon.serialize(@)
+
+    @model.set(data)
+    @trigger 'submit', @
 
 # # # # #
 

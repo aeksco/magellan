@@ -12,7 +12,7 @@ class CancelButtonBehavior extends Mn.Behavior
     @view.disableCancel = => @disableCancel()
     @view.enableCancel  = => @enableCancel()
 
-  onCancelClick: -> @view.triggerMethod('cancel')
+  onCancelClick: (e) -> @view.onCancel?(e)
   disableCancel: -> @ui.cancel.addClass('disabled')
   enableCancel: ->  @ui.cancel.removeClass('disabled')
 
