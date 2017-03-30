@@ -1,4 +1,8 @@
 
+RuleForm = require './ruleForm'
+
+# # # # #
+
 # Swaps models at supplied indicies & resets collection
 # TODO - rather than swapping indicies we should just PUSH the list accordingly.
 swapIndicies = (collection, oldIndex, newIndex) ->
@@ -6,26 +10,6 @@ swapIndicies = (collection, oldIndex, newIndex) ->
   # Swaps model indicies
   collection.at(oldIndex).set('order', newIndex)
   collection.at(newIndex).set('order', oldIndex)
-
-# # # # #
-
-class RuleForm extends Mn.LayoutView
-  className: 'modal-content'
-  template: require './templates/rule_form'
-
-  templateHelpers: { modalTitle: 'Edit Facet' }
-
-  behaviors:
-    SubmitButton: {}
-
-  onSubmit: ->
-    data = Backbone.Syphon.serialize(@)
-    @model.set(data)
-    @trigger 'submitted'
-    @trigger 'hide'
-
-  onRender: ->
-    Backbone.Syphon.deserialize(@, @model.toJSON())
 
 # # # # #
 
@@ -82,6 +66,7 @@ class RuleChild extends Mn.LayoutView
 
 # # # # #
 
+# TODO - add EmptyView
 class RuleList extends Mn.CompositeView
   className: 'list-group'
   template: require './templates/rule_list'
