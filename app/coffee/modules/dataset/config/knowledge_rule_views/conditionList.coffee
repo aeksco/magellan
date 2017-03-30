@@ -1,5 +1,5 @@
 
-RuleViewer = require './ruleViewer'
+ConditionForm = require './conditionForm'
 
 # # # # #
 
@@ -13,19 +13,18 @@ swapIndicies = (collection, oldIndex, newIndex) ->
 
 # # # # #
 
-class RuleEmpty extends Mn.LayoutView
-  template: require './templates/rule_empty'
+class ConditionEmpty extends Mn.LayoutView
+  template: require './templates/condition_empty'
   className: 'list-group-item list-group-item-warning'
 
 # # # # #
 
-class RuleChild extends Mn.LayoutView
-  template: require './templates/rule_child'
+class ConditionChild extends Mn.LayoutView
+  template: require './templates/condition_child'
   className: 'list-group-item'
 
   behaviors:
     SelectableChild: {}
-    Tooltips: {}
 
   events:
     'sortable:end': 'onSortableEnd'
@@ -43,11 +42,11 @@ class RuleChild extends Mn.LayoutView
 
 # # # # #
 
-class RuleList extends Mn.CompositeView
+class ConditionList extends Mn.CompositeView
   className: 'list-group'
-  template: require './templates/rule_list'
-  childView: RuleChild
-  emptyView: RuleEmpty
+  template: require './templates/condition_list'
+  childView: ConditionChild
+  emptyView: ConditionEmpty
 
   onRender: ->
 
@@ -59,9 +58,15 @@ class RuleList extends Mn.CompositeView
 
 # # # # #
 
-class RuleLayout extends Mn.LayoutView
+class ConditionLayout extends Mn.LayoutView
   className: 'row'
-  template: require './templates/rule_list_layout'
+  template: require './templates/condition_list_layout'
+
+  ui:
+    addCondition: '[data-click=add]'
+
+  events:
+    'click @ui.addCondition': 'addCondition'
 
   # TODO - do we need these events?
   collectionEvents:
@@ -72,15 +77,21 @@ class RuleLayout extends Mn.LayoutView
     listRegion:   '[data-region=list]'
     detailRegion: '[data-region=detail]'
 
+  addCondition: ->
+    console.log 'ADD CONDITION'
+    console.log @collection
+    @collection.add({})
+
   onRender: ->
-    listView = new RuleList({ collection: @collection })
+    listView = new ConditionList({ collection: @collection })
     listView.on 'childview:selected', (view) => @showDetail(view.model)
     @listRegion.show(listView)
     @collection.at(0)?.trigger('selected')
 
   showDetail: (model) ->
-    @detailRegion.show new RuleViewer({ model: model })
+    console.log 'SHOW DETAIL'
+    @detailRegion.show new ConditionForm({ model: model })
 
 # # # # #
 
-module.exports = RuleLayout
+module.exports = ConditionLayout

@@ -1,9 +1,22 @@
 
+
+# # # # #
+
+class KnowledgeRuleDecorator extends Mn.Decorator
+
+  icon: ->
+    return 'fa-magic' if @get('type') == 'decorator'
+    return 'fa-plus-square-o'
+
+# # # # #
+
 # TODO - this class probably needs some apply/evaluate-against method?
 # TODO - should the applyRule method belong here?
 # The KnowledgeRuleCollection should just ITERATE over each rule, invoking the method defined here.
 class KnowledgeRuleModel extends Backbone.Model
   # TODO - do we want to manage nested conditions as a Backbone.Relational Collection?
+
+  decorator: KnowledgeRuleDecorator
 
   # Model defaults
   defaults:

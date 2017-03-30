@@ -1,9 +1,18 @@
 include ../../../../base/partials/form_helpers
 
-.col-xs-12
+.col-xs-4
 
   //- TODO - should be a select box
+  +formInput({ label: 'Target Attribute', placeholder: 'Target Attribute', name: 'targetAttr', type: 'text' })
+
+  //- TODO - enabled checkbox
+
+  //- Decorators only accept ONE condition.
+  //- We manage this logic in the DecoratorView class
+  //- TODO - should be a select box
+
+.col-xs-4
   +formInput({ label: 'Source', placeholder: 'Source', name: 'source', type: 'text' })
 
-  //- TODO - should be a select box
-  +formInput({ label: 'Operation', placeholder: 'Operation', name: 'operation', type: 'text' })
+.col-xs-4
+  +formSelect({ label: 'Operation', name: 'operation', options: ['format_lowercase', 'format_uppercase'] })

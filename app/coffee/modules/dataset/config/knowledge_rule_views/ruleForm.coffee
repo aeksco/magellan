@@ -7,8 +7,23 @@ class AbstractRuleForm extends Mn.LayoutView
 
 # # # # #
 
+ConditionList = require './conditionList'
+
+# # # # #
+
 class DefinerForm extends AbstractRuleForm
   template: require './templates/definer_form'
+
+  regions:
+    conditionsRegion: '[data-region=conditions]'
+
+  onRender: ->
+    console.log 'RENDERD'
+
+    # TODO - get this from the model?
+    conditionsCollection = new Backbone.Collection()
+
+    @conditionsRegion.show new ConditionList({ collection: conditionsCollection })
 
 # # # # #
 

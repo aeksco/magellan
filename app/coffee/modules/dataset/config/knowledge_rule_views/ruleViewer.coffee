@@ -25,4 +25,5 @@ class RuleViewer extends require 'hn_views/lib/nav'
 
 # # # # #
 
-module.exports = RuleViewer
+# module.exports = RuleViewer
+module.exports = RuleDetail
