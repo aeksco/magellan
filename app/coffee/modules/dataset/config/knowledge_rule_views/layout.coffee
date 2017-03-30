@@ -32,33 +32,26 @@ class RuleLayout extends Mn.LayoutView
 
   newRule: ->
 
-    # TODO - this doesn't sit right - not a great pattern for
-    # creating a new model in this collection
+    # TODO - this doesn't sit right - not a great pattern for creating a new model in this collection
     newRuleModel = new @collection.model({ order: @collection.length + 1 })
 
     # Instantiates new RuleForm
     ruleForm = new RuleForm({ model: newRuleModel })
+
+    # Cancel event callback
+    ruleForm.on 'cancel', => @showRuleList()
 
     # Shows the RuleForm in @contentRegion
     @contentRegion.show(ruleForm)
 
   applyRules: ->
     applyView = new ApplyRulesView()
-
-    applyView.on 'cancel', =>
-      console.log 'ON CANCEL'
-      @showRuleList()
-
+    applyView.on 'cancel', => @showRuleList()
     @contentRegion.show(applyView)
 
   resetDataset: ->
-    console.log 'resetDataset'
     resetView = new ResetRulesView()
-
-    resetView.on 'cancel', =>
-      console.log 'ON CANCEL'
-      @showRuleList()
-
+    resetView.on 'cancel', => @showRuleList()
     @contentRegion.show(resetView)
 
 # # # # #

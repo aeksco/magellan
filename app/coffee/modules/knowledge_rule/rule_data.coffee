@@ -1,9 +1,8 @@
 # Defines rules leveraged by the utility
 # TODO - this hard-coded file should be removed.
 
-# TODO - ordered rules
-# TODO - ordered conditions
-# TODO - rule validations (which rules are predicated on others?)
+# TODO - ordered conditions <- THIS IS A BIG ONE.
+# TODO - rule validations (which rules are predicated on others?) <- THIS ISN'T AS IMPORTANT
 # TODO - rename to Attribute (source), Contraint (operation), and Query (value)?
 module.exports = [
 

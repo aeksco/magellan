@@ -1,3 +1,5 @@
+- tooltipAttrs = { 'data-placement': 'left', 'data-toggle': 'tooltip' }
+
 .row
   .col-xs-2
     //- TODO - this should be a data-attribute
@@ -9,7 +11,7 @@
   //- TODO - this should be a badge?
   .col-xs-2
     if type == 'definer'
-      i.fa.fa-fw.fa-plus-square-o( data-toggle='tooltip', title='Definer' )
+      i.fa.fa-fw.fa-plus-square-o( title='Definer' )&attributes(tooltipAttrs)
 
     if type == 'decorator'
-      i.fa.fa-fw.fa-magic( data-toggle='tooltip', title='Decorator' )
+      i.fa.fa-fw.fa-magic( title='Decorator' )&attributes(tooltipAttrs)

@@ -1,36 +1,4 @@
 
-RuleForm = require './ruleForm'
-
-# # # # #
-
-# TODO - abstract into separate files
-class RuleDetail extends Mn.LayoutView
-  className: 'card card-block'
-  template: require './templates/rule_detail'
-
-# # # # #
-
-# TODO - abstract into separate files
-class RuleEditor extends require 'hn_views/lib/nav'
-  className: 'col-xs-12'
-
-  navItems: [
-    { icon: 'fa-cube',       text: 'Rule',       trigger: 'rule', default: true }
-    { icon: 'fa-cubes',  text: 'Conditions', trigger: 'conditions' }
-  ]
-
-  navEvents:
-    'rule':       'showRuleForm'
-    'conditions': 'showConditionsForm'
-
-  showRuleForm: ->
-    @contentRegion.show new RuleDetail({ model: @model })
-
-  showConditionsForm: ->
-    console.log 'showConditionsForm'
-
-# # # # #
-
 # Swaps models at supplied indicies & resets collection
 # TODO - rather than swapping indicies we should just PUSH the list accordingly.
 swapIndicies = (collection, oldIndex, newIndex) ->

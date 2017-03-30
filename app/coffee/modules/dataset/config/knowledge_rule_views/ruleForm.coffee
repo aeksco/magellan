@@ -18,11 +18,12 @@ class DecoratorForm extends AbstractRuleForm
 # # # # #
 
 class RuleForm extends Mn.LayoutView
-  className: 'col-xs-12'
+  className: 'row'
   template: require './templates/rule_form'
 
-  # behaviors:
-  #   SubmitButton: {}
+  behaviors:
+    CancelButton: {}
+    SubmitButton: {}
 
   regions:
     typeFormRegion: '[data-region=type-form]'
