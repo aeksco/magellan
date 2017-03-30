@@ -5,7 +5,6 @@ RuleLayout  = require '../knowledge_rule_views/layout'
 
 class ConfigLayoutView extends require 'hn_views/lib/nav'
   className: 'container-fluid'
-  # template: require './templates/layout'
 
   navItems: [
     { icon: 'fa-list',            text: 'Facets',             trigger: 'facets' }
@@ -18,8 +17,8 @@ class ConfigLayoutView extends require 'hn_views/lib/nav'
     'knowledge':  'knowledgeConfig'
     'viewer':     'viewerConfig'
 
-  # navOptions:
-  #   stacked: true
+  navOptions:
+    pills: true
 
   facetConfig: ->
     @model.fetchFacets().then (facetCollection) =>

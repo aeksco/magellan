@@ -11,7 +11,7 @@ DecoratorForm = require './decoratorForm'
 # # # # #
 
 class RuleLayout extends Mn.LayoutView
-  className: 'card card-block'
+  className: 'row'
   template: require './templates/layout'
 
   ui:
