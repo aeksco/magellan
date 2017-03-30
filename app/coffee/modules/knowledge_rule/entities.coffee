@@ -1,7 +1,6 @@
 
 
-# # # # #
-
+# KnowledgeRuleDecorator class definition
 class KnowledgeRuleDecorator extends Mn.Decorator
 
   icon: ->
@@ -10,13 +9,35 @@ class KnowledgeRuleDecorator extends Mn.Decorator
 
 # # # # #
 
+# ConditionModel class definition
+class ConditionModel extends Backbone.RelationalModel
+
+  # Default attributes
+  # TODO - should these be NULL?
+  defaults:
+    source:     ''
+    operation:  ''
+    value:      ''
+    result:     ''
+
+# # # # #
+
 # TODO - this class probably needs some apply/evaluate-against method?
 # TODO - should the applyRule method belong here?
 # The KnowledgeRuleCollection should just ITERATE over each rule, invoking the method defined here.
-class KnowledgeRuleModel extends Backbone.Model
-  # TODO - do we want to manage nested conditions as a Backbone.Relational Collection?
+class KnowledgeRuleModel extends Backbone.RelationalModel
 
+  # Decorator assignment
   decorator: KnowledgeRuleDecorator
+
+  # Backbone.Relational relations definition
+  relations: [
+      type: Backbone.HasMany
+      key: 'conditions'
+      relatedModel: ConditionModel
+      # collectionType: require './metric/collection'
+      # includeInJSON: true # QUESTION - is this needed anywhere?
+  ]
 
   # Model defaults
   defaults:

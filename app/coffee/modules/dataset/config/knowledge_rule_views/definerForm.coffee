@@ -21,9 +21,10 @@ class DefinerForm extends Mn.LayoutView
   regions:
     conditionsRegion: '[data-region=conditions]'
 
-  initialize: ->
-    # TODO - this collection MUST come from Backbone.Relational
-    @collection = new Backbone.Collection(@model.get('conditions'))
+  # initialize: ->
+  #   # TODO - this collection MUST come from Backbone.Relational
+  #   console.log @model.get('conditions')
+  #   # @collection = new Backbone.Collection(@model.get('conditions'))
 
   addToCollection: (condition) ->
     @collection.add(condition)
@@ -59,7 +60,6 @@ class DefinerForm extends Mn.LayoutView
 
   onSubmit: ->
     data = Backbone.Syphon.serialize(@)
-    data.conditions = @collection.toJSON()
     @model.set(data)
     console.log @model.toJSON()
     @trigger 'submit', @model

@@ -73,7 +73,7 @@ class RuleLayout extends Mn.LayoutView
   # This should be simplified as a helper method
   showDefinerForm: (model) ->
     formModel = model || @buildNewRule('definer')
-    formView = new DefinerForm({ model: formModel })
+    formView = new DefinerForm({ model: formModel, collection: formModel.get('conditions') })
     formView.on 'cancel', => @showRuleList()
     formView.on 'submit', => console.log 'SUBMIT RULE FORM'
     @contentRegion.show formView
