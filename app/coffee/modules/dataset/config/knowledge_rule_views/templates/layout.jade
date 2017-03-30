@@ -3,6 +3,12 @@
     h4.card-title Knowledge Rules
 
   .col-xs-6.text-xs-right
+
+    button.btn.btn-sm.btn-primary-outline.m-r-2( data-click='new' )
+      i.fa.fa-fw.fa-plus
+      |&nbsp;
+      |New Rule
+
     button.btn.btn-sm.btn-success-outline.m-r-2( data-click='apply' )
       i.fa.fa-fw.fa-globe
       | &nbsp;
@@ -17,16 +23,4 @@
   .col-xs-12
     hr
 
-.row
-  .col-xs-4
-    .row
-      .col-xs-12
-        button.btn.btn-primary-outline.w-100( data-click='new-rule' )
-          i.fa.fa-fw.fa-plus
-          |&nbsp;
-          |New
-
-      .col-xs-12.m-t-1( data-region='list' )
-
-  .col-xs-8
-    .row(data-region='detail')
+.row( data-region='content' )

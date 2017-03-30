@@ -3,6 +3,34 @@ RuleForm = require './ruleForm'
 
 # # # # #
 
+# TODO - abstract into separate files
+class RuleDetail extends Mn.LayoutView
+  className: 'card card-block'
+  template: require './templates/rule_detail'
+
+# # # # #
+
+# TODO - abstract into separate files
+class RuleEditor extends require 'hn_views/lib/nav'
+  className: 'col-xs-12'
+
+  navItems: [
+    { icon: 'fa-cube',       text: 'Rule',       trigger: 'rule', default: true }
+    { icon: 'fa-cubes',  text: 'Conditions', trigger: 'conditions' }
+  ]
+
+  navEvents:
+    'rule':       'showRuleForm'
+    'conditions': 'showConditionsForm'
+
+  showRuleForm: ->
+    @contentRegion.show new RuleDetail({ model: @model })
+
+  showConditionsForm: ->
+    console.log 'showConditionsForm'
+
+# # # # #
+
 # Swaps models at supplied indicies & resets collection
 # TODO - rather than swapping indicies we should just PUSH the list accordingly.
 swapIndicies = (collection, oldIndex, newIndex) ->
@@ -59,4 +87,28 @@ class RuleList extends Mn.CompositeView
 
 # # # # #
 
-module.exports = RuleList
+class RuleLayout extends Mn.LayoutView
+  className: 'row'
+  template: require './templates/rule_list_layout'
+
+  # TODO - do we need these events?
+  collectionEvents:
+    'add':    'render'
+    'remove': 'render'
+
+  regions:
+    listRegion:   '[data-region=list]'
+    detailRegion: '[data-region=detail]'
+
+  onRender: ->
+    listView = new RuleList({ collection: @collection })
+    listView.on 'childview:selected', (view) => @showDetail(view.model)
+    @listRegion.show(listView)
+    @collection.at(0)?.trigger('selected')
+
+  showDetail: (model) ->
+    @detailRegion.show new RuleEditor({ model: model })
+
+# # # # #
+
+module.exports = RuleLayout

@@ -15,11 +15,12 @@ mixin typeSelector(opts)
     +typeSelector({ type: 'definer',    icon: 'fa-plus-square-o', text: 'Definer' })
     +typeSelector({ type: 'decorator',  icon: 'fa-magic',         text: 'Decorator' })
 
+  .col-xs-12
+    hr
+
   .col-xs-12( data-region='type-form' )
+    .alert.alert-info Select a Knowledge Rule type.
 
-  //-   +formInput({ label: 'Label', placeholder: 'Label', name: 'label', type: 'text' })
-  //-   +formTextArea({ label: 'Tooltip', placeholder: 'Tooltip', name: 'tooltip', type: 'text' })
-
-  //- .col-xs-12
-  //-   button.btn.btn-secondary( type='button', data-dismiss='modal' ) Close
-  //-   +submitButton({})
+  .col-xs-12
+      +cancelButton({})
+      +submitButton({})
