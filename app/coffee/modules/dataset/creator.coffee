@@ -5,6 +5,7 @@
 buildUniqueId = (prefix='')->
   return prefix + Math.random().toString(36).substr(2, 10)
 
+# TODO - decomission this
 window.buildUniqueId = buildUniqueId
 
 # # # # #

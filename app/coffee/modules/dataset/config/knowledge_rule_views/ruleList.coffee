@@ -28,6 +28,16 @@ class RuleChild extends Mn.LayoutView
     SortableChild: {}
     Tooltips: {}
 
+  modelEvents:
+    'change:order': 'onReordered'
+    'sync':         'onSync'
+
+  onReordered: ->
+    @model.save()
+
+  onSync: ->
+    @render()
+
 # # # # #
 
 class RuleList extends Mn.CollectionView
@@ -37,10 +47,6 @@ class RuleList extends Mn.CollectionView
 
   behaviors:
     SortableList: {}
-
-  onCollectionReordered: ->
-    console.log @
-    console.log 'ON REORDERED'
 
 # # # # #
 

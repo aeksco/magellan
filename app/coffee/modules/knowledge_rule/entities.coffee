@@ -47,6 +47,11 @@ class KnowledgeRuleModel extends Backbone.RelationalModel
       relatedModel: ConditionModel
   ]
 
+  # Overwritten save method
+  # TODO - this may need to be refactored when new facets are defined
+  save: ->
+    Backbone.Radio.channel('knowledge:rule').request('save', @)
+
 # # # # #
 
 # KnowledgeRuleCollection definition

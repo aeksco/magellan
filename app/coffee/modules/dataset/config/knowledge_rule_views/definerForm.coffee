@@ -11,6 +11,7 @@ class DefinerForm extends Mn.LayoutView
   behaviors:
     CancelButton: {}
     SubmitButton: {}
+    ModelEvents: {}
 
   ui:
     addCondition: '[data-click=add]'
@@ -27,9 +28,8 @@ class DefinerForm extends Mn.LayoutView
 
   addCondition: ->
 
-    # TODO - not like this :(
-    # Integration of Backbone.Relational is a MUST.
-    newCondition = new Backbone.Model()
+    # Instantiates new ConditionModel from the collection
+    newCondition = new @collection.model()
 
     # Instantiates new ConditionForm instance
     conditionForm = new ConditionForm({ model: newCondition, isNew: true })
@@ -57,7 +57,16 @@ class DefinerForm extends Mn.LayoutView
     data = Backbone.Syphon.serialize(@)
     @model.set(data)
     console.log @model.toJSON()
-    @trigger 'submit', @model
+    @model.save()
+
+  onRequest: ->
+    console.log 'onRequest'
+
+  onSync: ->
+    console.log 'onSync'
+
+  onError: ->
+    console.log 'onError'
 
 # # # # #
 

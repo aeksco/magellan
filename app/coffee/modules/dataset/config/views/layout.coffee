@@ -26,7 +26,7 @@ class ConfigLayoutView extends require 'hn_views/lib/nav'
 
   knowledgeConfig: ->
     @model.fetchKnowledgeRules().then (ruleCollection) =>
-      @contentRegion.show new RuleLayout({ collection: ruleCollection })
+      @contentRegion.show new RuleLayout({ model: @model, collection: ruleCollection })
 
   viewerConfig: ->
     console.log 'VIEWER CONFIG'

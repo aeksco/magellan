@@ -57,8 +57,9 @@ class RuleLayout extends Mn.LayoutView
     @contentRegion.show(ruleForm)
 
   # TODO - this method should live on the collection, rather than in this view.
+  # TODO - this should REALLY be abstracted into a factory method that accepts TYPE and DATASET_ID attributes
   buildNewRule: (type) ->
-    return new @collection.model({ order: @collection.length + 1, type: type })
+    return new @collection.model({ id: window.buildUniqueId('kn_'), order: @collection.length + 1, type: type, dataset_id: @model.id })
 
   # TODO - these two methods have a lot of repetition
   # This should be simplified as a helper method
@@ -75,7 +76,7 @@ class RuleLayout extends Mn.LayoutView
     formModel = model || @buildNewRule('definer')
     formView = new DefinerForm({ model: formModel, collection: formModel.get('conditions') })
     formView.on 'cancel', => @showRuleList()
-    formView.on 'submit', => console.log 'SUBMIT RULE FORM'
+    # formView.on 'submit', => console.log 'SUBMIT RULE FORM'
     @contentRegion.show formView
 
   applyRules: ->
