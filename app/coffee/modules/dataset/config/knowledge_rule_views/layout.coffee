@@ -1,6 +1,6 @@
 
 RuleList = require './ruleList'
-RuleForm = require './ruleForm'
+RuleFormSelector = require './ruleForm'
 
 ApplyRulesView = require './applyRules'
 ResetRulesView = require './resetRules'
@@ -28,21 +28,36 @@ class RuleLayout extends Mn.LayoutView
     @showRuleList()
 
   showRuleList: ->
-    @contentRegion.show new RuleList({ collection: @collection })
+    # TODO - add 'EDIT' event for RuleList
+    ruleList = new RuleList({ collection: @collection })
+    @contentRegion.show ruleList
 
   newRule: ->
 
-    # TODO - this doesn't sit right - not a great pattern for creating a new model in this collection
-    newRuleModel = new @collection.model({ order: @collection.length + 1 })
-
-    # Instantiates new RuleForm
-    ruleForm = new RuleForm({ model: newRuleModel })
+    # Instantiates new RuleFormSelector
+    ruleForm = new RuleFormSelector()
 
     # Cancel event callback
     ruleForm.on 'cancel', => @showRuleList()
 
+    # Definer event callback
+    ruleForm.on 'new:definer', => @showDefinerForm()
+
+    # Decorator event callback
+    ruleForm.on 'new:decorator', => @showDecoratorForm()
+
     # Shows the RuleForm in @contentRegion
     @contentRegion.show(ruleForm)
+
+  # TODO - this method should live on the collection, rather than in this view.
+  buildNewRule: (type) ->
+    return new @collection.model({ order: @collection.length + 1, type: type })
+
+  showDecoratorForm: ->
+    console.log 'showDecoratorForm'
+
+  showDefinerForm: ->
+    console.log 'showDefinerForm'
 
   applyRules: ->
     applyView = new ApplyRulesView()

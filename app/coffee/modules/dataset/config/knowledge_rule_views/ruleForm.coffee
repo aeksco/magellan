@@ -1,25 +1,10 @@
 
-DefinerForm = require './definerForm'
-
-# # # # #
-
-# TODO - abstract into separate file
-class DecoratorForm extends Mn.LayoutView
+class RuleFormSelector extends Mn.LayoutView
   className: 'row'
-  template: require './templates/decorator_form'
-
-# # # # #
-
-class RuleForm extends Mn.LayoutView
-  className: 'row'
-  template: require './templates/rule_form'
+  template: require './templates/rule_form_selector'
 
   behaviors:
     CancelButton: {}
-    SubmitButton: {}
-
-  regions:
-    typeFormRegion: '[data-region=type-form]'
 
   ui:
     typeSelector: '[data-click=type-selector]'
@@ -27,6 +12,7 @@ class RuleForm extends Mn.LayoutView
   events:
     'click @ui.typeSelector': 'onTypeSelected'
 
+  # TODO - this should be an event that is handled in this view's parent
   onTypeSelected: (e) ->
     el = $(e.currentTarget)
     type = el.data('type')
@@ -35,29 +21,12 @@ class RuleForm extends Mn.LayoutView
     @model.set('type', type)
 
     # Decides the form to be rendered
-    if type == 'definer'
-      formView = new DefinerForm({ model: @model })
-
-    else
-      formView = new DecoratorForm({ model: @model })
-
-    # Shows the formView instance in the region
-    @typeFormRegion.show(formView)
-
-  onSubmit: ->
-    console.log 'ON SUBMIT'
-    data = Backbone.Syphon.serialize(@)
-    console.log data
-    # @model.set(data)
-    # @trigger 'submitted'
-    # @trigger 'hide'
+    return @trigger('new:definer') if type == 'definer'
+    return @trigger('new:decorator')
 
   onCancel: ->
     @trigger 'cancel'
 
-  # onRender: ->
-  #   Backbone.Syphon.deserialize(@, @model.toJSON())
-
 # # # # #
 
-module.exports = RuleForm
+module.exports = RuleFormSelector
