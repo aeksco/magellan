@@ -63,11 +63,11 @@ class ConditionLayout extends Mn.LayoutView
   className: 'row'
   template: require './templates/condition_list_layout'
 
-  ui:
-    addCondition: '[data-click=add]'
+  # ui:
+  #   addCondition: '[data-click=add]'
 
-  events:
-    'click @ui.addCondition': 'addCondition'
+  # events:
+  #   'click @ui.addCondition': 'addCondition'
 
   # TODO - do we need these events?
   collectionEvents:
@@ -78,11 +78,11 @@ class ConditionLayout extends Mn.LayoutView
     listRegion:   '[data-region=list]'
     detailRegion: '[data-region=detail]'
 
-  addCondition: ->
-    console.log 'ADD CONDITION'
-    console.log @collection
-    newCondition = new @collection.model() # TODO - not like this :(
-    @showConditionForm(newCondition)
+  # addCondition: ->
+  #   console.log 'ADD CONDITION'
+  #   console.log @collection
+  #   newCondition = new @collection.model() # TODO - not like this :(
+  #   @showConditionForm(newCondition)
 
   onRender: ->
     listView = new ConditionList({ collection: @collection })
