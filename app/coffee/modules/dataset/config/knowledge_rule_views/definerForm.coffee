@@ -8,6 +8,10 @@ class DefinerForm extends Mn.LayoutView
   className: 'row'
   template: require './templates/definer_form'
 
+  behaviors:
+    CancelButton: {}
+    SubmitButton: {}
+
   ui:
     addCondition: '[data-click=add]'
 
@@ -50,6 +54,12 @@ class DefinerForm extends Mn.LayoutView
 
   onRender: ->
     @showConditionList()
+
+  onCancel: ->
+    @trigger 'cancel'
+
+  onSubmit: ->
+    console.log 'ON SUBMIT'
 
 # # # # #
 

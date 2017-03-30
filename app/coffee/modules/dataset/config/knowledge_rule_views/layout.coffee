@@ -5,6 +5,9 @@ RuleFormSelector = require './ruleFormSelector'
 ApplyRulesView = require './applyRules'
 ResetRulesView = require './resetRules'
 
+DefinerForm = require './definerForm'
+DecoratorForm = require './decoratorForm'
+
 # # # # #
 
 class RuleLayout extends Mn.LayoutView
@@ -53,11 +56,23 @@ class RuleLayout extends Mn.LayoutView
   buildNewRule: (type) ->
     return new @collection.model({ order: @collection.length + 1, type: type })
 
+  # TODO - these two methods have a lot of repetition
+  # This should be simplified as a helper method
   showDecoratorForm: ->
-    console.log 'showDecoratorForm'
+    model = @buildNewRule('decorator')
+    formView = new DecoratorForm({ model: model })
+    formView.on 'cancel', => @showRuleList()
+    formView.on 'submit', => console.log 'SUBMIT RULE FORM'
+    @contentRegion.show formView
 
+  # TODO - these two methods have a lot of repetition
+  # This should be simplified as a helper method
   showDefinerForm: ->
-    console.log 'showDefinerForm'
+    model = @buildNewRule('definer')
+    formView = new DefinerForm({ model: model })
+    formView.on 'cancel', => @showRuleList()
+    formView.on 'submit', => console.log 'SUBMIT RULE FORM'
+    @contentRegion.show formView
 
   applyRules: ->
     applyView = new ApplyRulesView()
