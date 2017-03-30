@@ -25,34 +25,21 @@ class RuleChild extends Mn.LayoutView
 
   behaviors:
     SelectableChild: {}
+    SortableChild: {}
     Tooltips: {}
-
-  events:
-    'sortable:end': 'onSortableEnd'
-
-  modelEvents:
-    'change:order': 'onOrderChange'
-
-  onSortableEnd: (e, ev) ->
-    # TODO - return if ev.oldIndex / newIndex == undefined
-    # TODO - don't SWAP indicies. Rather, we should INSERT AT INDEX
-    swapIndicies(@model.collection, ev.oldIndex, ev.newIndex)
-
-  onOrderChange: ->
-    # @model.save()
 
 # # # # #
 
-class RuleList extends Mn.CompositeView
+class RuleList extends Mn.CollectionView
   className: 'list-group'
-  template: require './templates/rule_list'
   childView: RuleChild
   emptyView: RuleEmpty
 
   behaviors:
     SortableList: {}
 
-  onCollectionReordered: =>
+  onCollectionReordered: ->
+    console.log @
     console.log 'ON REORDERED'
 
 # # # # #

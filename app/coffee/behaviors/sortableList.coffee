@@ -1,5 +1,6 @@
 
 # SortableList Behavior definition
+# Works with SortableChild Behavior
 class SortableList extends Mn.Behavior
 
   onRender: ->
@@ -10,15 +11,15 @@ class SortableList extends Mn.Behavior
       animation:    @options.animation || 250
       onEnd: (e) => @onSortableEnd(e)
 
-
   # onSortableEnd callback
   # Invoked after sorting has completed
   onSortableEnd: (e) ->
 
-    # Sets the order on the view's models
-    order = 0
-    for id, view of @view.children._views
-      view.model.set('order', order)
+    # Triggers order events on CollectionView childView $els
+    order = 1
+    for el in @view.$el[0].children
+      $(el).trigger('sorted',order)
+      order++
 
     # Triggers onReorderedCollection method on view class
     @view.triggerMethod('collection:reordered', e)

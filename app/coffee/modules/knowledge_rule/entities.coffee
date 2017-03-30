@@ -34,6 +34,9 @@ class KnowledgeRuleModel extends Backbone.RelationalModel
     targetAttr: 'UNDEFINED'
     conditions: []
 
+  # Sort by order attribute
+  comparator: 'order'
+
   # Decorator assignment
   decorator: KnowledgeRuleDecorator
 
