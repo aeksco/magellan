@@ -1,4 +1,14 @@
 
+# TODO - abstract into a separate service?
+# Perhaps abstract into Application?
+# This will likely need to be used elsewhere
+buildUniqueId = (prefix='')->
+  return prefix + Math.random().toString(36).substr(2, 10)
+
+window.buildUniqueId = buildUniqueId
+
+# # # # #
+
 class DatasetCreator extends Backbone.Model
 
   # TODO - this should be abstracted elsewhere.
@@ -51,7 +61,7 @@ class DatasetCreator extends Backbone.Model
 
       # Assembles a new facet
       attrs =
-        id:         _.uniqueId('fc_')
+        id:         buildUniqueId('fc_')
         dataset_id: dataset_id
         attribute:  facet
         label:      facet
@@ -79,7 +89,7 @@ class DatasetCreator extends Backbone.Model
 
       # Assembles a new datapoint
       attrs =
-        id:         _.uniqueId('dp_')
+        id:         buildUniqueId('dp_')
         dataset_id: dataset_id
         raw:        datapoint
         data:       datapoint
@@ -102,7 +112,7 @@ class DatasetCreator extends Backbone.Model
     # Sets count attribute defined from length of graph parameter
     # and unique ID for Dataset model
     dataset.set('count', datapoints.length)
-    dataset.set('id', _.uniqueId('ds_'))
+    dataset.set('id', buildUniqueId('ds_'))
 
     # Triggers 'request' event on Dataset model
     # (important for views to function correctly)

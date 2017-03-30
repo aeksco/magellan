@@ -8,8 +8,9 @@ class ConfigLayoutView extends require 'hn_views/lib/nav'
   # template: require './templates/layout'
 
   navItems: [
-    { icon: 'fa-table',   text: 'Facets',  trigger: 'facets', default: true }
-    { icon: 'fa-university',    text: 'Knowledge Rules',   trigger: 'knowledge' }
+    { icon: 'fa-table',   text: 'Facets',  trigger: 'facets' }
+    # { icon: 'fa-table',   text: 'Facets',  trigger: 'facets', default: true }
+    { icon: 'fa-university',    text: 'Knowledge Rules',   trigger: 'knowledge', default: true }
   ]
 
   navEvents:

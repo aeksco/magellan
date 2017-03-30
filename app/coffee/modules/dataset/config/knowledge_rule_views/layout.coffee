@@ -7,10 +7,6 @@ swapIndicies = (collection, oldIndex, newIndex) ->
   collection.at(oldIndex).set('order', newIndex)
   collection.at(newIndex).set('order', oldIndex)
 
-  # TODO - better way to handle this?
-  # models = collection.models
-  # collection.reset(models)
-
 # # # # #
 
 class RuleForm extends Mn.LayoutView
@@ -55,7 +51,7 @@ class RuleChild extends Mn.LayoutView
 
   onEnabledChange: ->
     @model.set(Backbone.Syphon.serialize(@))
-    @model.save()
+    # @model.save()
 
   onRender: ->
     Backbone.Syphon.deserialize( @, @model.attributes )
@@ -67,7 +63,7 @@ class RuleChild extends Mn.LayoutView
     swapIndicies(@model.collection, ev.oldIndex, ev.newIndex)
 
   onOrderChange: ->
-    @model.save()
+    # @model.save()
 
   showEditModal: ->
     formView = new RuleForm({ model: @model })
@@ -107,13 +103,47 @@ class RuleDetail extends Mn.LayoutView
 
 # # # # #
 
-class RuleLayout extends Mn.LayoutView
+class RuleEditor extends require 'hn_views/lib/nav'
   className: 'row'
+
+  navItems: [
+    { icon: 'fa-cube',       text: 'Rule',       trigger: 'rule', default: true }
+    { icon: 'fa-cubes',  text: 'Conditions', trigger: 'conditions' }
+  ]
+
+  navEvents:
+    'rule':       'showRuleForm'
+    'conditions': 'showConditionsForm'
+
+  showRuleForm: ->
+    @contentRegion.show new RuleDetail({ model: @model })
+
+  showConditionsForm: ->
+    console.log 'showConditionsForm'
+
+# # # # #
+
+class RuleLayout extends Mn.LayoutView
+  className: 'card card-block'
   template: require './templates/layout'
+
+  ui:
+    newModel: '[data-click=new-model]'
+
+  events:
+    'click @ui.newModel': 'newModel'
+
+  collectionEvents:
+    'add':    'render'
+    'remove': 'render'
 
   regions:
     listRegion:   '[data-region=list]'
     detailRegion: '[data-region=detail]'
+
+  newModel: ->
+    newModelParams = { order: @collection.length + 1 }
+    @collection.add({}, { parse: true })
 
   onRender: ->
     listView = new RuleList({ collection: @collection })
@@ -122,7 +152,7 @@ class RuleLayout extends Mn.LayoutView
     @collection.at(0)?.trigger('selected')
 
   showDetail: (model) ->
-    @detailRegion.show new RuleDetail({ model: model })
+    @detailRegion.show new RuleEditor({ model: model })
 
 # # # # #
 

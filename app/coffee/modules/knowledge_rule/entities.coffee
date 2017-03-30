@@ -5,6 +5,13 @@
 class KnowledgeRuleModel extends Backbone.Model
   # TODO - do we want to manage nested conditions as a Backbone.Relational Collection?
 
+  # Model defaults
+  defaults:
+    order:      0
+    enabled:    true
+    targetAttr: 'UNDEFINED'
+    conditions: []
+
 # # # # #
 
 class KnowledgeRuleCollection extends Backbone.Collection

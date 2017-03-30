@@ -91,7 +91,7 @@ new OntologyRouter({ container: AppLayout.main })
 # used by the application
 dexieConfiguration =
   # db:     'dexie_database_01'
-  db:     'dexie_database_alpha_07'
+  db:     'dexie_database_alpha_09'
 
   # Schema documentation:
   # http://dexie.org/docs/Version/Version.stores().html
