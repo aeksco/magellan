@@ -12,3 +12,4 @@ module.exports =
   SelectableChild:    require './selectableChild'
   SubmitButton:       require 'hn_behaviors/lib/submitButton'
   Tooltips:           require 'hn_behaviors/lib/tooltips'
+  SortableList:       require './sortableList'

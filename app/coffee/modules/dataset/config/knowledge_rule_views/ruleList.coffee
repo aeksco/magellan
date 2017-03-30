@@ -49,13 +49,11 @@ class RuleList extends Mn.CompositeView
   childView: RuleChild
   emptyView: RuleEmpty
 
-  onRender: ->
+  behaviors:
+    SortableList: {}
 
-    # Initializes Sortable container
-    Sortable.create @el,
-      handle: '.handle'
-      animation: 250
-      onEnd: (e) => $(e.item).trigger('sortable:end', e)
+  onCollectionReordered: =>
+    console.log 'ON REORDERED'
 
 # # # # #
 
@@ -74,6 +72,7 @@ class RuleLayout extends Mn.LayoutView
 
   onRender: ->
     listView = new RuleList({ collection: @collection })
+    window.listView = listView
     listView.on 'childview:selected', (view) => @showDetail(view.model)
     @listRegion.show(listView)
     @collection.at(0)?.trigger('selected')

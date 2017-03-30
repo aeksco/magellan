@@ -8,6 +8,7 @@ module.exports = [
 
   # LastName rule definition
   {
+    id:         'ru_123'
     order:      1
     enabled:    true
     targetAttr: 'lastName'
@@ -22,6 +23,7 @@ module.exports = [
 
   # TESTING REPLACE OPERATION
   {
+    id:         'ru_234'
     order:      2
     enabled:    true
     type:       'definer'
@@ -58,6 +60,7 @@ module.exports = [
 
   # TESTING FORMAT OPERATION
   {
+    id:         'ru_345'
     order:      3
     enabled:    true
     type:       'decorator'
