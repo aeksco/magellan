@@ -6,6 +6,10 @@
 
   .col-xs-8= targetAttr
 
-  //- TODO - this should be a badge
+  //- TODO - this should be a badge?
   .col-xs-2
-    i.fa.fa-fw.fa-magic
+    if type == 'definer'
+      i.fa.fa-fw.fa-plus-square-o( data-toggle='tooltip', title='Definer' )
+
+    if type == 'decorator'
+      i.fa.fa-fw.fa-magic( data-toggle='tooltip', title='Decorator' )

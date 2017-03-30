@@ -25,6 +25,7 @@ class RuleChild extends Mn.LayoutView
 
   behaviors:
     SelectableChild: {}
+    Tooltips: {}
 
   events:
     'sortable:end': 'onSortableEnd'
@@ -46,7 +47,7 @@ class RuleList extends Mn.CompositeView
   className: 'list-group'
   template: require './templates/rule_list'
   childView: RuleChild
-  childView: RuleEmpty
+  emptyView: RuleEmpty
 
   onRender: ->
 

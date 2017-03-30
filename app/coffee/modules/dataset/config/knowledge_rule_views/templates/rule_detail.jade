@@ -2,6 +2,7 @@ h4.card-title Rule Detail
 
 p.lead Order: #{order}
 p.lead Enabled: #{enabled}
+p.lead Type: #{type}
 p.lead Target: #{targetAttr}
 
 hr
@@ -27,15 +28,3 @@ ul.list-group
 
   each condition in conditions
     +conditionItem(condition)
-
-  //- {
-  //-   order: 1
-  //-   enabled: true
-  //-   targetAttr: 'lastName'
-  //-   conditions: [ # TODO - should conditions be models as well?
-  //-     { source: 'firstName', operation: 'exact_match', value: 'Alex', result: 'Schwartzberg' } # TODO - *required* attribute
-  //-     { source: 'firstName', operation: 'exact_match', value: 'Johnson', result: 'Samuel' }
-  //-     { source: '@id', operation: 'exact_match', value: 1, result: 'Erickson' }
-  //-     { source: '@id', operation: 'exact_match', value: 4, result: 'Hynes' }
-  //-   ]
-  //- }
