@@ -39,13 +39,13 @@ class FacetChild extends Mn.LayoutView
 
   behaviors:
     ModelEvents: {}
+    SortableChild: {}
 
   ui:
     checkbox: 'input[type=checkbox]'
     edit:     '[data-click=edit]'
 
   events:
-    'sortable:end': 'onSortableEnd'
     'switchChange.bootstrapSwitch @ui.checkbox':  'onEnabledChange'
     'click @ui.edit': 'showEditModal'
 
@@ -60,11 +60,8 @@ class FacetChild extends Mn.LayoutView
     Backbone.Syphon.deserialize( @, @model.attributes )
     @ui.checkbox.bootstrapSwitch({ size: 'small', onText: 'Enabled', offText: 'Disabled' })
 
-  onSortableEnd: (e, ev) ->
-    # TODO - return if ev.oldIndex / newIndex == undefined
-    # TODO - don't SWAP indicies. Rather, we should INSERT AT INDEX
-    swapIndicies(@model.collection, ev.oldIndex, ev.newIndex)
-
+  # TODO - this is an expensive operation?
+  # We might want to change the way this is managed
   onOrderChange: ->
     @model.save()
 
@@ -90,13 +87,8 @@ class FacetList extends Mn.CompositeView
   template: require './templates/facet_list'
   childView: FacetChild
 
-  onRender: ->
-
-    # Initializes Sortable container
-    Sortable.create @el,
-      handle: '.handle'
-      animation: 250
-      onEnd: (e) => $(e.item).trigger('sortable:end', e)
+  behaviors:
+    SortableList: {}
 
 # # # # #
 

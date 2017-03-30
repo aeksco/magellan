@@ -26,20 +26,7 @@ class ConditionChild extends Mn.LayoutView
 
   behaviors:
     SelectableChild: {}
-
-  events:
-    'sortable:end': 'onSortableEnd'
-
-  modelEvents:
-    'change:order': 'onOrderChange'
-
-  onSortableEnd: (e, ev) ->
-    # TODO - return if ev.oldIndex / newIndex == undefined
-    # TODO - don't SWAP indicies. Rather, we should INSERT AT INDEX
-    swapIndicies(@model.collection, ev.oldIndex, ev.newIndex)
-
-  onOrderChange: ->
-    # @model.save()
+    SortableChild: {}
 
 # # # # #
 
@@ -49,13 +36,12 @@ class ConditionList extends Mn.CompositeView
   childView: ConditionChild
   emptyView: ConditionEmpty
 
-  onRender: ->
+  behaviors:
+    SortableList: {}
 
-    # Initializes Sortable container
-    Sortable.create @el,
-      handle: '.handle'
-      animation: 250
-      onEnd: (e) => $(e.item).trigger('sortable:end', e)
+  onCollectionReordered: ->
+    console.log @
+    console.log 'ON REORDERED'
 
 # # # # #
 
