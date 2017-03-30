@@ -8,14 +8,15 @@ class ConfigLayoutView extends require 'hn_views/lib/nav'
   # template: require './templates/layout'
 
   navItems: [
-    { icon: 'fa-table',   text: 'Facets',  trigger: 'facets' }
-    # { icon: 'fa-table',   text: 'Facets',  trigger: 'facets', default: true }
-    { icon: 'fa-university',    text: 'Knowledge Rules',   trigger: 'knowledge', default: true }
+    { icon: 'fa-list',            text: 'Facets',             trigger: 'facets' }
+    { icon: 'fa-university',      text: 'Knowledge Rules',    trigger: 'knowledge', default: true }
+    { icon: 'fa-window-maximize', text: 'Viewer Rules',       trigger: 'viewer' }
   ]
 
   navEvents:
     'facets':     'facetConfig'
     'knowledge':  'knowledgeConfig'
+    'viewer':     'viewerConfig'
 
   # navOptions:
   #   stacked: true
@@ -27,6 +28,9 @@ class ConfigLayoutView extends require 'hn_views/lib/nav'
   knowledgeConfig: ->
     @model.fetchKnowledgeRules().then (ruleCollection) =>
       @contentRegion.show new RuleLayout({ collection: ruleCollection })
+
+  viewerConfig: ->
+    console.log 'VIEWER CONFIG'
 
 # # # # #
 

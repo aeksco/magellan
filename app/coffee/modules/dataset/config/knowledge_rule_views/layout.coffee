@@ -11,7 +11,7 @@ swapIndicies = (collection, oldIndex, newIndex) ->
 
 class RuleForm extends Mn.LayoutView
   className: 'modal-content'
-  template: require './templates/krule_form'
+  template: require './templates/rule_form'
 
   templateHelpers: { modalTitle: 'Edit Facet' }
 
@@ -30,7 +30,7 @@ class RuleForm extends Mn.LayoutView
 # # # # #
 
 class RuleChild extends Mn.LayoutView
-  template: require './templates/krule_child'
+  template: require './templates/rule_child'
   className: 'list-group-item'
 
   behaviors:
@@ -84,7 +84,7 @@ class RuleChild extends Mn.LayoutView
 
 class RuleList extends Mn.CompositeView
   className: 'list-group'
-  template: require './templates/krule_list'
+  template: require './templates/rule_list'
   childView: RuleChild
 
   onRender: ->
@@ -104,7 +104,7 @@ class RuleDetail extends Mn.LayoutView
 # # # # #
 
 class RuleEditor extends require 'hn_views/lib/nav'
-  className: 'row'
+  className: 'col-xs-12'
 
   navItems: [
     { icon: 'fa-cube',       text: 'Rule',       trigger: 'rule', default: true }
