@@ -1,0 +1,23 @@
+.col-xs-12
+  .card.card-block
+
+    .row
+
+      .col-xs-6
+        p.lead Condition
+
+      .col-xs-6.text-xs-right
+        button.btn.btn-sm.btn-secondary( data-click='edit' )
+          i.fa.fa-fw.fa-pencil
+          | &nbsp;
+          | Edit Condition
+
+      .col-xs-12
+        hr
+
+      .col-xs-12
+        .row
+          .col-xs-6= source || 'UNDEFINED'
+          .col-xs-6= operation || 'UNDEFINED'
+          .col-xs-6= value || 'UNDEFINED'
+          .col-xs-6= result || 'UNDEFINED'

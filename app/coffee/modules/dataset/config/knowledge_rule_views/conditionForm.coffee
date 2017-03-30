@@ -4,21 +4,25 @@ class ConditionForm extends Mn.LayoutView
   template: require './templates/condition_form'
 
   behaviors:
-    CancelButton: {}
     SubmitButton: {}
 
   ui:
-    discard: '[data-click=discard]'
+    cancel:   '[data-click=cancel]'
+    discard:  '[data-click=discard]'
 
   events:
-    'click @ui.discard': 'confirmDiscard'
+    'click @ui.cancel':   'cancelEditing'
+    'click @ui.discard':  'confirmDiscard'
 
   confirmDiscard: ->
     console.log 'CONFIRM DISCARD'
     console.log @model
     console.log @model.collection
-
     @model.collection.remove(@model)
+
+  cancelEditing: (e) ->
+    e.stopPropagation()
+    @trigger 'cancel', @
 
 # # # # #
 

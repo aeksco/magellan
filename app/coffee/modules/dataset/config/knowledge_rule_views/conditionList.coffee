@@ -1,4 +1,5 @@
 
+ConditionViewer = require './conditionViewer'
 ConditionForm = require './conditionForm'
 
 # # # # #
@@ -80,17 +81,24 @@ class ConditionLayout extends Mn.LayoutView
   addCondition: ->
     console.log 'ADD CONDITION'
     console.log @collection
-    @collection.add({})
+    newCondition = new @collection.model() # TODO - not like this :(
+    @showConditionForm(newCondition)
 
   onRender: ->
     listView = new ConditionList({ collection: @collection })
-    listView.on 'childview:selected', (view) => @showDetail(view.model)
+    listView.on 'childview:selected', (view) => @showConditionViewer(view.model)
     @listRegion.show(listView)
     @collection.at(0)?.trigger('selected')
 
-  showDetail: (model) ->
-    console.log 'SHOW DETAIL'
-    @detailRegion.show new ConditionForm({ model: model })
+  showConditionForm: (model) ->
+    conditionForm = new ConditionForm({ model: model })
+    conditionForm.on 'cancel', (view) => @showConditionViewer(view.model)
+    @detailRegion.show conditionForm
+
+  showConditionViewer: (model) ->
+    conditionViewer = new ConditionViewer({ model: model })
+    conditionViewer.on 'edit', (view) => @showConditionForm(view.model)
+    @detailRegion.show conditionViewer
 
 # # # # #
 
