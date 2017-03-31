@@ -13,9 +13,8 @@ class DatasetSearchRoute extends require 'hn_routing/lib/route'
       { text: "#{@model.get('label')}" }
     ]
 
-  # TODO - this needs to be cleaned up. The promise chain here is all out of whack.
-  # DatasetModel.ensureFacets() should be done inside the view
-  # to gracefully load the collection in a non-blocking way
+  # TODO - this should be re-evaluated
+  # Datapoints, Facets, and Results can be loaded in a non-blocking way
   fetch: (id) ->
 
     # Gets the Dataset
