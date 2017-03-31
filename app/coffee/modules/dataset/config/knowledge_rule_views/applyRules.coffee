@@ -22,6 +22,7 @@ class ApplyRulesView extends Mn.LayoutView
         console.log 'FETCHED RULES'
         console.log rules
 
+        # TODO - this must return a Promise
         rules.applyRules(datapoints)
 
 # # # # #

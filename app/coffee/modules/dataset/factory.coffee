@@ -15,17 +15,24 @@ class DatasetFactory extends DexieFactory
     @cachedCollection = new Entities.Collection()
 
   getCollection: ->
+
+    # Ensures presence of @db variable
     @ensureDb()
+
+    # Returns a Promise to manage async DB operations
     return new Promise (resolve, reject) =>
+
+      # Fetches all records from Dexie
       @db[@tableName].toArray()
 
       # Fetches successfully
       .then (models) =>
         @cachedCollection.reset(models)
-        return resolve(@cached)
+        return resolve(@cachedCollection)
 
       # Error handling
-      .catch (err) => return reject(err)
+      .catch (err) =>
+        return reject(err)
 
 # # # # #
 

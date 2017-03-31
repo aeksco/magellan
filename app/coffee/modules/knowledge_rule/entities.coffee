@@ -1,5 +1,4 @@
 
-
 # KnowledgeRuleDecorator class definition
 class KnowledgeRuleDecorator extends Mn.Decorator
 
@@ -88,6 +87,9 @@ class KnowledgeRuleCollection extends Backbone.Collection
         # i.e., short-circuit conditions loop if match is found
         for condition in conditions
 
+          console.log condition.source
+          console.log target.get('data')
+
           # Isolates pertinant variables
           # TODO - not all of these are used by every operation
           # This should be simplified to cache ONLY what's used.
@@ -99,9 +101,14 @@ class KnowledgeRuleCollection extends Backbone.Collection
 
           # # # # # # # # # # # # # # # # # # # #
           # TODO - this operation should be abstracted into RuleModel
+          # TODO - this operation must manage values that are arrays, objects, etc.
+
+          # Skip undefined
+          # continue unless source
 
           # EXACT MATCH
           if operation == 'exact_match'
+            console.log source
             if source == value
               conditionMatched = true
               data[targetAttr] = result
@@ -109,6 +116,8 @@ class KnowledgeRuleCollection extends Backbone.Collection
 
           # REPLACE
           if operation == 'replace'
+
+            # TODO - this should replace ONLY if there's an extant substring
             replaced = source.replace(value, result)
             if replaced
               conditionMatched = true
