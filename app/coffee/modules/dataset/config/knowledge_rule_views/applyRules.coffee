@@ -11,10 +11,18 @@ class ApplyRulesView extends Mn.LayoutView
     @trigger 'cancel'
 
   onSubmit: ->
-    console.log 'ON SUBMIT'
     @disableSubmit()
     @disableCancel()
-    console.log @model
+
+    @model.fetchDatapoints().then (datapoints) =>
+      console.log 'FETCHED DATAPOINTS'
+      console.log datapoints
+
+      @model.fetchKnowledgeRules().then (rules) =>
+        console.log 'FETCHED RULES'
+        console.log rules
+
+        rules.applyRules(datapoints)
 
 # # # # #
 

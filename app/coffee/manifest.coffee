@@ -62,7 +62,8 @@ new FlashComponent({ container: AppLayout.flash })
 # # # # #
 
 # Factories
-require './modules/search/factory'
+require './modules/search/factory' # TODO - this should be removed.
+require './modules/datapoint/factory'
 require './modules/facet/factory'
 require './modules/knowledge_rule/factory'
 

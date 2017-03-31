@@ -1,4 +1,7 @@
 
+
+# TODO - remove this file.
+
 # # TODO - this needs to be decomissioned
 # # in favor of a configuration-based approach.
 # class RecordDecorator extends Mn.Decorator

@@ -25,7 +25,8 @@ class KnowledgeRuleFactory extends Marionette.Service
       db = Backbone.Radio.channel('db').request('db')
 
       # Queries DB
-      db['knowledge_rules'].where('dataset_id').equals(dataset_id).toArray()
+      table = 'knowledge_rules'
+      db[table].where('dataset_id').equals(dataset_id).toArray()
 
       # Resets the collection and resolves the promise
       .then (models) =>

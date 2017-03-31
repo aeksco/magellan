@@ -68,10 +68,13 @@ class KnowledgeRuleCollection extends Backbone.Collection
 
     # Iterates over each rule...
     for rule in @models
-      # console.log rule.attributes
+
+      console.log rule.attributes
 
       # Iterates over each model in targetCollection and applies rule to each model
       for target in targetCollection.models
+
+        console.log target
 
         # Isolates targetAttr and conditions from Rule
         targetAttr = rule.get('targetAttr')

@@ -1,6 +1,4 @@
-
 SearchView = require '../../search/facetsearch/views/layout'
-ItemCollection = require '../../search/collection' # TODO - abstract into factory elsewhere
 
 # # # # #
 
@@ -31,10 +29,8 @@ class DatasetSearchRoute extends require 'hn_routing/lib/route'
         # Fetches datapoints contained within the dataset
         @model.fetchDatapoints().then (datapoints) =>
 
-          # Gets all items for Faceted Search
-          # TODO - abstract into DataSet model,
-          # constructor call should not be in route
-          @items = new ItemCollection(datapoints)
+          # Assigns @datapoints
+          @datapoints = datapoints
 
           # Gets FacetCollection from Dataset
           @model.fetchFacets().then (facetCollection) =>
@@ -43,14 +39,16 @@ class DatasetSearchRoute extends require 'hn_routing/lib/route'
             @facetCollection = facetCollection
 
             # Gets SearchResultCollection
-            Backbone.Radio.channel('search:result').request('collection')
-            .then (collection) => @collection = collection
+            Backbone.Radio.channel('search:result').request('collection').then (collection) =>
 
-            # Resolves outter promise
-            return resolve()
+              # Assigns @collection
+              @collection = collection
+
+              # Resolves outter promise
+              return resolve()
 
   render: ->
-    @container.show new SearchView({ model: @model, collection: @collection, items: @items, facetCollection: @facetCollection })
+    @container.show new SearchView({ model: @model, collection: @collection, items: @datapoints, facetCollection: @facetCollection })
 
 # # # # #
 

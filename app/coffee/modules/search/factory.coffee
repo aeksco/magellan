@@ -1,4 +1,6 @@
 
+# TODO - remove this file.
+
 class SearchResultFactory extends require 'hn_entities/lib/factory'
   radioChannel:         'search:result'
   modelPrototype:       require './model'
