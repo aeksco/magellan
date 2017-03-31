@@ -69,16 +69,19 @@ class KnowledgeRuleCollection extends Backbone.Collection
     # Iterates over each rule...
     for rule in @models
 
-      console.log rule.attributes
+      # Rule represented soley as JSON
+      rule = rule.toJSON()
 
       # Iterates over each model in targetCollection and applies rule to each model
       for target in targetCollection.models
 
-        console.log target
-
         # Isolates targetAttr and conditions from Rule
-        targetAttr = rule.get('targetAttr')
-        conditions = rule.get('conditions')
+        targetAttr = rule.targetAttr
+        conditions = rule.conditions
+
+        # Condition matched flag
+        # Target model is saved IF true
+        conditionMatched = false
 
         # Iterates over each condition
         # TODO - continue to next target if condition is matched
@@ -100,6 +103,7 @@ class KnowledgeRuleCollection extends Backbone.Collection
           # EXACT MATCH
           if operation == 'exact_match'
             if source == value
+              conditionMatched = true
               data[targetAttr] = result
               target.set('data', data)
 
@@ -107,6 +111,7 @@ class KnowledgeRuleCollection extends Backbone.Collection
           if operation == 'replace'
             replaced = source.replace(value, result)
             if replaced
+              conditionMatched = true
               data[targetAttr] = replaced
               target.set('data', data)
 
@@ -114,6 +119,7 @@ class KnowledgeRuleCollection extends Backbone.Collection
           if operation == 'format_uppercase'
             formatted = source.toUpperCase()
             if formatted
+              conditionMatched = true
               data[targetAttr] = formatted
               target.set('data', data)
 
@@ -121,6 +127,7 @@ class KnowledgeRuleCollection extends Backbone.Collection
           if operation == 'format_lowercase'
             formatted = source.toLowerCase()
             if formatted
+              conditionMatched = true
               data[targetAttr] = formatted
               target.set('data', data)
 
@@ -129,6 +136,7 @@ class KnowledgeRuleCollection extends Backbone.Collection
           if operation == 'regex_match'
             matched = value.exec(source)
             if matched
+              conditionMatched = true
               data[targetAttr] = matched
               target.set('data', data)
 
@@ -136,6 +144,12 @@ class KnowledgeRuleCollection extends Backbone.Collection
           # THIS Save method should return a promise.
           # So that logic should be abstracted into the KnowledgeRuleModel class.
           # And this method should return a Promise.each()
+
+        # Saves the target model ONLY if a condition has been matched
+        if conditionMatched
+          console.log 'MATCHED'
+          console.log target
+          target.save()
 
 # # # # #
 

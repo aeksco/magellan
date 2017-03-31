@@ -10,6 +10,7 @@ class DatapointFactory extends Marionette.Service
   # Defines radioRequests
   radioRequests:
     'datapoint collection': 'getCollection'
+    'datapoint save':       'saveModel'
 
   initialize: ->
     @cachedCollection = new Entities.Collection()
@@ -37,6 +38,32 @@ class DatapointFactory extends Marionette.Service
 
       # Error handling
       .catch (err) => return reject(err)
+
+  # saveModel
+  # Persists an individual model to Dexie
+  saveModel: (model) ->
+    return new Promise (resolve, reject) =>
+
+      # Triggers 'request' event on model
+      model.trigger('request')
+
+      # Item JSON to insert into Dexie table
+      item = model.toJSON()
+
+      # DexieDB dependency injection
+      # TODO - you should rethink this pattern right hurr (used twice in this file)
+      db = Backbone.Radio.channel('db').request('db')
+
+      # Updates the record in the table (or saves a new)
+      db[@tableName].put(item)
+      .then (model_id) =>
+        model.trigger('sync')
+        return resolve()
+
+      # Error handling
+      .catch (err) =>
+        model.trigger('error', err)
+        return reject(err)
 
 # # # # #
 

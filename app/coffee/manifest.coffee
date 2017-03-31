@@ -42,8 +42,6 @@ new ConfirmComponent({ container: AppLayout.modal })
 
 # Henson.js Sidebar configuration
 menuItems = [
-  # { href: '#home',        icon: 'fa-home',      title: 'Server Home' }
-  # { href: '#data',        icon: 'fa-database',  title: 'Server Data', divider: true }
   { href: '#datasets',    icon: 'fa-search',    title: 'Datasets', divider: true }
   { href: '#ontologies',  icon: 'fa-sitemap',   title: 'Ontologies', divider: true }
   { href: '#settings',    icon: 'fa-cog',       title: 'Settings', divider: true }
@@ -62,7 +60,7 @@ new FlashComponent({ container: AppLayout.flash })
 # # # # #
 
 # Factories
-require './modules/search/factory' # TODO - this should be removed.
+require './modules/search/factory'
 require './modules/datapoint/factory'
 require './modules/facet/factory'
 require './modules/knowledge_rule/factory'
