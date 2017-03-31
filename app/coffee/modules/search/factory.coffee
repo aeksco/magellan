@@ -1,13 +1,18 @@
+Entities = require './entities'
 
-# TODO - remove this file.
+# # # # #
 
-class SearchResultFactory extends require 'hn_entities/lib/factory'
-  radioChannel:         'search:result'
-  modelPrototype:       require './model'
-  collectionPrototype:  require './collection'
+class SearchResultFactory extends Marionette.Service
 
-  collection: ->
-    return new Promise (resolve, reject) => resolve(@cached)
+  radioRequests:
+    'search:result collection': 'getCollection'
+
+  initialize: ->
+    @cachedCollection = new Entities.Collection()
+
+  getCollection: ->
+    return new Promise (resolve, reject) =>
+      return resolve(@cachedCollection)
 
 # # # # #
 
