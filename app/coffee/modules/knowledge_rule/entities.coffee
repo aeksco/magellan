@@ -52,6 +52,9 @@ class KnowledgeRuleModel extends Backbone.RelationalModel
   save: ->
     Backbone.Radio.channel('knowledge:rule').request('save', @)
 
+  destroy: ->
+    Backbone.Radio.channel('knowledge:rule').request('destroy', @)
+
 # # # # #
 
 # KnowledgeRuleCollection definition

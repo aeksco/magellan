@@ -20,7 +20,7 @@ class RuleLayout extends Mn.LayoutView
     reset:    '[data-click=reset]'
 
   events:
-    'click @ui.newRule':  'newRule'
+    'click @ui.newRule':  'showRuleFormSelector'
     'click @ui.apply':    'applyRules'
     'click @ui.reset':    'resetDataset'
 
@@ -30,16 +30,23 @@ class RuleLayout extends Mn.LayoutView
   onRender: ->
     @showRuleList()
 
+  # showRuleList
+  # Shows the list of defined rules
   showRuleList: ->
     ruleList = new RuleList({ collection: @collection })
     ruleList.on 'edit', (ruleModel) => @editRule(ruleModel)
     @contentRegion.show ruleList
 
+  # editRule
+  # Shows the correct form to edit the ruleModel parameter
   editRule: (ruleModel) =>
     return @showDefinerForm(ruleModel) if ruleModel.get('type') == 'definer'
     return @showDecoratorForm(ruleModel)
 
-  newRule: ->
+  # showRuleFormSelector
+  # Shows the form to select which type of rule
+  # the user would like to create
+  showRuleFormSelector: ->
 
     # Instantiates new RuleFormSelector
     ruleForm = new RuleFormSelector()
@@ -61,29 +68,61 @@ class RuleLayout extends Mn.LayoutView
   buildNewRule: (type) ->
     return new @collection.model({ id: window.buildUniqueId('kn_'), order: @collection.length + 1, type: type, dataset_id: @model.id })
 
-  # TODO - these two methods have a lot of repetition
-  # This should be simplified as a helper method
+  # showDecoratorForm
+  # Shows the form to create or edit a Decorator rule instance
   showDecoratorForm: (model) ->
+
+    # Gets model to pass into DecoratorForm
     formModel = model || @buildNewRule('decorator')
+
+    # Instantiates new FormView instance
     formView = new DecoratorForm({ model: formModel })
-    formView.on 'cancel', => @showRuleList()
-    formView.on 'submit', => console.log 'SUBMIT RULE FORM'
-    @contentRegion.show formView
 
-  # TODO - these two methods have a lot of repetition
-  # This should be simplified as a helper method
+    # Shows the DecoratorForm
+    @showRuleForm(formView)
+
+  # showDefinerForm
+  # Shows the form to create or edit a Definer rule instance
   showDefinerForm: (model) ->
-    formModel = model || @buildNewRule('definer')
-    formView = new DefinerForm({ model: formModel, collection: formModel.get('conditions') })
-    formView.on 'cancel', => @showRuleList()
-    # formView.on 'submit', => console.log 'SUBMIT RULE FORM'
-    @contentRegion.show formView
 
+    # Gets model to pass into DefinerForm
+    formModel = model || @buildNewRule('definer')
+
+    # Instantiates new DefinerForm instance
+    formView = new DefinerForm({ model: formModel, collection: formModel.get('conditions') })
+
+    # Shows the DefinerForm
+    @showRuleForm(formView)
+
+  # showRuleForm
+  # Shows either a Definer or Decorator form view
+  # Defines event listeners and callbacks shared between both forms
+  showRuleForm: (formView) ->
+    # Form Cancel
+    formView.on 'cancel', =>
+      @showRuleList()
+
+    # Form Success
+    formView.on 'sync', (model) =>
+
+      # Adds new model to the collection
+      @collection.add(model)
+
+      # Renders the rule list
+      @showRuleList()
+
+    # Shows the form inside the content region
+    @contentRegion.show(formView)
+
+  # applyRules
+  # Shows the view to apply the rules to the dataset
   applyRules: ->
     applyView = new ApplyRulesView()
     applyView.on 'cancel', => @showRuleList()
     @contentRegion.show(applyView)
 
+  # resetDataset
+  # Shows the view to reset the dataset to it's default raw values
   resetDataset: ->
     resetView = new ResetRulesView()
     resetView.on 'cancel', => @showRuleList()

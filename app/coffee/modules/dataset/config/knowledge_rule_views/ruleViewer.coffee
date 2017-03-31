@@ -4,6 +4,7 @@ class RuleViewer extends Mn.LayoutView
   template: require './templates/rule_viewer'
 
   behaviors:
+    ModelEvents: {}
     Confirmations:
       message:      'Are you sure you want to destroy this Knowledge Rule?'
       confirmIcon:  'fa-trash'
@@ -12,14 +13,22 @@ class RuleViewer extends Mn.LayoutView
 
   ui:
     edit:                 '[data-click=edit]'
-    confirmationTrigger:  '[data-click=discard]'
+    confirmationTrigger:  '[data-click=destroy]'
 
   triggers:
     'click @ui.edit': 'edit'
 
-  # TODO - is there a better way to manage this?
   onConfirmed: ->
-    console.log 'DESTROY KNOWLEDGE RULE HERE'
+    @model.destroy()
+
+  onRequest: ->
+    console.log 'onRequest'
+
+  onSync: ->
+    @model.collection.remove(@model)
+
+  onError: ->
+    console.log 'onError'
 
 # # # # #
 

@@ -30,10 +30,11 @@ class DecoratorForm extends Mn.LayoutView
     @model.save()
 
   onRequest: ->
-    console.log 'onRequest'
+    @disableSubmit()
+    @disableCancel()
 
   onSync: ->
-    console.log 'onSync'
+    @trigger 'sync', @model
 
   onError: ->
     console.log 'onError'

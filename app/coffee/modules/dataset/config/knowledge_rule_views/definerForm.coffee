@@ -56,14 +56,13 @@ class DefinerForm extends Mn.LayoutView
   onSubmit: ->
     data = Backbone.Syphon.serialize(@)
     @model.set(data)
-    console.log @model.toJSON()
     @model.save()
 
   onRequest: ->
     console.log 'onRequest'
 
   onSync: ->
-    console.log 'onSync'
+    @trigger 'sync', @model
 
   onError: ->
     console.log 'onError'

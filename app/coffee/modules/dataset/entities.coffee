@@ -18,6 +18,7 @@ class DatasetModel extends Backbone.Model
     return Backbone.Radio.channel('facet').request('collection', @id)
 
   # TODO - should return the Datapoint collection
+  # TODO - this should hit the DATAPOINT service, rather than DATASET
   fetchDatapoints: ->
     return Backbone.Radio.channel('dataset').request('datapoints', @id)
 
