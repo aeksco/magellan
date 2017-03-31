@@ -10,6 +10,12 @@ class ApplyRulesView extends Mn.LayoutView
   onCancel: ->
     @trigger 'cancel'
 
+  onSubmit: ->
+    console.log 'ON SUBMIT'
+    @disableSubmit()
+    @disableCancel()
+    console.log @model
+
 # # # # #
 
 module.exports = ApplyRulesView

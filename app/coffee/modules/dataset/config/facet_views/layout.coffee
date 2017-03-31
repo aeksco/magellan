@@ -1,18 +1,4 @@
 
-# Swaps models at supplied indicies & resets collection
-# TODO - rather than swapping indicies we should just PUSH the list accordingly.
-swapIndicies = (collection, oldIndex, newIndex) ->
-
-  # Swaps model indicies
-  collection.at(oldIndex).set('order', newIndex)
-  collection.at(newIndex).set('order', oldIndex)
-
-  # TODO - better way to handle this?
-  # models = collection.models
-  # collection.reset(models)
-
-# # # # #
-
 class FacetForm extends Mn.LayoutView
   className: 'modal-content'
   template: require './templates/facet_form'

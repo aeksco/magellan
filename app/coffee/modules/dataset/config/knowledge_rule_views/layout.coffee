@@ -123,7 +123,7 @@ class RuleLayout extends Mn.LayoutView
   # applyRules
   # Shows the view to apply the rules to the dataset
   applyRules: ->
-    applyView = new ApplyRulesView()
+    applyView = new ApplyRulesView({ model: @model })
     applyView.on 'cancel', => @showRuleList()
     @contentRegion.show(applyView)
 
