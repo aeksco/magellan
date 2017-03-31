@@ -14,26 +14,18 @@ class DatasetFactory extends DexieFactory
   initialize: ->
     @cachedCollection = new Entities.Collection()
 
-  getModel: (id) ->
-    return new Promise (resolve, reject) =>
-
-      # Resolves if ID is undefined
-      return resolve(new Entities.Model()) unless id
-
-      # Returns from @cached if synced
-      return resolve(@cachedCollection.get(id)) if @cachedCollection.get(id)
-
-      # Gets @cachedCollection and returns
-      return @getCollection().then () => resolve(@cachedCollection.get(id))
-
   getCollection: ->
     @ensureDb()
     return new Promise (resolve, reject) =>
-      @db[@tableName].toArray().then (models) =>
+      @db[@tableName].toArray()
+
+      # Fetches successfully
+      .then (models) =>
         @cachedCollection.reset(models)
-        @cachedCollection._synced = true
         return resolve(@cached)
-      # TODO - catch statement
+
+      # Error handling
+      .catch (err) => return reject(err)
 
 # # # # #
 

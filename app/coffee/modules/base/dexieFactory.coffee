@@ -35,6 +35,20 @@ class DexieFactory extends Marionette.Service
       # Error handling
       .catch (err) => return reject(err)
 
+  # getModel
+  # Returns a model instance queried from @cachedCollection
+  getModel: (id) ->
+    return new Promise (resolve, reject) =>
+
+      # Resolves if ID is undefined
+      return resolve(new Entities.Model()) unless id
+
+      # Returns from @cached if synced
+      return resolve(@cachedCollection.get(id)) if @cachedCollection.get(id)
+
+      # Gets @cachedCollection and returns
+      return @getCollection().then () => resolve(@cachedCollection.get(id))
+
   # saveModel
   # Persists an individual model to Dexie
   saveModel: (model) ->
