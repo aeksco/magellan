@@ -80,9 +80,6 @@ new HomeRouter({ container: AppLayout.main })
 new IframeRouter({ container: AppLayout.main })
 new OntologyRouter({ container: AppLayout.main })
 
-# TODO - remove this after testing
-# require './modules/base/dexieModel'
-
 # # # # #
 
 # DexieService configuration

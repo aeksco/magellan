@@ -1,64 +1,20 @@
 Entities = require './entities'
+DexieFactory  = require '../base/dexieFactory'
 
 # # # # #
 
-class FacetFactory extends Marionette.Service
+class FacetFactory extends DexieFactory
 
+  # Defines tableName
+  tableName: 'facets'
+
+  # Defines radioRequests
   radioRequests:
     'facet collection': 'getCollection'
-    'facet save':       'saveFacet'
+    'facet save':       'saveModel'
 
   initialize: ->
-    @facetCollection = new Entities.Collection()
-
-  getCollection: (dataset_id) ->
-    return new Promise (resolve, reject) =>
-
-      # DexieDB dependency injection
-      # TODO - you should rethink this pattern right hurr (used twice in this file)
-      db = Backbone.Radio.channel('db').request('db')
-
-      # Queries DB
-      db.facets.where('dataset_id').equals(dataset_id).toArray()
-
-      # Resets the collection and resolves the promise
-      .then (facets) =>
-
-        # Resets the collection of facets
-        @facetCollection.reset(facets)
-
-        # Resolves the Promise and returns the FacetCollection
-        return resolve(@facetCollection)
-
-      # Error handling
-      .catch (err) => return reject(err)
-
-  # TODO - perhaps this should be abstracted into a
-  # more generic implementation
-  saveFacet: (model) ->
-    return new Promise (resolve, reject) =>
-
-      # Triggers 'request' event on model
-      model.trigger('request')
-
-      # Inserts item into Dexie table
-      table = 'facets'
-      item = model.toJSON()
-
-      # DexieDB dependency injection
-      # TODO - you should rethink this pattern right hurr (used twice in this file)
-      db = Backbone.Radio.channel('db').request('db')
-
-      # Updates the record in the table (or saves a new)
-      db[table].put(item)
-      .then (model_id) =>
-        model.trigger('sync')
-        return resolve()
-
-      # Error handling
-      .catch (err) =>
-        model.trigger('error', err)
-        return reject(err)
+    @cachedCollection = new Entities.Collection()
 
 # # # # #
 

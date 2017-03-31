@@ -1,18 +1,18 @@
-
 Entities = require './entities'
+DexieFactory  = require '../base/dexieFactory'
 
 # # # # #
 
-# TODO - abstract patterns here into DexieFactory
-class DatasetFactory extends Marionette.Service
+class DatasetFactory extends DexieFactory
 
-  # Defines radioRequests
+  tableName: 'datasets'
+
   radioRequests:
     'dataset model':      'getModel'
     'dataset collection': 'getCollection'
 
   initialize: ->
-    @cached = new Entities.Collection()
+    @cachedCollection = new Entities.Collection()
 
   getModel: (id) ->
     return new Promise (resolve, reject) =>
@@ -21,20 +21,17 @@ class DatasetFactory extends Marionette.Service
       return resolve(new Entities.Model()) unless id
 
       # Returns from @cached if synced
-      return resolve(@cached.get(id)) if @cached._synced
+      return resolve(@cachedCollection.get(id)) if @cachedCollection.get(id)
 
-      # Gets @cached and returns
-      return @getCollection().then () => resolve(@cached.get(id))
+      # Gets @cachedCollection and returns
+      return @getCollection().then () => resolve(@cachedCollection.get(id))
 
   getCollection: ->
+    @ensureDb()
     return new Promise (resolve, reject) =>
-
-      # TODO - abstract into:
-      # Backbone.Radio.channel('db').request('all')
-      table = 'datasets' # MODEL.urlRoot
-      window.db[table].toArray().then (models) =>
-        @cached.reset(models)
-        @cached._synced = true
+      @db[@tableName].toArray().then (models) =>
+        @cachedCollection.reset(models)
+        @cachedCollection._synced = true
         return resolve(@cached)
       # TODO - catch statement
 

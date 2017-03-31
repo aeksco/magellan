@@ -1,9 +1,8 @@
-
 Entities = require './entities'
 
 # # # # #
 
-# TODO - abstract patterns here into DexieFactory?
+# TODO - integrate DexieFactory
 class OntologyFactory extends Marionette.Service
 
   # Defines radioRequests
