@@ -85,7 +85,7 @@ class KnowledgeRuleFactory extends Marionette.Service
       # Deletes the record from the table via primary key
       db[table].delete(primary_key)
       .then (model_id) =>
-        model.trigger('sync')
+        model.trigger('destroy')
         return resolve()
 
       # Error handling

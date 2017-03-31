@@ -34,9 +34,6 @@ class KnowledgeRuleModel extends Backbone.RelationalModel
     targetAttr: 'UNDEFINED'
     conditions: []
 
-  # Sort by order attribute
-  comparator: 'order'
-
   # Decorator assignment
   decorator: KnowledgeRuleDecorator
 
@@ -48,10 +45,10 @@ class KnowledgeRuleModel extends Backbone.RelationalModel
   ]
 
   # Overwritten save method
-  # TODO - this may need to be refactored when new facets are defined
   save: ->
     Backbone.Radio.channel('knowledge:rule').request('save', @)
 
+  # Overwritten destroy method
   destroy: ->
     Backbone.Radio.channel('knowledge:rule').request('destroy', @)
 
@@ -60,6 +57,9 @@ class KnowledgeRuleModel extends Backbone.RelationalModel
 # KnowledgeRuleCollection definition
 class KnowledgeRuleCollection extends Backbone.Collection
   model: KnowledgeRuleModel
+
+  # Sort by order attribute
+  comparator: 'order'
 
   # applyRules
   # Applies the defined KnowledgeRules to the TargetCollection

@@ -66,7 +66,13 @@ class RuleLayout extends Mn.LayoutView
   # TODO - this method should live on the collection, rather than in this view.
   # TODO - this should REALLY be abstracted into a factory method that accepts TYPE and DATASET_ID attributes
   buildNewRule: (type) ->
-    return new @collection.model({ id: window.buildUniqueId('kn_'), order: @collection.length + 1, type: type, dataset_id: @model.id })
+    params =
+      id:         window.buildUniqueId('kn_')
+      order:      @collection.length + 1
+      type:       type
+      dataset_id: @model.id
+
+    return new @collection.model(params)
 
   # showDecoratorForm
   # Shows the form to create or edit a Decorator rule instance

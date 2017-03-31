@@ -4,7 +4,6 @@ class RuleViewer extends Mn.LayoutView
   template: require './templates/rule_viewer'
 
   behaviors:
-    ModelEvents: {}
     Confirmations:
       message:      'Are you sure you want to destroy this Knowledge Rule?'
       confirmIcon:  'fa-trash'
@@ -18,13 +17,14 @@ class RuleViewer extends Mn.LayoutView
   triggers:
     'click @ui.edit': 'edit'
 
+  modelEvents:
+    'destroy':  'onModelDestroy'
+    'error':    'onError'
+
   onConfirmed: ->
     @model.destroy()
 
-  onRequest: ->
-    console.log 'onRequest'
-
-  onSync: ->
+  onModelDestroy: ->
     @model.collection.remove(@model)
 
   onError: ->

@@ -48,16 +48,20 @@ class RuleList extends Mn.CollectionView
   behaviors:
     SortableList: {}
 
+  collectionEvents:
+    'remove': 'onCollectionRemove'
+
+  # Resets the selected model in the list
+  # When a selected rule has been removed
+  onCollectionRemove: ->
+    setTimeout( @reorderCollection, 250 )
+    @collection.at(0)?.trigger('selected')
+
 # # # # #
 
 class RuleLayout extends Mn.LayoutView
   className: 'row'
   template: require './templates/rule_list_layout'
-
-  # TODO - do we need these events?
-  collectionEvents:
-    'add':    'render'
-    'remove': 'render'
 
   regions:
     listRegion:   '[data-region=list]'
