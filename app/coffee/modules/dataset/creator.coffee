@@ -93,7 +93,7 @@ class DatasetCreator extends Backbone.Model
         id:         buildUniqueId('dp_')
         dataset_id: dataset_id
         raw:        datapoint
-        data:       datapoint
+        data:       JSON.parse(JSON.stringify(datapoint))
 
       # Returns 'add' Promise from DB service
       return Backbone.Radio.channel('db').request('add', 'datapoints', attrs)
