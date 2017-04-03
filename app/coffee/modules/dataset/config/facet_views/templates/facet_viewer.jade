@@ -1,6 +1,6 @@
 .row
   .col-xs-6
-    h4.card-title Facet
+    h4.card-title= label
 
   .col-xs-6.text-xs-right
 
@@ -18,10 +18,40 @@
     hr
 
 .row
-  .col-xs-12
 
-    p=id
-    p=label
-    p=attribute
-    p=tooltip || 'No Tooltip'
-    p=enabled
+  //- ATTRIBUTE
+  .col-xs-12
+    .alert.alert-info
+      i.fa.fa-fw.fa-search
+      | &nbsp;
+      | Matches the
+      strong  #{attribute}
+      |  attribute.
+
+  //- TOOLTIP
+  .col-xs-12
+    if tooltip
+      .alert.alert-info
+        i.fa.fa-fw.fa-question-circle-o
+        | &nbsp;
+        =tooltip
+
+    else
+      .alert.alert-warning
+        i.fa.fa-fw.fa-warning
+        | &nbsp;
+        | No tooltip defined for this facet.
+
+  //- ENABLED
+  .col-xs-12
+    if enabled
+      .alert.alert-success
+        i.fa.fa-fw.fa-check-circle-o
+        | &nbsp;
+        | Facet is enabled.
+
+    else
+      .alert.alert-warning
+        i.fa.fa-fw.fa-warning
+        | &nbsp;
+        | Facet is not enabled.
