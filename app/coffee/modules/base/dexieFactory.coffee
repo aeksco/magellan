@@ -38,6 +38,11 @@ class DexieFactory extends Marionette.Service
   # getModel
   # Returns a model instance queried from @cachedCollection
   getModel: (id) ->
+
+    # Ensures presence of @db
+    @ensureDb()
+
+    # Returns Promise to manage async DB operations
     return new Promise (resolve, reject) =>
 
       # Resolves if ID is undefined

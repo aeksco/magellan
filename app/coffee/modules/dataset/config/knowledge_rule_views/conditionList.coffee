@@ -1,6 +1,4 @@
-
 ConditionViewer = require './conditionViewer'
-ConditionForm = require './conditionForm'
 
 # # # # #
 
@@ -29,9 +27,9 @@ class ConditionList extends Mn.CompositeView
   behaviors:
     SortableList: {}
 
-  onCollectionReordered: ->
-    console.log @
-    console.log 'ON REORDERED'
+  # onCollectionReordered: ->
+  #   console.log @
+  #   console.log 'ON REORDERED'
 
 # # # # #
 
@@ -39,7 +37,6 @@ class ConditionLayout extends Mn.LayoutView
   className: 'row'
   template: require './templates/condition_list_layout'
 
-  # TODO - do we need these events?
   collectionEvents:
     'add':    'render'
     'remove': 'render'
@@ -57,20 +54,9 @@ class ConditionLayout extends Mn.LayoutView
     @listRegion.show(listView)
     @collection.at(0)?.trigger('selected')
 
-  showConditionForm: (model) ->
-    conditionForm = new ConditionForm({ model: model })
-    conditionForm.on 'cancel', (view) => @showConditionViewer(view.model)
-    conditionForm.on 'submit', (view) =>
-      console.log 'SUBIMTTED'
-      console.log view.model
-      @showConditionList()
-      # @showConditionViewer(view.model)
-
-    @detailRegion.show conditionForm
-
   showConditionViewer: (model) ->
     conditionViewer = new ConditionViewer({ model: model })
-    conditionViewer.on 'edit', (view) => @showConditionForm(view.model)
+    conditionViewer.on 'edit', (view) => @trigger('edit:condition', view.model)
     @detailRegion.show conditionViewer
 
 # # # # #

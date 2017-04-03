@@ -43,8 +43,26 @@ class DefinerForm extends Mn.LayoutView
     # Shows the form in region
     @conditionsRegion.show conditionForm
 
+  editCondition: (conditionModel) ->
+
+    # Instantiates new ConditionForm instance
+    conditionForm = new ConditionForm({ model: conditionModel })
+
+    # Cancel event callback
+    conditionForm.on 'cancel', => @showConditionList()
+
+    # Submit event callback
+    conditionForm.on 'submit', (view) => @showConditionList()
+
+    # Shows the form in region
+    @conditionsRegion.show conditionForm
+
   showConditionList: ->
-    @conditionsRegion.show new ConditionList({ collection: @collection })
+    conditionList = new ConditionList({ collection: @collection })
+    conditionList.on 'edit:condition', (conditionModel) => return @editCondition(conditionModel)
+
+    # Shows the list view in region
+    @conditionsRegion.show conditionList
 
   onRender: ->
     Backbone.Syphon.deserialize( @, @model.attributes )
