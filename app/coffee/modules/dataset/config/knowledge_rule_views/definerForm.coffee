@@ -29,10 +29,11 @@ class DefinerForm extends Mn.LayoutView
   addCondition: ->
 
     # Instantiates new ConditionModel from the collection
+    # TODO - THIS NEEDS AN ORDER ATTRIBUTE
     newCondition = new @collection.model()
 
     # Instantiates new ConditionForm instance
-    conditionForm = new ConditionForm({ model: newCondition, isNew: true })
+    conditionForm = new ConditionForm({ model: newCondition, isNew: true, sourceOptions: @options.sourceOptions })
 
     # Cancel event callback
     conditionForm.on 'cancel', => @showConditionList()
@@ -45,8 +46,10 @@ class DefinerForm extends Mn.LayoutView
 
   editCondition: (conditionModel) ->
 
+    console.log @
+
     # Instantiates new ConditionForm instance
-    conditionForm = new ConditionForm({ model: conditionModel })
+    conditionForm = new ConditionForm({ model: conditionModel, sourceOptions: @options.sourceOptions })
 
     # Cancel event callback
     conditionForm.on 'cancel', => @showConditionList()

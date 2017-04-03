@@ -30,6 +30,28 @@ class RuleLayout extends Mn.LayoutView
   onRender: ->
     @showRuleList()
 
+  # fetchSourceOptions
+  # Fetches the available facet IDs and Labels
+  # Used in the 'source' dropdown in the Decorator and Definer Forms
+  fetchSourceOptions: ->
+
+    # Returns Promise to manage async operation
+    return new Promise (resolve, reject) =>
+
+      # Fetches Facets - used to populate the 'source' dropdown
+      @model.fetchFacets().then (facetCollection) =>
+
+        # facets = facetCollection.toJSON()
+        # Plucks attributes and labels,
+        attrs = facetCollection.pluck('attribute')
+        labels = facetCollection.pluck('label')
+
+        # Zips into a two-dimensional array
+        sourceOptions = _.zip(attrs, labels)
+
+        # Resolves Promise with sourceOptions
+        return resolve(sourceOptions)
+
   # showRuleList
   # Shows the list of defined rules
   showRuleList: ->
@@ -81,11 +103,14 @@ class RuleLayout extends Mn.LayoutView
     # Gets model to pass into DecoratorForm
     formModel = model || @buildNewRule('decorator')
 
-    # Instantiates new FormView instance
-    formView = new DecoratorForm({ model: formModel })
+    # Fetches SourceOptions
+    @fetchSourceOptions().then (sourceOptions) =>
 
-    # Shows the DecoratorForm
-    @showRuleForm(formView)
+      # Instantiates new FormView instance
+      formView = new DecoratorForm({ model: formModel, sourceOptions: sourceOptions })
+
+      # Shows the DecoratorForm
+      @showRuleForm(formView)
 
   # showDefinerForm
   # Shows the form to create or edit a Definer rule instance
@@ -94,21 +119,24 @@ class RuleLayout extends Mn.LayoutView
     # Gets model to pass into DefinerForm
     formModel = model || @buildNewRule('definer')
 
-    # Instantiates new DefinerForm instance
-    formView = new DefinerForm({ model: formModel, collection: formModel.get('conditions') })
+    # Fetches SourceOptions
+    @fetchSourceOptions().then (sourceOptions) =>
 
-    # Shows the DefinerForm
-    @showRuleForm(formView)
+      # Instantiates new DefinerForm instance
+      formView = new DefinerForm({ model: formModel, collection: formModel.get('conditions'), sourceOptions: sourceOptions })
+
+      # Shows the DefinerForm
+      @showRuleForm(formView)
 
   # showRuleForm
   # Shows either a Definer or Decorator form view
   # Defines event listeners and callbacks shared between both forms
   showRuleForm: (formView) ->
-    # Form Cancel
-    formView.on 'cancel', =>
-      @showRuleList()
 
-    # Form Success
+    # Form 'cancel' event handler
+    formView.on 'cancel', => @showRuleList()
+
+    # Form 'sync' event handler
     formView.on 'sync', (model) =>
 
       # Adds new model to the collection

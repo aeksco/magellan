@@ -13,23 +13,37 @@ class ConditionChild extends Mn.LayoutView
   className: 'list-group-item'
 
   behaviors:
-    SelectableChild: {}
     SortableChild: {}
+    SelectableChild: {}
+
+  modelEvents:
+    'change:order': 'onReordered'
+
+  onReordered: ->
+    @render()
+    @model.collection.sort()
+    console.log 'ON REORDERED'
 
 # # # # #
 
-class ConditionList extends Mn.CompositeView
+class ConditionList extends Mn.CollectionView
   className: 'list-group'
-  template: require './templates/condition_list'
   childView: ConditionChild
   emptyView: ConditionEmpty
 
   behaviors:
     SortableList: {}
 
-  # onCollectionReordered: ->
-  #   console.log @
-  #   console.log 'ON REORDERED'
+  collectionEvents:
+    'remove': 'onCollectionRemove'
+    'add':    'onCollectionRemove'
+
+  # Resets the selected model in the list
+  # When a selected rule has been removed
+  onCollectionRemove: ->
+    console.log 'COLLECTION CHANGE'
+    setTimeout( @reorderCollection, 250 )
+    @collection.at(0)?.trigger('selected')
 
 # # # # #
 

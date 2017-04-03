@@ -12,7 +12,8 @@ include ../../../../base/partials/form_helpers
   //- TODO - should be a select box
 
 .col-xs-4
-  +formInput({ label: 'Source', placeholder: 'Source', name: 'source', type: 'text' })
+  //- TODO - options should be defined and passed in from the view
+  +formSelect({ label: 'Source', name: 'source', options: [['format_lowercase', 'Format Lowercase'], ['format_uppercase','Format Uppercase']] })
 
 .col-xs-4
   +formSelect({ label: 'Operation', name: 'operation', options: ['format_lowercase', 'format_uppercase'] })

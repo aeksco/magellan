@@ -21,6 +21,12 @@ class ConditionModel extends Backbone.RelationalModel
 
 # # # # #
 
+class ConditionCollection extends Backbone.Collection
+  model: ConditionModel
+  comparator: 'order'
+
+# # # # #
+
 # TODO - this class probably needs some apply/evaluate-against method?
 # TODO - should the applyRule method belong here?
 # The KnowledgeRuleCollection should just ITERATE over each rule, invoking the method defined here.
@@ -36,11 +42,12 @@ class KnowledgeRuleModel extends Backbone.RelationalModel
   # Decorator assignment
   decorator: KnowledgeRuleDecorator
 
-  # Backbone.Relational relations definition
+  # Backbone.Relational - @relations definition
   relations: [
-      type:         Backbone.HasMany
-      key:          'conditions'
-      relatedModel: ConditionModel
+      type:           Backbone.HasMany
+      key:            'conditions'
+      relatedModel:   ConditionModel
+      collectionType: ConditionCollection
   ]
 
   # Overwritten save method
@@ -115,6 +122,34 @@ class KnowledgeRuleCollection extends Backbone.Collection
           # EXACT MATCH
           if operation == 'exact_match'
             if source == value
+              conditionMatched = true
+              data[targetAttr] = result
+              target.set('data', data)
+
+          # STARTS WITH
+          if operation == 'starts_with'
+            if _s.startsWith(source, value)
+              conditionMatched = true
+              data[targetAttr] = result
+              target.set('data', data)
+
+          # CONTAINS
+          if operation == 'contains'
+            if _s.include(source, value)
+              conditionMatched = true
+              data[targetAttr] = result
+              target.set('data', data)
+
+          # CONTAINS (Case-sensitive)
+          if operation == 'contains_case_sensitive'
+            if _s.startsWith(source.toLowerCase(), value.toLowerCase())
+              conditionMatched = true
+              data[targetAttr] = result
+              target.set('data', data)
+
+          # ENDS WITH
+          if operation == 'ends_with'
+            if _s.endsWith(source, value)
               conditionMatched = true
               data[targetAttr] = result
               target.set('data', data)

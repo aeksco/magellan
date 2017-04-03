@@ -15,18 +15,19 @@ include ../../../../base/partials/form_helpers
       .col-xs-12
         hr
 
-      .col-xs-6
+      .col-xs-4
+        //- Source Selector
+        +formSelect({ label: 'Source', name: 'source', options: sourceOptions })
 
-        //- TODO - should be a select box
-        +formInput({ label: 'Source', placeholder: 'Source', name: 'source', type: 'text' })
-
+      .col-xs-4
         //- Operation Selector
-        +formSelect({ label: 'Operation', name: 'operation', options: ['exact_match', 'replace'] })
+        +formSelect({ label: 'Operation', name: 'operation', options: operationOptions })
 
-      .col-xs-6
-
+      .col-xs-4
+        //- Value input
         +formInput({ label: 'Value', placeholder: 'Value', name: 'value', type: 'text' })
 
+      .col-xs-12
         +formInput({ label: 'Result', placeholder: 'Result', name: 'result', type: 'text' })
 
       //- TODO - these buttons should be custom-made for this particular form

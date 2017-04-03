@@ -10,8 +10,21 @@ class ConditionForm extends Mn.LayoutView
     CancelButton: {}
     SubmitButton: {}
 
+  # Defines operationOptions
+  operationOptions: [
+    ['exact_match',             'Exact Match']
+    ['starts_with',             'Starts With']
+    ['ends_with',               'Ends With']
+    ['replace',                 'Replace']
+    ['contains',                'Contains']
+    ['contains_case_sensitive', 'Contains (case sensitive)']
+  ]
+
   templateHelpers: ->
-    return { isNew: @options.isNew }
+    return helpers =
+      isNew:            @options.isNew
+      sourceOptions:    @options.sourceOptions
+      operationOptions: @operationOptions
 
   onRender: ->
 
