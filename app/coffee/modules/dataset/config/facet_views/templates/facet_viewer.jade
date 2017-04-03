@@ -1,0 +1,27 @@
+.row
+  .col-xs-6
+    h4.card-title Facet
+
+  .col-xs-6.text-xs-right
+
+    button.btn.btn-sm.btn-secondary.m-r-1( data-click='link' )
+      i.fa.fa-fw.fa-link
+      | &nbsp;
+      | Link to Ontology
+
+    button.btn.btn-sm.btn-success-outline( data-click='edit' )
+      i.fa.fa-fw.fa-pencil
+      | &nbsp;
+      | Edit
+
+  .col-xs-12
+    hr
+
+.row
+  .col-xs-12
+
+    p=id
+    p=label
+    p=attribute
+    p=tooltip || 'No Tooltip'
+    p=enabled

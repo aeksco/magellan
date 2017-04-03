@@ -1,81 +1,50 @@
+FacetList = require './facetList'
+FacetViewer = require './facetViewer'
+FacetForm = require './facetForm'
 
-class FacetForm extends Mn.LayoutView
-  className: 'modal-content'
-  template: require './templates/facet_form'
+# # # # #
 
-  templateHelpers: { modalTitle: 'Edit Facet' }
+class FacetListLayout extends Mn.LayoutView
+  className: 'row'
+  template: require './templates/facet_list_layout'
 
-  behaviors:
-    SubmitButton: {}
-
-  onSubmit: ->
-    data = Backbone.Syphon.serialize(@)
-    @model.set(data)
-    @trigger 'submitted'
-    @trigger 'hide'
+  regions:
+    listRegion:   '[data-region=list]'
+    viewerRegion: '[data-region=viewer]'
 
   onRender: ->
-    Backbone.Syphon.deserialize(@, @model.toJSON())
+    listView = new FacetList({ collection: @collection })
+    listView.on 'childview:selected', (view) => @showFacetViewer(view.model)
+    @listRegion.show(listView)
+    @collection.at(0)?.trigger('selected')
+
+  showFacetViewer: (facetModel) =>
+
+    # Instantiates new FacetViewer view
+    facetViewer = new FacetViewer({ model: facetModel })
+
+    # Defines 'edit' event handler
+    facetViewer.on 'edit', (view) => @showFacetEditor(view.model)
+
+    # Shows the FacetViewer in @viewerRegion
+    @viewerRegion.show facetViewer
+
+  showFacetEditor: (facetModel) =>
+
+    # Instantiates new FacetForm view
+    facetForm = new FacetForm({ model: facetModel })
+
+    # Defines 'cancel' event handler
+    facetForm.on 'cancel', (view) => @showFacetViewer(view.model)
+
+    # Defines 'sync' event handler
+    facetForm.on 'sync', (view) =>
+      console.log 'SUCCESS'
+      @showFacetViewer(view.model)
+
+    # Shows the FacetForm in @viewerRegion
+    @viewerRegion.show facetForm
 
 # # # # #
 
-class FacetChild extends Mn.LayoutView
-  template: require './templates/facet_child'
-  className: 'list-group-item'
-
-  behaviors:
-    ModelEvents: {}
-    SortableChild: {}
-
-  ui:
-    checkbox: 'input[type=checkbox]'
-    edit:     '[data-click=edit]'
-
-  events:
-    'switchChange.bootstrapSwitch @ui.checkbox':  'onEnabledChange'
-    'click @ui.edit': 'showEditModal'
-
-  modelEvents:
-    'change:order': 'onOrderChange'
-
-  onEnabledChange: ->
-    @model.set(Backbone.Syphon.serialize(@))
-    @model.save()
-
-  onRender: ->
-    Backbone.Syphon.deserialize( @, @model.attributes )
-    @ui.checkbox.bootstrapSwitch({ size: 'small', onText: 'Enabled', offText: 'Disabled' })
-
-  # TODO - this is an expensive operation?
-  # We might want to change the way this is managed
-  onOrderChange: ->
-    @model.save()
-
-  showEditModal: ->
-    formView = new FacetForm({ model: @model })
-    formView.on 'submitted', => @model.save()
-    Backbone.Radio.channel('modal').trigger('show', formView)
-
-  # TODO - better
-  onRequest: ->
-    console.log 'onRequest'
-
-  onSync: ->
-    @render()
-
-  onError: ->
-    console.log 'onError'
-
-# # # # #
-
-class FacetList extends Mn.CompositeView
-  className: 'list-group'
-  template: require './templates/facet_list'
-  childView: FacetChild
-
-  behaviors:
-    SortableList: {}
-
-# # # # #
-
-module.exports = FacetList
+module.exports = FacetListLayout
