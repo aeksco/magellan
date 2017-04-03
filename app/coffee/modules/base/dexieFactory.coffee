@@ -41,7 +41,7 @@ class DexieFactory extends Marionette.Service
     return new Promise (resolve, reject) =>
 
       # Resolves if ID is undefined
-      return resolve(new Entities.Model()) unless id
+      return resolve(new @cachedCollection.model()) unless id
 
       # Returns from @cached if synced
       return resolve(@cachedCollection.get(id)) if @cachedCollection.get(id)

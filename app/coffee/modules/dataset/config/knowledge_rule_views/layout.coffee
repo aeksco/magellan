@@ -130,7 +130,7 @@ class RuleLayout extends Mn.LayoutView
   # resetDataset
   # Shows the view to reset the dataset to it's default raw values
   resetDataset: ->
-    resetView = new ResetRulesView()
+    resetView = new ResetRulesView({ model: @model })
     resetView.on 'cancel', => @showRuleList()
     @contentRegion.show(resetView)
 

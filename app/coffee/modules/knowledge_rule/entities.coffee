@@ -53,6 +53,12 @@ class KnowledgeRuleModel extends Backbone.RelationalModel
 
 # # # # #
 
+# Substring helper function
+isSubstringOf = (str, sub) ->
+  return str.indexOf(sub) > -1
+
+# # # # #
+
 # KnowledgeRuleCollection definition
 class KnowledgeRuleCollection extends Backbone.Collection
   model: KnowledgeRuleModel
@@ -87,8 +93,8 @@ class KnowledgeRuleCollection extends Backbone.Collection
         # i.e., short-circuit conditions loop if match is found
         for condition in conditions
 
-          console.log condition.source
-          console.log target.get('data')
+          # console.log condition.source
+          # console.log target.get('data')
 
           # Isolates pertinant variables
           # TODO - not all of these are used by every operation
@@ -108,7 +114,6 @@ class KnowledgeRuleCollection extends Backbone.Collection
 
           # EXACT MATCH
           if operation == 'exact_match'
-            console.log source
             if source == value
               conditionMatched = true
               data[targetAttr] = result
@@ -117,15 +122,16 @@ class KnowledgeRuleCollection extends Backbone.Collection
           # REPLACE
           if operation == 'replace'
 
-            # TODO - this should replace ONLY if there's an extant substring
-            replaced = source.replace(value, result)
-            if replaced
+            # Ensures presence of substring
+            isSubstring = isSubstringOf(source, value)
+            if isSubstring
               conditionMatched = true
-              data[targetAttr] = replaced
+              data[targetAttr] = source.replace(value, result)
               target.set('data', data)
 
           # FORMAT UPPERCASE
           if operation == 'format_uppercase'
+            continue unless source
             formatted = source.toUpperCase()
             if formatted
               conditionMatched = true
@@ -134,6 +140,7 @@ class KnowledgeRuleCollection extends Backbone.Collection
 
           # FORMAT UPPERCASE
           if operation == 'format_lowercase'
+            continue unless source
             formatted = source.toLowerCase()
             if formatted
               conditionMatched = true
@@ -155,9 +162,8 @@ class KnowledgeRuleCollection extends Backbone.Collection
           # And this method should return a Promise.each()
 
         # Saves the target model ONLY if a condition has been matched
+        # TODO - this should happen one-at-a-time
         if conditionMatched
-          console.log 'MATCHED'
-          console.log target
           target.save()
 
 # # # # #
