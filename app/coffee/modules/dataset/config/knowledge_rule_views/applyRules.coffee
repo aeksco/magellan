@@ -31,15 +31,9 @@ class ApplyRulesView extends Mn.LayoutView
 
       @model.fetchKnowledgeRules().then (rules) =>
 
-        console.log 'APPLYING RULES...'
-
         rules.applyRules(datapoints).then () =>
-          console.log 'RULES APPLIED!'
 
-          console.log 'regenerateFacets...'
           @model.regenerateFacets().then () =>
-
-            console.log 'regenerateFacets DONE!'
 
             # Shows success message
             @flashSuccess()

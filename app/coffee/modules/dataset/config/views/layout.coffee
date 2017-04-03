@@ -7,8 +7,8 @@ class ConfigLayoutView extends require 'hn_views/lib/nav'
   className: 'container-fluid'
 
   navItems: [
-    { icon: 'fa-list',            text: 'Facets',             trigger: 'facets' }
-    { icon: 'fa-university',      text: 'Knowledge Rules',    trigger: 'knowledge', default: true }
+    { icon: 'fa-list',            text: 'Facets',             trigger: 'facets', default: true }
+    { icon: 'fa-university',      text: 'Knowledge Rules',    trigger: 'knowledge'}#, default: true }
     # { icon: 'fa-window-maximize', text: 'Viewer Rules',       trigger: 'viewer' }
   ]
 

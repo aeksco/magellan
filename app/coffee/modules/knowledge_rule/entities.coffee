@@ -75,10 +75,10 @@ class KnowledgeRuleCollection extends Backbone.Collection
 
   # applyRules
   # Applies the defined KnowledgeRules to the TargetCollection
-  # TODO - targetCollection.models should be the outer loop, and rules the inner
   applyRules: (targetCollection) ->
 
     # Iterates over each model in targetCollection and applies rule to each model
+    # TODO - should this be a function belonging to the KnowledgeRule model?
     applyRuleToTarget = (target) =>
 
       # Iterates over each rule...
@@ -192,17 +192,15 @@ class KnowledgeRuleCollection extends Backbone.Collection
               data[targetAttr] = matched
               target.set('data', data)
 
-          # TODO - save EACH dataset model after setting the data
-          # THIS Save method should return a promise.
-          # So that logic should be abstracted into the KnowledgeRuleModel class.
-          # And this method should return a Promise.each()
+      # Condition-checking finished
+
+      # # # # #
 
       # Saves the target model ONLY if a condition has been matched
-      # TODO - this should happen one-at-a-time
-      if conditionMatched
-        return target.save()
-      else
-        return new Promise (resolve, reject) => resolve(true)
+      return target.save() if conditionMatched
+
+      # Returns an empty Promise
+      return new Promise (resolve, reject) => resolve(true)
 
     # Returns as a Promise
     return Promise.each(targetCollection.models, applyRuleToTarget)
