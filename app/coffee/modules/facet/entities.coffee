@@ -9,7 +9,7 @@ class FacetModel extends Backbone.Model
   destroy: ->
     return Backbone.Radio.channel('facet').request('destroy', @)
 
-  # TODO - this should be abstracted elsewhere.
+  # TODO - this functionality should be re-integrated
   # This functionality is really geared towards 'linking' a
   # facet to an ontology attribute.
   # getFacet: (ont_id, ont_attr, id, index) ->

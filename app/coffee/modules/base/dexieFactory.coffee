@@ -97,12 +97,8 @@ class DexieFactory extends Marionette.Service
       # Inserts item into Dexie table
       primary_key = model.id
 
-      # DexieDB dependency injection
-      # TODO - you should rethink this pattern right hurr (used twice in this file)
-      db = Backbone.Radio.channel('db').request('db')
-
       # Deletes the record from the table via primary key
-      db[@tableName].delete(primary_key)
+      @db[@tableName].delete(primary_key)
       .then (model_id) =>
         model.trigger('destroy')
         return resolve()

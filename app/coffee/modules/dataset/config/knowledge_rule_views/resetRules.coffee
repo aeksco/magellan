@@ -27,11 +27,13 @@ class ResetRulesView extends Mn.LayoutView
 
       datapoints.resetDataFromRaw().then () =>
 
-        # Shows success message
-        @flashSuccess()
+        @model.regenerateFacets().then () =>
 
-        # Triggers 'success' event
-        @trigger('success')
+          # Shows success message
+          @flashSuccess()
+
+          # Triggers 'success' event
+          @trigger('success')
 
 # # # # #
 

@@ -31,16 +31,21 @@ class ApplyRulesView extends Mn.LayoutView
 
       @model.fetchKnowledgeRules().then (rules) =>
 
-        # TODO - this must return a Promise
-        rules.applyRules(datapoints)
+        console.log 'APPLYING RULES...'
 
-        # TODO - @model.regenerateFacets()
+        rules.applyRules(datapoints).then () =>
+          console.log 'RULES APPLIED!'
 
-        # Shows success message
-        @flashSuccess()
+          console.log 'regenerateFacets...'
+          @model.regenerateFacets().then () =>
 
-        # Triggers 'success' event
-        @trigger('success')
+            console.log 'regenerateFacets DONE!'
+
+            # Shows success message
+            @flashSuccess()
+
+            # Triggers 'success' event
+            @trigger('success')
 
 # # # # #
 

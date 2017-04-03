@@ -78,14 +78,15 @@ class KnowledgeRuleCollection extends Backbone.Collection
   # TODO - targetCollection.models should be the outer loop, and rules the inner
   applyRules: (targetCollection) ->
 
-    # Iterates over each rule...
-    for rule in @models
+    # Iterates over each model in targetCollection and applies rule to each model
+    applyRuleToTarget = (target) =>
 
-      # Rule represented soley as JSON
-      rule = rule.toJSON()
+      # Iterates over each rule...
+      # TODO - this should be isolated to the rule model?
+      for rule in @models
 
-      # Iterates over each model in targetCollection and applies rule to each model
-      for target in targetCollection.models
+        # Rule represented soley as JSON
+        rule = rule.toJSON()
 
         # Isolates targetAttr and conditions from Rule
         targetAttr = rule.targetAttr
@@ -196,10 +197,15 @@ class KnowledgeRuleCollection extends Backbone.Collection
           # So that logic should be abstracted into the KnowledgeRuleModel class.
           # And this method should return a Promise.each()
 
-        # Saves the target model ONLY if a condition has been matched
-        # TODO - this should happen one-at-a-time
-        if conditionMatched
-          target.save()
+      # Saves the target model ONLY if a condition has been matched
+      # TODO - this should happen one-at-a-time
+      if conditionMatched
+        return target.save()
+      else
+        return new Promise (resolve, reject) => resolve(true)
+
+    # Returns as a Promise
+    return Promise.each(targetCollection.models, applyRuleToTarget)
 
 # # # # #
 
