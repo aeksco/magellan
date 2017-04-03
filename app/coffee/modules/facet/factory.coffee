@@ -12,6 +12,7 @@ class FacetFactory extends DexieFactory
   radioRequests:
     'facet collection': 'getCollection'
     'facet save':       'saveModel'
+    'facet destroy':    'destroyModel'
 
   initialize: ->
     @cachedCollection = new Entities.Collection()

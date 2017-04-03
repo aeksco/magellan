@@ -23,6 +23,95 @@ class DatasetModel extends Backbone.Model
   fetchKnowledgeRules: ->
     return Backbone.Radio.channel('knowledge:rule').request('collection', @id)
 
+  generateNewFacets: (facetKeys, indexStart) ->
+
+    # Adds an index to each facet for correct ordering
+    index = indexStart
+
+    # Save Datapoint function
+    # Passed to Bluebird's Promise.each method, returns a Promise
+    saveFacet = (facet) =>
+
+      # Assembles a new facet
+      attrs =
+        id:         buildUniqueId('fc_')
+        dataset_id: @id
+        attribute:  facet
+        label:      facet
+        order:      index
+        enabled:    true
+        tooltip:    ''
+
+      # Increments index
+      index = index + 1
+
+      # Returns 'add' Promise from DB service
+      return Backbone.Radio.channel('db').request('add', 'facets', attrs)
+
+    # # # # #
+
+    # Iterates over each id in facetKeys returns a promise
+    return Promise.each(facetKeys, saveFacet)
+
+  # Destroys superfluous facets
+  destroySuperfluousFacets: (toDestroy, facetCollection) =>
+
+    # Anonymous helper function
+    # Returns Promise from facet.destroy
+    destroyFacet = (facet) =>
+      facetCollection.remove(facet)
+      return facet.destroy()
+
+    # Iterates over each facet - removes from collection and destroys
+    return Promise.each(toDestroy, destroyFacet)
+
+  # Regenerates facets after KnowledgeRule-related updates
+  regenerateFacets: ->
+
+    # Returns Promise to handle async operations
+    return new Promise (resolve, reject) =>
+
+      # Fetches datapoints
+      @fetchDatapoints().then (datapointCollection) =>
+
+        # Fetches Facets
+        @fetchFacets().then (facetCollection) =>
+
+          # Stores facet models that are pending destruction
+          pendingDestroy = []
+
+          # Isolates keys for facet generation
+          allKeys = []
+          for dp in datapointCollection.models
+            allKeys = _.union(allKeys, _.keys(dp.get('data')) )
+
+          # Iterates over each existing facet
+          for facet in facetCollection.models
+
+            # Isolates the 'attribute' attribute (ha...)
+            attr = facet.get('attribute')
+
+            # Remove attr from allKeys if an associated facet is defined
+            if attr in allKeys
+              allKeys = _.without(allKeys, attr)
+
+            # Destroys a facet with no associated attribute
+            else
+
+              # Marks the facet as pending destruction
+              pendingDestroy.push(facet)
+
+          # Destroys superfluous facets
+          @destroySuperfluousFacets(pendingDestroy, facetCollection)
+          .then () =>
+
+            # Builds new Facets from attributes with no existing associated facet
+            @generateNewFacets(allKeys, facetCollection.length + 1)
+            .then () => return resolve()
+            .catch () => return reject(err)
+
+          .catch (err) => return reject(err)
+
 # # # # #
 
 class DatasetCollection extends Backbone.Collection

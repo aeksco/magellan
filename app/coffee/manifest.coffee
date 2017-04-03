@@ -92,7 +92,7 @@ dexieConfiguration =
   # Schema documentation:
   # http://dexie.org/docs/Version/Version.stores().html
   schema:  [
-    { name: 'facets',   attrs: 'id, dataset_id, order, label, tooltip' }
+    { name: 'facets',   attrs: 'id, dataset_id, label' }
     { name: 'datasets', attrs: 'id, label' }
     { name: 'datapoints', attrs: 'id, dataset_id' }
     { name: 'ontologies', attrs: 'id' }

@@ -25,6 +25,8 @@ class ConfigLayoutView extends require 'hn_views/lib/nav'
       @contentRegion.show new FacetLayout({ collection: facetCollection })
 
   knowledgeConfig: ->
+    window.dataset = @model # TODO - remove.
+
     @model.fetchKnowledgeRules().then (ruleCollection) =>
       @contentRegion.show new RuleLayout({ model: @model, collection: ruleCollection })
 

@@ -55,7 +55,6 @@ class RuleLayout extends Mn.LayoutView
   # showRuleList
   # Shows the list of defined rules
   showRuleList: ->
-    console.log @collection
     ruleList = new RuleList({ collection: @collection })
     ruleList.on 'edit', (ruleModel) => @editRule(ruleModel)
     @contentRegion.show ruleList
@@ -154,6 +153,7 @@ class RuleLayout extends Mn.LayoutView
   applyRules: ->
     applyView = new ApplyRulesView({ model: @model })
     applyView.on 'cancel', => @showRuleList()
+    applyView.on 'success', => @showRuleList()
     @contentRegion.show(applyView)
 
   # resetDataset
@@ -161,6 +161,7 @@ class RuleLayout extends Mn.LayoutView
   resetDataset: ->
     resetView = new ResetRulesView({ model: @model })
     resetView.on 'cancel', => @showRuleList()
+    resetView.on 'success', => @showRuleList()
     @contentRegion.show(resetView)
 
 # # # # #

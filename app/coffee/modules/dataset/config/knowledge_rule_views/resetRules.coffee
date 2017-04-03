@@ -1,23 +1,37 @@
 
 class ResetRulesView extends Mn.LayoutView
   template: require './templates/reset_rules'
-  className: 'row'
+  className: 'card card-block'
 
   behaviors:
     CancelButton: {}
-    SubmitButton: {}
+
+    Confirmations:
+      message:      'Are you sure you want to reset this dataset?'
+      confirmIcon:  'fa-refresh'
+      confirmText:  'RESET'
+      confirmCss:   'btn-danger'
+
+    Flashes:
+      success:
+        message:  'Successfully reset dataset.'
+
+  ui:
+    confirmationTrigger:  '[data-click=submit]'
 
   onCancel: ->
     @trigger 'cancel'
 
-  onSubmit: ->
-    console.log 'ON SUBMIT'
-    console.log @model
+  onConfirmed: ->
     @model.fetchDatapoints().then (datapoints) =>
-      console.log 'FETCHED'
 
       datapoints.resetDataFromRaw().then () =>
-        console.log 'RESET ALL'
+
+        # Shows success message
+        @flashSuccess()
+
+        # Triggers 'success' event
+        @trigger('success')
 
 # # # # #
 

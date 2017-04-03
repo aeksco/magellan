@@ -82,7 +82,7 @@ class DexieFactory extends Marionette.Service
         return reject(err)
 
   # DestroyModel
-  # TODO - abstract into a more generalized method
+  # Removes an individual model from Dexie
   destroyModel: (model) ->
 
     # Ensures presence of @db

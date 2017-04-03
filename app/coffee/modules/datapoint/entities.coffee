@@ -13,7 +13,6 @@ class DatapointCollection extends Backbone.Collection
   # resetDataFromRaw
   # Resets the collection of datapoints to their default attributes
   resetDataFromRaw: ->
-    console.log "RESET DATA"
 
     # Resets data attribute from raw, and saves
     resetDatapoint = (dp) ->

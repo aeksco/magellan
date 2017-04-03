@@ -22,9 +22,8 @@ class FacetChild extends Mn.LayoutView
 
 # # # # #
 
-class FacetList extends Mn.CompositeView
+class FacetList extends Mn.CollectionView
   className: 'list-group'
-  template: require './templates/facet_list'
   childView: FacetChild
 
   behaviors:

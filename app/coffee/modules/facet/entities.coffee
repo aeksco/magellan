@@ -3,9 +3,11 @@ class FacetModel extends Backbone.Model
   urlRoot: 'facet'
 
   # Overwritten save method
-  # TODO - this may need to be refactored when new facets are defined
   save: ->
-    Backbone.Radio.channel('facet').request('save', @)
+    return Backbone.Radio.channel('facet').request('save', @)
+
+  destroy: ->
+    return Backbone.Radio.channel('facet').request('destroy', @)
 
   # TODO - this should be abstracted elsewhere.
   # This functionality is really geared towards 'linking' a
