@@ -2,42 +2,60 @@
 class FacetModel extends Backbone.Model
   urlRoot: 'facet'
 
-  # Overwritten save method
+  # Overwritten 'save' method
   save: ->
     return Backbone.Radio.channel('facet').request('save', @)
 
+  # Overwritten 'destroy' method
   destroy: ->
     return Backbone.Radio.channel('facet').request('destroy', @)
 
-  # TODO - this functionality should be re-integrated
-  # This functionality is really geared towards 'linking' a
-  # facet to an ontology attribute.
-  # getFacet: (ont_id, ont_attr, id, index) ->
-  #   return new Promise (resolve, reject) =>
-  #     Backbone.Radio.channel('ontology').request('attribute', ont_id, ont_attr)
-  #     .then (attribute) =>
+  # linkToOntology
+  # Populates a facte model with data from an ontology
+  linkToOntology: ->
+    return new Promise (resolve, reject) =>
 
-  #       # In ontology attribute is defined (i.e. FOUND)
-  #       if attribute
-  #         label   = attribute['rdfs:label']
-  #         tooltip = attribute['rdfs:comment']
+      # Isolates attribute
+      attr = @get('attribute')
 
-  #       # Ontology attribute was not found
-  #       # We define placeholder label and tooltip
-  #       else
-  #         label   = id
-  #         tooltip = ''
+      # Short-circuits erroneous attribute names
+      return resolve(true) if attr in ['@id', '@type']
+      return resolve(true) if attr.indexOf(':') < 0
 
-  #       # Assembles individual facet object
-  #       facet =
-  #         id:       id
-  #         label:    label
-  #         order:    index
-  #         enabled:  true
-  #         tooltip:  tooltip
+      # Splits attribute to define ontology prefix and attribute
+      attr        = attr.split(':')
+      ont_prefix  = attr[0]
+      ont_attr    = attr[1]
 
-  #       # Returns the generated facet
-  #       return resolve(facet)
+      console.log ont_prefix
+      console.log ont_attr
+
+      return resolve(true)
+
+      # Backbone.Radio.channel('ontology').request('attribute', ont_id, ont_attr)
+      # .then (attribute) =>
+
+      #   # In ontology attribute is defined (i.e. FOUND)
+      #   if attribute
+      #     label   = attribute['rdfs:label']
+      #     tooltip = attribute['rdfs:comment']
+
+      #   # Ontology attribute was not found
+      #   # We define placeholder label and tooltip
+      #   else
+      #     label   = id
+      #     tooltip = ''
+
+      #   # Assembles individual facet object
+      #   facet =
+      #     id:       id
+      #     label:    label
+      #     order:    index
+      #     enabled:  true
+      #     tooltip:  tooltip
+
+      #   # Returns the generated facet
+      #   return resolve(facet)
 
 # # # # #
 
