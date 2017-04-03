@@ -68,7 +68,8 @@
     "sortablejs": "~1.4",
     "tether": "~1.1",
     "three": "^0.82.1",
-    "underscore": "~1.8"
+    "underscore": "~1.8",
+    "underscore.string": "^3.3.4"
   },
   "author": "Alexander Schwartzberg",
   "license": "MIT"

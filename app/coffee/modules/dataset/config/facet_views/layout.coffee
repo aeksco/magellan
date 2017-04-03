@@ -38,9 +38,7 @@ class FacetListLayout extends Mn.LayoutView
     facetForm.on 'cancel', (view) => @showFacetViewer(view.model)
 
     # Defines 'sync' event handler
-    facetForm.on 'sync', (view) =>
-      console.log 'SUCCESS'
-      @showFacetViewer(view.model)
+    facetForm.on 'sync', (view) => @showFacetViewer(view.model)
 
     # Shows the FacetForm in @viewerRegion
     @viewerRegion.show facetForm
