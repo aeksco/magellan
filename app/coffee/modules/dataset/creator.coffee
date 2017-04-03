@@ -12,36 +12,6 @@ window.buildUniqueId = buildUniqueId
 
 class DatasetCreator extends Backbone.Model
 
-  # TODO - this should be abstracted elsewhere.
-  # This functionality is really geared towards 'linking' a
-  # facet to an ontology attribute.
-  # getFacet: (ont_id, ont_attr, id, index) ->
-  #   return new Promise (resolve, reject) =>
-  #     Backbone.Radio.channel('ontology').request('attribute', ont_id, ont_attr)
-  #     .then (attribute) =>
-
-  #       # In ontology attribute is defined (i.e. FOUND)
-  #       if attribute
-  #         label   = attribute['rdfs:label']
-  #         tooltip = attribute['rdfs:comment']
-
-  #       # Ontology attribute was not found
-  #       # We define placeholder label and tooltip
-  #       else
-  #         label   = id
-  #         tooltip = ''
-
-  #       # Assembles individual facet object
-  #       facet =
-  #         id:       id
-  #         label:    label
-  #         order:    index
-  #         enabled:  true
-  #         tooltip:  tooltip
-
-  #       # Returns the generated facet
-  #       return resolve(facet)
-
   # They may be re-generated, though stateful
   # properties will be lost in the process
   # TODO - we will need a process to UPDATE or RE-GENERATE facets
