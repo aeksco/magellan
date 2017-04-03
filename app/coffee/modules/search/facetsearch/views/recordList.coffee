@@ -26,7 +26,7 @@ class ResultViewer extends require 'hn_views/lib/nav'
     @contentRegion.show new JsonViewer({ model: @model })
 
   showGraph: ->
-    @contentRegion.show new JsonGraph({ json: @model.toJSON() })
+    @contentRegion.show new JsonGraph({ json: @model.toJSON()['data'] })
 
   # showOntology: ->
   #   ontologyJson = []

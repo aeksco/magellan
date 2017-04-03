@@ -25,7 +25,19 @@ class FacetedViewLayout extends Mn.LayoutView
     # Shows HeaderView
     # TODO - rename to ControlsView / @controlsRegion
     headerView = new HeaderView({ model: @model })
+
+    # Clear Filters
     headerView.on 'clear', => jQuery.clearFacets()
+
+    # # View as List
+    # headerView.on 'list', =>
+    #   console.log 'SHOW AS LIST'
+
+    # # View as Selector
+    # headerView.on 'viewer', =>
+    #   console.log 'SHOW AS VIEWER'
+
+    # Shows the HeaderView in the headerRegion
     @headerRegion.show headerView
 
     # Initializes FacetView

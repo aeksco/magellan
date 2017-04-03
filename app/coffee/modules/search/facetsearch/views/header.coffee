@@ -4,10 +4,14 @@ class FacetSearchHeader extends Mn.LayoutView
   className: 'card card-block'
 
   ui:
-    clear: '[data-click=clear]'
+    clear:  '[data-click=clear]'
+    list:   '[data-click=list]'
+    viewer: '[data-click=viewer]'
 
   triggers:
-    'click @ui.clear': 'clear'
+    'click @ui.clear':  'clear'
+    'click @ui.list':   'list'
+    'click @ui.viewer': 'viewer'
 
 # # # # #
 
