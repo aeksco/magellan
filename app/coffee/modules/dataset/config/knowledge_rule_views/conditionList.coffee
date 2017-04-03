@@ -21,11 +21,11 @@ class ConditionChild extends Mn.LayoutView
 
   onReordered: ->
     @render()
-    @model.collection.sort()
-    console.log 'ON REORDERED'
+    # @model.collection.sort()
 
 # # # # #
 
+# TODO - collection add and remove events
 class ConditionList extends Mn.CollectionView
   className: 'list-group'
   childView: ConditionChild

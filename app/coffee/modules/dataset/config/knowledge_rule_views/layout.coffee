@@ -55,6 +55,7 @@ class RuleLayout extends Mn.LayoutView
   # showRuleList
   # Shows the list of defined rules
   showRuleList: ->
+    console.log @collection
     ruleList = new RuleList({ collection: @collection })
     ruleList.on 'edit', (ruleModel) => @editRule(ruleModel)
     @contentRegion.show ruleList

@@ -15,6 +15,7 @@ class DatasetCreator extends Backbone.Model
   # They may be re-generated, though stateful
   # properties will be lost in the process
   # TODO - we will need a process to UPDATE or RE-GENERATE facets
+  # TODO - this should be abstracted into the Dataset model as a generateFacets method
   ensureFacets: (dataset_id, datapoints) ->
 
     # Isolates unique keys from the datapoints

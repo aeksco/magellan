@@ -17,7 +17,7 @@ class DatapointCollection extends Backbone.Collection
 
     # Resets data attribute from raw, and saves
     resetDatapoint = (dp) ->
-      raw = dp.get('raw')
+      raw = JSON.parse(JSON.stringify(dp.get('raw'))) # Deep-copy
       dp.set('data', raw)
       return dp.save()
 

@@ -30,7 +30,7 @@ class DefinerForm extends Mn.LayoutView
 
     # Instantiates new ConditionModel from the collection
     # TODO - THIS NEEDS AN ORDER ATTRIBUTE
-    newCondition = new @collection.model()
+    newCondition = new @collection.model({ id: buildUniqueId('cn_'), order: @collection.length + 1 })
 
     # Instantiates new ConditionForm instance
     conditionForm = new ConditionForm({ model: newCondition, isNew: true, sourceOptions: @options.sourceOptions })
