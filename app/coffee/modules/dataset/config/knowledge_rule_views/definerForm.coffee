@@ -4,6 +4,27 @@ ConditionList = require './conditionList'
 
 # # # # #
 
+# OntologySelector class definition
+# TODO - this should be abstracted into a component that can be used elsewhere
+class OntologySelector extends Mn.LayoutView
+  className: 'row'
+  template: require './templates/ontology_attribute_selector'
+
+  ui:
+    attributeSelector: '[name=target_property]'
+
+  templateHelpers: ->
+    return { dropdown: @options.dropdown }
+
+  onRender: ->
+    Backbone.Syphon.deserialize(@, @model.attributes)
+    setTimeout(@initAttributeSelector, 200)
+
+  initAttributeSelector: =>
+    @ui.attributeSelector.select2({ placeholder: 'Target Attribute' })
+
+# # # # #
+
 class DefinerForm extends Mn.LayoutView
   className: 'row'
   template: require './templates/definer_form'
@@ -20,11 +41,16 @@ class DefinerForm extends Mn.LayoutView
     'click @ui.addCondition': 'addCondition'
 
   regions:
+    ontologySelector: '[data-region=ontology-selector]'
     conditionsRegion: '[data-region=conditions]'
 
   addToCollection: (condition) ->
     @collection.add(condition)
     @showConditionList()
+
+  showOntologyAttributeSelector: ->
+    Backbone.Radio.channel('ontology').request('attribute:dropdown').then (dropdown) =>
+      @ontologySelector.show new OntologySelector({ model: @model, dropdown: dropdown })
 
   addCondition: ->
 
@@ -45,8 +71,6 @@ class DefinerForm extends Mn.LayoutView
     @conditionsRegion.show conditionForm
 
   editCondition: (conditionModel) ->
-
-    console.log @
 
     # Instantiates new ConditionForm instance
     conditionForm = new ConditionForm({ model: conditionModel, sourceOptions: @options.sourceOptions })
@@ -70,6 +94,7 @@ class DefinerForm extends Mn.LayoutView
   onRender: ->
     Backbone.Syphon.deserialize( @, @model.attributes )
     @showConditionList()
+    @showOntologyAttributeSelector()
 
   onCancel: ->
     @trigger 'cancel'

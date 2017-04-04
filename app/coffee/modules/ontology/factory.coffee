@@ -7,9 +7,10 @@ class OntologyFactory extends Marionette.Service
 
   # Defines radioRequests
   radioRequests:
-    'ontology model':       'getModel'
-    'ontology collection':  'getCollection'
-    'ontology attribute':   'attribute'
+    'ontology model':               'getModel'
+    'ontology collection':          'getCollection'
+    'ontology attribute':           'attribute'
+    'ontology attribute:dropdown':  'getAttributeDropdown'
 
   initialize: ->
     @cached = new Entities.Collection()
@@ -62,6 +63,34 @@ class OntologyFactory extends Marionette.Service
 
         # Finds and returns the attribute
         return resolve(_.find(graph, (attr) -> attr['@id'] == attribute))
+
+  # getAttributeDropdown
+  # Used to create a grouped dropdown menu to select an ontology attribute
+  getAttributeDropdown: ->
+
+    # Returns Promise to manage async operation
+    return new Promise (resolve, reject) =>
+
+      # Variable to store the dropdown data
+      dropdown = []
+
+      # Fetches ontology collection
+      @getCollection().then (ontologyCollection) =>
+
+        # Iterates over each ontology in the collection
+        for ontology in ontologyCollection.models
+
+          # Constructs an object to maintain the <optgroup> label
+          # and the associated <option> elements
+          item = {}
+          item.label = ontology.get('label')
+          item.items = _.pluck(ontology.get('graph'), '@id')
+
+          # Appends the item to the dropdown return variable
+          dropdown.push item
+
+        # Resolves and returns the constructed dropdown data
+        return resolve(dropdown)
 
 # # # # #
 

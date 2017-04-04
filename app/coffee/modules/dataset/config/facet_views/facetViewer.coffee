@@ -14,8 +14,7 @@ class FacetViewer extends Mn.LayoutView
     'click @ui.link': 'linkToOntology'
 
   linkToOntology: ->
-    @model.linkToOntology().then () =>
-      console.log 'LINKED?'
+    @model.linkToOntology().then () => @render()
 
 # # # # #
 

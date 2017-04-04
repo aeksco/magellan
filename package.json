@@ -65,6 +65,7 @@
     "moment": "~2.10",
     "nw-builder": "^3.2.0",
     "qs": "~6.0",
+    "select2": "^4.0.3",
     "sortablejs": "~1.4",
     "tether": "~1.1",
     "three": "^0.82.1",
