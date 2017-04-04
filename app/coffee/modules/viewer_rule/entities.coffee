@@ -1,56 +1,36 @@
-
-# ConditionModel class definition
-class ConditionModel extends Backbone.RelationalModel
-
-  # Default attributes
-  # TODO - should these be NULL?
-  defaults:
-    source:     ''
-    operation:  ''
-    value:      ''
-    result:     ''
+AbstractRuleEntities = require '../abstract_rule/entities'
 
 # # # # #
 
-class ConditionCollection extends Backbone.Collection
-  model: ConditionModel
-  comparator: 'order'
+# ViewerRuleDecorator class definition
+class ViewerRuleDecorator extends Mn.Decorator
+
+  icon: ->
+    return 'fa-globe'
 
 # # # # #
 
-class ViewerRuleModel extends Backbone.RelationalModel
+# ViewerRuleModel definition
+class ViewerRuleModel extends AbstractRuleEntities.Model
 
-  # Model defaults
-  defaults:
-    order:            0
-    enabled:          true
-    target_property:  'UNDEFINED' # TODO - this will be defined in the form
-    conditions:       []
+  # Decorator assignment
+  decorator: ViewerRuleDecorator
 
-  # Backbone.Relational - @relations definition
-  relations: [
-      type:           Backbone.HasMany
-      key:            'conditions'
-      relatedModel:   ConditionModel
-      collectionType: ConditionCollection
-  ]
+  # radioChannel Definition
+  radioChannel: 'viewer:rule'
 
-  # Overwritten save method
-  save: ->
-    Backbone.Radio.channel('viewer:rule').request('save', @)
+# # # # #
 
-  # Overwritten destroy method
-  destroy: ->
-    Backbone.Radio.channel('viewer:rule').request('destroy', @)
+ViewerRuleModel.setup()
 
 # # # # #
 
 # ViewerRuleCollection definition
-class ViewerRuleCollection extends Backbone.Collection
+class ViewerRuleCollection extends AbstractRuleEntities.Collection
   model: ViewerRuleModel
 
-  # Sort by order attribute
-  comparator: 'order'
+  # Object attribute to which the rules are applied
+  target_attribute: 'views'
 
 # # # # #
 
