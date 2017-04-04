@@ -29,6 +29,9 @@ class ResetRulesView extends Mn.LayoutView
 
         @model.regenerateFacets().then () =>
 
+          # Hides Loading component
+          Backbone.Radio.channel('loading').trigger('hide')
+
           # Shows success message
           @flashSuccess()
 
