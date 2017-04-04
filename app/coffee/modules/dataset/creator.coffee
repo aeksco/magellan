@@ -57,7 +57,7 @@ class DatasetCreator extends Backbone.Model
 
     # Index and count variables for Loading component updates
     index = 0
-    count = datapoints.length
+    count = _s.numberFormat(datapoints.length)
 
     # Save Datapoint function
     # Passed to Bluebird's Promise.each method, returns a Promise
@@ -65,7 +65,7 @@ class DatasetCreator extends Backbone.Model
 
       # Loading component update message
       index = index + 1
-      Backbone.Radio.channel('loading').trigger('show', "Saving datapoint #{index} of #{count}")
+      Backbone.Radio.channel('loading').trigger('show', "Processing #{_s.numberFormat(index)} of #{count}")
 
       # Assembles a new datapoint
       attrs =
