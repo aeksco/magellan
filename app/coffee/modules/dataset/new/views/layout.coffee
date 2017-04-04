@@ -33,7 +33,7 @@ class UploadWidget extends Mn.LayoutView
 
 class NewDatasetLayout extends Mn.LayoutView
   template: require './templates/layout'
-  className: 'container-fluid'
+  className: 'container'
 
   behaviors:
     ModelEvents: {}
