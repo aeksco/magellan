@@ -8,6 +8,17 @@ class FacetListLayout extends Mn.LayoutView
   className: 'row'
   template: require './templates/facet_list_layout'
 
+  behaviors:
+    Flashes:
+      success:
+        message:  'Successfully linked all facets.'
+
+  ui:
+    linkFacets: '[data-click=link-facets]'
+
+  events:
+    'click @ui.linkFacets': 'linkFacets'
+
   regions:
     listRegion:   '[data-region=list]'
     viewerRegion: '[data-region=viewer]'
@@ -17,6 +28,11 @@ class FacetListLayout extends Mn.LayoutView
     listView.on 'childview:selected', (view) => @showFacetViewer(view.model)
     @listRegion.show(listView)
     @collection.at(0)?.trigger('selected')
+
+  linkFacets: ->
+    @collection.linkAllFacets().then () =>
+      @flashSuccess()
+      @render()
 
   showFacetViewer: (facetModel) =>
 

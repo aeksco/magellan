@@ -61,6 +61,16 @@ class FacetCollection extends Backbone.Collection
     facets.push(facet.toJSON()) for facet in @where({ enabled: true })
     return facets
 
+  # linkAllFacets
+  # Links all facets to ontologies (invokes FacetModel.linkToOntology)
+  linkAllFacets: ->
+
+    # Anonymous helper function to invoke linkToOntology()
+    linkFacet = (facet) => return facet.linkToOntology()
+
+    # Returns Promise.each(...)
+    return Promise.each(@models, linkFacet)
+
 # # # # #
 
 module.exports =
