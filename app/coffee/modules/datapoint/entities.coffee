@@ -2,6 +2,8 @@
 class DatapointModel extends Backbone.Model
   urlRoot: 'datapoints'
 
+  # TODO - model defaults
+
   save: ->
     Backbone.Radio.channel('datapoint').request('save', @)
 
