@@ -64,6 +64,7 @@ require './modules/search/factory'
 require './modules/datapoint/factory'
 require './modules/facet/factory'
 require './modules/knowledge_rule/factory'
+require './modules/viewer_rule/factory'
 
 # # # # #
 
