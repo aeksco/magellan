@@ -16,9 +16,20 @@ class DatapointCollection extends Backbone.Collection
   # Resets the collection of datapoints to their default attributes
   resetDataFromRaw: ->
 
+    # Index and count variables for Loading component updates
+    index = 0
+    count = _s.numberFormat(@length)
+
     # Resets data attribute from raw, and saves
     resetDatapoint = (dp) ->
-      raw = JSON.parse(JSON.stringify(dp.get('raw'))) # Deep-copy
+
+      # Loading component update message
+      index = index + 1
+      Backbone.Radio.channel('loading').trigger('show', "Processing #{_s.numberFormat(index)} of #{count}")
+
+      # Deep-copy
+      # Ensures objects don't represent the same space in memory
+      raw = JSON.parse(JSON.stringify(dp.get('raw')))
       dp.set('data', raw)
       return dp.save()
 

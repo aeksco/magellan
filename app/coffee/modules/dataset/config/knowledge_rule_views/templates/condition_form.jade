@@ -27,8 +27,18 @@ include ../../../../base/partials/form_helpers
         //- Value input
         +formInput({ label: 'Value', placeholder: 'Value', name: 'value', type: 'text' })
 
+      .col-xs-6
+        //- Blocking Input
+        +formInput({ label: 'Blocking', formGroupCss: 'm-b-0', name: 'blocking', type: 'checkbox', value: blocking })
+
+      .col-xs-12
+        hr
+
       .col-xs-12
         +formInput({ label: 'Result', placeholder: 'Result', name: 'result', type: 'text' })
+
+      .col-xs-12
+        hr
 
       //- TODO - these buttons should be custom-made for this particular form
       .col-xs-12.text-xs-right
