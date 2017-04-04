@@ -21,7 +21,6 @@ class ConditionChild extends Mn.LayoutView
 
   onReordered: ->
     @render()
-    # @model.collection.sort()
 
 # # # # #
 

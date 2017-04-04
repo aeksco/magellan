@@ -101,6 +101,7 @@ class DefinerForm extends Mn.LayoutView
 
   onSubmit: ->
     data = Backbone.Syphon.serialize(@)
+    @collection.sort()
     @model.set(data)
     @model.save()
 
