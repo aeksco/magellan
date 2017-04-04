@@ -108,7 +108,7 @@ class KnowledgeRuleCollection extends Backbone.Collection
           # TODO - not all of these are used by every operation
           # This should be simplified to cache ONLY what's used.
           data      = target.get('data')
-          source    = data[condition.source]
+          source    = data[condition.source] # TODO - we must find a way to handle non-string datatypes here (Array, Object, Collection, etc.)
           operation = condition.operation
           value     = condition.value
           result    = condition.result
