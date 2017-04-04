@@ -14,11 +14,12 @@ class FacetChild extends Mn.LayoutView
 
   modelEvents:
     'change:order': 'onReordered'
-    # 'sync':         'onSync'
+    'sync':         'onSync'
 
-  # onSync: ->
-  #   css = @className() + ' active'
-  #   @$el.removeClass().addClass(css)
+  onSync: ->
+    css = @className()
+    # css = @className() + ' active'
+    @$el.removeClass().addClass(css)
 
   onReordered: ->
     @model.save()

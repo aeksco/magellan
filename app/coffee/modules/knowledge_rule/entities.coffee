@@ -34,10 +34,10 @@ class KnowledgeRuleModel extends Backbone.RelationalModel
 
   # Model defaults
   defaults:
-    order:      0
-    enabled:    true
-    targetAttr: 'UNDEFINED'
-    conditions: []
+    order:            0
+    enabled:          true
+    target_property:  'UNDEFINED'
+    conditions:       []
 
   # Decorator assignment
   decorator: KnowledgeRuleDecorator
@@ -88,8 +88,8 @@ class KnowledgeRuleCollection extends Backbone.Collection
         # Rule represented soley as JSON
         rule = rule.toJSON()
 
-        # Isolates targetAttr and conditions from Rule
-        targetAttr = rule.targetAttr
+        # Isolates target_property and conditions from Rule
+        target_property = rule.target_property
         conditions = rule.conditions
 
         # Condition matched flag
@@ -124,35 +124,35 @@ class KnowledgeRuleCollection extends Backbone.Collection
           if operation == 'exact_match'
             if source == value
               conditionMatched = true
-              data[targetAttr] = result
+              data[target_property] = result
               target.set('data', data)
 
           # STARTS WITH
           if operation == 'starts_with'
             if _s.startsWith(source, value)
               conditionMatched = true
-              data[targetAttr] = result
+              data[target_property] = result
               target.set('data', data)
 
           # CONTAINS
           if operation == 'contains'
             if _s.include(source, value)
               conditionMatched = true
-              data[targetAttr] = result
+              data[target_property] = result
               target.set('data', data)
 
           # CONTAINS (Case-sensitive)
           if operation == 'contains_case_sensitive'
             if _s.startsWith(source.toLowerCase(), value.toLowerCase())
               conditionMatched = true
-              data[targetAttr] = result
+              data[target_property] = result
               target.set('data', data)
 
           # ENDS WITH
           if operation == 'ends_with'
             if _s.endsWith(source, value)
               conditionMatched = true
-              data[targetAttr] = result
+              data[target_property] = result
               target.set('data', data)
 
           # REPLACE
@@ -162,7 +162,7 @@ class KnowledgeRuleCollection extends Backbone.Collection
             isSubstring = isSubstringOf(source, value)
             if isSubstring
               conditionMatched = true
-              data[targetAttr] = source.replace(value, result)
+              data[target_property] = source.replace(value, result)
               target.set('data', data)
 
           # FORMAT UPPERCASE
@@ -171,7 +171,7 @@ class KnowledgeRuleCollection extends Backbone.Collection
             formatted = source.toUpperCase()
             if formatted
               conditionMatched = true
-              data[targetAttr] = formatted
+              data[target_property] = formatted
               target.set('data', data)
 
           # FORMAT UPPERCASE
@@ -180,7 +180,7 @@ class KnowledgeRuleCollection extends Backbone.Collection
             formatted = source.toLowerCase()
             if formatted
               conditionMatched = true
-              data[targetAttr] = formatted
+              data[target_property] = formatted
               target.set('data', data)
 
           # REGEX MATCH
@@ -189,7 +189,7 @@ class KnowledgeRuleCollection extends Backbone.Collection
             matched = value.exec(source)
             if matched
               conditionMatched = true
-              data[targetAttr] = matched
+              data[target_property] = matched
               target.set('data', data)
 
       # Condition-checking finished

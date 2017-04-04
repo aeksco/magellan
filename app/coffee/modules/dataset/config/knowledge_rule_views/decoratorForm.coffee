@@ -19,8 +19,8 @@ class DecoratorForm extends Mn.LayoutView
     # Gets data from form
     data = Backbone.Syphon.serialize(@)
 
-    # Sets targetAttr
-    @model.set('targetAttr', data.targetAttr)
+    # Sets target_property
+    @model.set('target_property', data.target_property)
 
     # Sets single Decorator condition
     conditions = @model.get('conditions')

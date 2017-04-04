@@ -86,8 +86,7 @@ new OntologyRouter({ container: AppLayout.main })
 # Defines the tables and indexed attributes
 # used by the application
 dexieConfiguration =
-  # db:     'dexie_database_01'
-  db:     'dexie_database_alpha_09'
+  db:     'dexie_database_alpha_10'
 
   # Schema documentation:
   # http://dexie.org/docs/Version/Version.stores().html
@@ -95,7 +94,7 @@ dexieConfiguration =
     { name: 'facets',   attrs: 'id, dataset_id, label' }
     { name: 'datasets', attrs: 'id, label' }
     { name: 'datapoints', attrs: 'id, dataset_id' }
-    { name: 'ontologies', attrs: 'id' }
+    { name: 'ontologies', attrs: 'id, prefix' }
     { name: 'knowledge_rules', attrs: 'id, dataset_id' }
   ]
 
