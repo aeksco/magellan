@@ -45,13 +45,21 @@ class FacetedViewLayout extends Mn.LayoutView
 
     # Bypass List selector
     listView = new RecordListView({ collection: @collection })
-    listView.on 'childview:show:relation', (view, uri) => @showItem(uri)
+    listView.on 'childview:show:relation', (view, id) => @showItem(id)
     @listRegion.show listView
 
-  showItem: (uri) =>
+  showItem: (id) =>
 
-    # Gets item from collection
-    item = @options.items.get(uri)
+    # Empty variable to store found item
+    item = null
+
+    # Finds item
+    for el in @options.items.models
+      if el.get('data')['@id'] == id
+        item = el
+        break
+
+    # Short circuits if item isn't defined
     return unless item
 
     # Closes, if @detailView is showing the same model

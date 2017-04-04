@@ -3,9 +3,26 @@
 
 mixin arrayRow(attr)
   if data[attr]
-    tr
-      td #{attr}:
-      td #{data[attr].join(', ')}
+
+    //- Array of objects
+    if typeof(data[attr][0]) == 'object'
+      tr
+        td #{attr}:
+        td
+          a(data-click='toggle-aggegates') Show Elements
+          | &nbsp; (#{data[attr].length} items)
+
+      tr.aggregate-list(data-toggle='aggregates' style='display:none;')
+        td
+        td
+          each obj in data[attr]
+            a(data-relation=obj['@id'])= obj['@id']
+            | , &nbsp;
+
+    else
+      tr
+        td #{attr}:
+        td #{data[attr].join(', ')}
 
 mixin attrRow(attr)
   if data[attr]

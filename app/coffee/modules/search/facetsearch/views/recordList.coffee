@@ -10,14 +10,12 @@ class ResultViewer extends require 'hn_views/lib/nav'
     { icon: 'fa-table',   text: 'Table',  trigger: 'table', default: true }
     { icon: 'fa-code',    text: 'JSON',   trigger: 'json' }
     { icon: 'fa-sitemap', text: 'Graph',  trigger: 'graph' }
-    # { icon: 'fa-sitemap', text: 'Type Ontology',  trigger: 'ontology' }
   ]
 
   navEvents:
     'table':    'showTable'
     'json':     'showJson'
     'graph':    'showGraph'
-    # 'ontology': 'showOntology'
 
   showTable: ->
     @contentRegion.show new TableView({ model: @model })
@@ -27,18 +25,6 @@ class ResultViewer extends require 'hn_views/lib/nav'
 
   showGraph: ->
     @contentRegion.show new JsonGraph({ json: @model.toJSON()['data'] })
-
-  # showOntology: ->
-  #   ontologyJson = []
-
-  #   # Gets JSON for each @type
-  #   for type in @model.get('@type')
-  #     id = type.split(':')[0]
-  #     attr = type
-  #     attribute = Backbone.Radio.channel('ontology').request('attribute', id, attr)
-  #     ontologyJson.push(attribute) if attribute
-
-  #   @contentRegion.show new JsonGraph({ json: ontologyJson })
 
 # # # # #
 
@@ -66,9 +52,6 @@ class RecordChild extends Mn.LayoutView
   # CopyToClipboard behavior callbacks
   onClipboardSuccess: -> @flashSuccess()
   onClipboardError: -> @flashError()
-
-  # serializeData: ->
-  #   return {data: super()}
 
   onRender: ->
     @viewerRegion.show new ResultViewer({ model: @model })
