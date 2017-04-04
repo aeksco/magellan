@@ -128,6 +128,7 @@ class KnowledgeRuleCollection extends Backbone.Collection
               target.set('data', data)
 
           # STARTS WITH
+          # TODO - STARTS_WITH_CASE_SENSITIVE
           if operation == 'starts_with'
             if _s.startsWith(source, value)
               conditionMatched = true
@@ -149,6 +150,7 @@ class KnowledgeRuleCollection extends Backbone.Collection
               target.set('data', data)
 
           # ENDS WITH
+          # TODO - ENDS_WITH_CASE_SENSITIVE
           if operation == 'ends_with'
             if _s.endsWith(source, value)
               conditionMatched = true
