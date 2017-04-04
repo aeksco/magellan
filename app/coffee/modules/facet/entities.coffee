@@ -13,6 +13,8 @@ class FacetModel extends Backbone.Model
   # linkToOntology
   # Populates a facte model with data from an ontology
   linkToOntology: ->
+
+    # Returns Promise to manage async operations
     return new Promise (resolve, reject) =>
 
       # Isolates attribute
@@ -27,41 +29,31 @@ class FacetModel extends Backbone.Model
       ont_prefix  = attr[0]
       ont_attr    = attr[1]
 
-      console.log ont_prefix
-      console.log ont_attr
+      # Fetches the ontology attribute from the Ontology factory
+      Backbone.Radio.channel('ontology').request('attribute', ont_prefix, ont_attr)
+      .then (ontologyAttribute) =>
 
-      return resolve(true)
+        # Resolves if no matching attribute has been found
+        return resolve(true) unless ontologyAttribute
 
-      # Backbone.Radio.channel('ontology').request('attribute', ont_id, ont_attr)
-      # .then (attribute) =>
+        # Assembles the attributes to be updated
+        update =
+          label:    ontologyAttribute['rdfs:label']
+          tooltip:  ontologyAttribute['rdfs:comment']
 
-      #   # In ontology attribute is defined (i.e. FOUND)
-      #   if attribute
-      #     label   = attribute['rdfs:label']
-      #     tooltip = attribute['rdfs:comment']
+        # Updates the facet model
+        @set(update)
 
-      #   # Ontology attribute was not found
-      #   # We define placeholder label and tooltip
-      #   else
-      #     label   = id
-      #     tooltip = ''
-
-      #   # Assembles individual facet object
-      #   facet =
-      #     id:       id
-      #     label:    label
-      #     order:    index
-      #     enabled:  true
-      #     tooltip:  tooltip
-
-      #   # Returns the generated facet
-      #   return resolve(facet)
+        # Persists the update to database
+        @save()
+        .then () => return resolve(true)
+        .catch (err) => return reject(err)
 
 # # # # #
 
 class FacetCollection extends Backbone.Collection
   model: FacetModel
-  comparator: 'order' # TODO - sort by 'ORDER' attribute
+  comparator: 'order'
 
   getEnabled: ->
     @sort()

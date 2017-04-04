@@ -42,12 +42,25 @@ class OntologyFactory extends Marionette.Service
       # Gets @cached and returns
       return @getCollection().then () => resolve(@cached.get(id))
 
-  attribute: (id, attribute) ->
+  attribute: (prefix, attribute) ->
     return new Promise (resolve, reject) =>
-      @getModel(id).then (ontology) =>
+
+      # Fetchs the full collection of ontologies
+      @getCollection().then (ontologyCollection) =>
+
+        # Finds the ontology by prefix
+        ontology = ontologyCollection.findWhere({ prefix: prefix })
+
+        # Resolves false unless the ontology exists
         return resolve(false) unless ontology
 
+        # Isolates the graph attribute from the ontology model
         graph = ontology.get('graph')
+
+        # Re-assigns correct attribute @id
+        attribute = prefix + ':' + attribute
+
+        # Finds and returns the attribute
         return resolve(_.find(graph, (attr) -> attr['@id'] == attribute))
 
 # # # # #
