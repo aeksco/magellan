@@ -42,10 +42,6 @@ class NewDatasetLayout extends Mn.LayoutView
   regions:
     uploadRegion: '[data-region=upload]'
 
-  modelEvents:
-    'ensured:dataset':    'onDatasetEnsured'
-    'ensured:datapoints': 'onDatapointsEnsured'
-
   onRender: ->
     uploadWidget = new UploadWidget()
     uploadWidget.on 'parse', @onJsonUpload # TODO
@@ -63,8 +59,7 @@ class NewDatasetLayout extends Mn.LayoutView
     @uploadedGraph = parsedJson['@graph']
 
     # Enables submitButton
-    # TODO - there should be a validate method that
-    # manages submitButton state
+    # TODO - there should be a validate method that manages submitButton state
     @enableSubmit()
 
   # onSubmit (from SubmitButton behavior)
@@ -77,19 +72,10 @@ class NewDatasetLayout extends Mn.LayoutView
     @model.set(data)
     @options.creator.deploy(@model, @uploadedGraph)
 
-  onRequest: ->
-    console.log 'ON REQUEST'
-
-  onDatasetEnsured: ->
-    console.log 'onDatasetEnsured'
-
-  onDatapointsEnsured: ->
-    console.log 'onDatapointsEnsured'
-
-  # TODO - handle these model event callbacks
   onSync: ->
-    Backbone.Radio.channel('app').trigger('redirect', '#datasets')
+    Radio.channel('app').trigger('redirect', '#datasets')
 
+  # TODO - handle error event callbacks
   onError: (err) ->
     console.log 'ERROR'
     console.log err

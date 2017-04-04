@@ -40,6 +40,11 @@ new ModalComponent({ container: AppLayout.modal })
 ConfirmComponent = require './components/confirm/component'
 new ConfirmComponent({ container: AppLayout.modal })
 
+# Loading Component Initialization
+# TODO - abstract into Henson.js
+LoadingComponent = require './components/loading/component'
+new LoadingComponent({ container: AppLayout.loading })
+
 # Henson.js Sidebar configuration
 menuItems = [
   { href: '#datasets',    icon: 'fa-search',    title: 'Datasets', divider: true }
@@ -87,7 +92,7 @@ new OntologyRouter({ container: AppLayout.main })
 # Defines the tables and indexed attributes
 # used by the application
 dexieConfiguration =
-  db:     'dexie_database_alpha_10'
+  db:     'dexie_database_alpha_11'
 
   # Schema documentation:
   # http://dexie.org/docs/Version/Version.stores().html

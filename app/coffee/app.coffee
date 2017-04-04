@@ -13,6 +13,9 @@ class Application extends Marionette.Service
     # Starts Header Component
     Backbone.Radio.channel('header').trigger('reset')
 
+    # Starts Loading Component
+    Backbone.Radio.channel('loading').trigger('ready')
+
     # Starts Henson.js Components
     Backbone.Radio.channel('breadcrumb').trigger('ready')
     Backbone.Radio.channel('overlay').trigger('ready')
