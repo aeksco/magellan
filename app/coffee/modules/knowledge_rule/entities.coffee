@@ -61,6 +61,7 @@ class KnowledgeRuleModel extends Backbone.RelationalModel
 # # # # #
 
 # Substring helper function
+# TODO - phase this out w/ Underscore.String
 isSubstringOf = (str, sub) ->
   return str.indexOf(sub) > -1
 
@@ -77,9 +78,22 @@ class KnowledgeRuleCollection extends Backbone.Collection
   # Applies the defined KnowledgeRules to the TargetCollection
   applyRules: (targetCollection) ->
 
+    # Index and count variables for Loading component updates
+    index = 0
+    count = _s.numberFormat(targetCollection.length)
+
     # Iterates over each model in targetCollection and applies rule to each model
     # TODO - should this be a function belonging to the KnowledgeRule model?
+    # ^^^ Yes, definitely.
     applyRuleToTarget = (target) =>
+
+      # Loading component update message
+      index = index + 1
+      Backbone.Radio.channel('loading').trigger('show', "Processing #{_s.numberFormat(index)} of #{count}")
+
+      # # # # #
+
+      # Condition-checking starts
 
       # Iterates over each rule...
       # TODO - this should be isolated to the rule model?
@@ -201,7 +215,7 @@ class KnowledgeRuleCollection extends Backbone.Collection
       # Saves the target model ONLY if a condition has been matched
       return target.save() if conditionMatched
 
-      # Returns an empty Promise
+      # Returns an empty Promise :(
       return new Promise (resolve, reject) => resolve(true)
 
     # Returns as a Promise
