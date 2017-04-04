@@ -1,8 +1,25 @@
 .row
-  .col-xs-12.text-xs-right
+  .col-xs-6.text-xs-left
+    a.btn.btn-secondary( data-click='clear')
+      i.fa.fa-fw.fa-times-circle-o
+      | &nbsp;
+      | Clear Filters
+
+  .col-xs-6.text-xs-right
+
+    //- .btn-group.m-r-1
+    //-   button.btn.btn-secondary( data-click='list' )
+    //-     i.fa.fa-fw.fa-list
+    //-     | &nbsp;
+    //-     | List View
+
+    //-   button.btn.btn-secondary( data-click='viewer' )
+    //-     i.fa.fa-fw.fa-list-alt
+    //-     | &nbsp;
+    //-     | Detail View
 
     .btn-group
-      a.btn.btn-primary-outline( href="#datasets/#{id}/settings" data-click='settings')
+      a.btn.btn-primary-outline( href="#datasets/#{id}/config" )
         i.fa.fa-fw.fa-cog
         | &nbsp;
-        | Settings
+        | Configuration

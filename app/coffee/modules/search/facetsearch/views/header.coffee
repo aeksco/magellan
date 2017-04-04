@@ -3,14 +3,15 @@ class FacetSearchHeader extends Mn.LayoutView
   template: require './templates/header'
   className: 'card card-block'
 
-  # ui:
-  #   settings: '[data-click=settings]'
+  ui:
+    clear:  '[data-click=clear]'
+    list:   '[data-click=list]'
+    viewer: '[data-click=viewer]'
 
-  # events:
-  #   'click @ui.settings': 'showSettingsView'
-
-  # showSettingsView: -> # TODO - should be a trigger.
-  #   console.log 'SHOW SETTINGS!'
+  triggers:
+    'click @ui.clear':  'clear'
+    'click @ui.list':   'list'
+    'click @ui.viewer': 'viewer'
 
 # # # # #
 

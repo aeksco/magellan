@@ -33,13 +33,18 @@ class UploadWidget extends Mn.LayoutView
 
 class NewDatasetLayout extends Mn.LayoutView
   template: require './templates/layout'
-  className: 'container-fluid'
+  className: 'container'
 
   behaviors:
+    ModelEvents: {}
     SubmitButton: {}
 
   regions:
     uploadRegion: '[data-region=upload]'
+
+  modelEvents:
+    'ensured:dataset':    'onDatasetEnsured'
+    'ensured:datapoints': 'onDatapointsEnsured'
 
   onRender: ->
     uploadWidget = new UploadWidget()
@@ -47,29 +52,47 @@ class NewDatasetLayout extends Mn.LayoutView
     @uploadRegion.show uploadWidget
     @disableSubmit()
 
+  # onJsonUpload
+  # Invoked as a callback when a JSON file has
   onJsonUpload: (parsedJson) =>
     # Sets context and graph attributes on dataset model
     @model.set('context', parsedJson['@context'])
-    @model.set('graph', parsedJson['@graph'])
+
+    # TODO - is there a better way to manage this?
+    # We'll need some additional logic to manage the state of the uploaded dataset
+    @uploadedGraph = parsedJson['@graph']
+
+    # Enables submitButton
+    # TODO - there should be a validate method that
+    # manages submitButton state
     @enableSubmit()
 
+  # onSubmit (from SubmitButton behavior)
   onSubmit: ->
+
+    # TODO - this should be abstracted into a behavior...or has it been at some point?
     data = Backbone.Syphon.serialize(@)
-    data.id = data.label.toLowerCase().replace(' ', '_')
+
+    # Saves Dataset model to Dexie
     @model.set(data)
-    @saveToDexie()
+    @options.creator.deploy(@model, @uploadedGraph)
 
-  # TODO - abstract into DexieService
-  # TODO - should this be abstracted into a Dexie model?
-  # Or should the DexieService fire the required events
-  # on the Backbone.Model?
-  saveToDexie: ->
-    table = 'datasets' # MODEL.urlRoot
+  onRequest: ->
+    console.log 'ON REQUEST'
 
-    window.db[table].add(@model.toJSON())
-    .then (model_id) => Backbone.Radio.channel('app').trigger('redirect', '#datasets')
+  onDatasetEnsured: ->
+    console.log 'onDatasetEnsured'
 
-    .catch (err) => console.log 'ERROR CAUGHT'
+  onDatapointsEnsured: ->
+    console.log 'onDatapointsEnsured'
+
+  # TODO - handle these model event callbacks
+  onSync: ->
+    Backbone.Radio.channel('app').trigger('redirect', '#datasets')
+
+  onError: (err) ->
+    console.log 'ERROR'
+    console.log err
 
 # # # # #
 

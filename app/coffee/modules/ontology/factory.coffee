@@ -1,16 +1,16 @@
-
 Entities = require './entities'
 
 # # # # #
 
-# TODO - abstract patterns here into DexieFactory?
+# TODO - integrate DexieFactory
 class OntologyFactory extends Marionette.Service
 
   # Defines radioRequests
   radioRequests:
-    'ontology model':       'getModel'
-    'ontology collection':  'getCollection'
-    'ontology attribute':   'attribute'
+    'ontology model':               'getModel'
+    'ontology collection':          'getCollection'
+    'ontology attribute':           'attribute'
+    'ontology attribute:dropdown':  'getAttributeDropdown'
 
   initialize: ->
     @cached = new Entities.Collection()
@@ -43,13 +43,54 @@ class OntologyFactory extends Marionette.Service
       # Gets @cached and returns
       return @getCollection().then () => resolve(@cached.get(id))
 
-  attribute: (id, attribute) ->
+  attribute: (prefix, attribute) ->
     return new Promise (resolve, reject) =>
-      @getModel(id).then (ontology) =>
+
+      # Fetchs the full collection of ontologies
+      @getCollection().then (ontologyCollection) =>
+
+        # Finds the ontology by prefix
+        ontology = ontologyCollection.findWhere({ prefix: prefix })
+
+        # Resolves false unless the ontology exists
         return resolve(false) unless ontology
 
+        # Isolates the graph attribute from the ontology model
         graph = ontology.get('graph')
+
+        # Re-assigns correct attribute @id
+        attribute = prefix + ':' + attribute
+
+        # Finds and returns the attribute
         return resolve(_.find(graph, (attr) -> attr['@id'] == attribute))
+
+  # getAttributeDropdown
+  # Used to create a grouped dropdown menu to select an ontology attribute
+  getAttributeDropdown: ->
+
+    # Returns Promise to manage async operation
+    return new Promise (resolve, reject) =>
+
+      # Variable to store the dropdown data
+      dropdown = []
+
+      # Fetches ontology collection
+      @getCollection().then (ontologyCollection) =>
+
+        # Iterates over each ontology in the collection
+        for ontology in ontologyCollection.models
+
+          # Constructs an object to maintain the <optgroup> label
+          # and the associated <option> elements
+          item = {}
+          item.label = ontology.get('label')
+          item.items = _.pluck(ontology.get('graph'), '@id')
+
+          # Appends the item to the dropdown return variable
+          dropdown.push item
+
+        # Resolves and returns the constructed dropdown data
+        return resolve(dropdown)
 
 # # # # #
 

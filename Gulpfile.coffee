@@ -85,6 +85,8 @@ paths =
       nodeModules + 'chart.js/dist/Chart.js'
       nodeModules + 'sortablejs/Sortable.min.js'
       nodeModules + 'bootstrap-switch/dist/js/bootstrap-switch.min.js'
+      nodeModules + 'select2/dist/js/select2.full.js'
+
     ]
 
 # Import Plugins

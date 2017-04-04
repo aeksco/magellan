@@ -1,0 +1,19 @@
+include ../../../../base/partials/form_helpers
+
+.col-xs-3
+
+  .row
+    .col-xs-12(data-region='ontology-selector')
+
+  //- TODO - ENABLED CHECKBOX
+
+  button.btn.btn-primary-outline.w-100.m-b-1( data-click='add' )
+    i.fa.fa-fw.fa-plus-circle
+    | &nbsp;
+    | Add Condition
+
+.col-xs-9(data-region='conditions')
+
+.col-xs-12
+  +cancelButton({})
+  +submitButton({})

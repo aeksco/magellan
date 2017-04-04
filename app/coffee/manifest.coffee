@@ -26,14 +26,22 @@ DexieService = require './modules/db/service'
 # Components are routeless services with views that are
 # accessible anywhere in the application
 # Used to manage the header, sidebar, flash, and confirm UI elements
+
+# Header Component Initialization
 # TODO - abstract into Henson.js
 HeaderComponent = require './components/header/component'
 new HeaderComponent({ container: AppLayout.header })
 
+# Modal Component Initialization
+ModalComponent = require './components/modal/component'
+new ModalComponent({ container: AppLayout.modal })
+
+# Confirm Component Initialization
+ConfirmComponent = require './components/confirm/component'
+new ConfirmComponent({ container: AppLayout.modal })
+
 # Henson.js Sidebar configuration
 menuItems = [
-  { href: '#home',        icon: 'fa-home',      title: 'Server Home' }
-  { href: '#data',        icon: 'fa-database',  title: 'Server Data', divider: true }
   { href: '#datasets',    icon: 'fa-search',    title: 'Datasets', divider: true }
   { href: '#ontologies',  icon: 'fa-sitemap',   title: 'Ontologies', divider: true }
   { href: '#settings',    icon: 'fa-cog',       title: 'Settings', divider: true }
@@ -51,6 +59,14 @@ new FlashComponent({ container: AppLayout.flash })
 
 # # # # #
 
+# Factories
+require './modules/search/factory'
+require './modules/datapoint/factory'
+require './modules/facet/factory'
+require './modules/knowledge_rule/factory'
+
+# # # # #
+
 # Modules
 # Modules represent collections of endpoints in the application.
 # They have routes and entities (models and collections)
@@ -59,30 +75,27 @@ DatasetRouter   = require './modules/dataset/router'
 HomeRouter      = require './modules/home/router'
 IframeRouter    = require './modules/iframe/router'
 OntologyRouter  = require './modules/ontology/router'
-SearchRouter    = require './modules/search/router'
 new DatasetRouter({ container: AppLayout.main })
 new HomeRouter({ container: AppLayout.main })
 new IframeRouter({ container: AppLayout.main })
 new OntologyRouter({ container: AppLayout.main })
-new SearchRouter({ container: AppLayout.main })
 
-# TODO - remove this after testing
-# require './modules/base/dexieModel'
-
-# # # # # #
+# # # # #
 
 # DexieService configuration
 # Defines the tables and indexed attributes
 # used by the application
 dexieConfiguration =
-  db:     'dexie_database_01'
+  db:     'dexie_database_alpha_10'
 
   # Schema documentation:
   # http://dexie.org/docs/Version/Version.stores().html
   schema:  [
-    { name: 'facets',   attrs: 'id, order,label,tooltip' }
+    { name: 'facets',   attrs: 'id, dataset_id, label' }
     { name: 'datasets', attrs: 'id, label' }
-    { name: 'ontologies', attrs: 'id' }
+    { name: 'datapoints', attrs: 'id, dataset_id' }
+    { name: 'ontologies', attrs: 'id, prefix' }
+    { name: 'knowledge_rules', attrs: 'id, dataset_id' }
   ]
 
 # # # # # #

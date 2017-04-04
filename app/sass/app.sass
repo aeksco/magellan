@@ -19,8 +19,31 @@ $fa-font-path: '../fonts/'
 // Bootstrap Switch
 @import '../../node_modules/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min'
 
+// // // // //
+// Select2
+@import 'node_modules/select2/src/scss/core'
+
+// Select2 Overrides
+// FEATURE - this should be broken out into a Select2 Theme?
+.select2.select2-container
+  height: 2.5rem
+  .select2-selection
+    height: 2.5rem
+    border-radius: 0
+
+    .select2-selection__rendered, .select2-selection__arrow
+      margin-top: 0.25rem
+
+    .select2-selection__clear
+      display: none
+
+// // // // //
+
 // Material Mixins
 @import './material'
+
+// Nav styles (TODO - abstract into Henson)
+@import './nav'
 
 // Henson Styles
 @import './util'
@@ -35,6 +58,7 @@ $fa-font-path: '../fonts/'
 @import './rdf_viewer'
 @import '../coffee/modules/iframe/styles'
 @import '../coffee/modules/search/styles'
+@import '../coffee/modules/dataset/styles'
 
 // Layout SASS
 @import './layout'

@@ -54,7 +54,7 @@ settings = {}
 # TODO - this can be phased out once facetCollection IS a Backbone.Collection
 createEmptyFacetCollection = ->
   for facet in settings.facets
-    settings.facetCollection[facet.id] = {}
+    settings.facetCollection[facet.attribute] = {}
 
 # Sets zero count for all settings.items?
 # TODO - rename settings.items
@@ -63,34 +63,37 @@ setZeroCounts = ->
   # Iterate over each item
   for item in settings.items
 
+    # Aliases item
+    item = item.data
+
     # intialize the count to be zero
     for facet in settings.facets
 
       # Item[facet] is an array...
-      if $.isArray(item[facet.id])
+      if $.isArray(item[facet.attribute])
 
-        for facetitem in item[facet.id]
+        for facetitem in item[facet.attribute]
 
           if typeof facetitem == 'object'
-            settings.facetCollection[facet.id][facetitem['@id']] = settings.facetCollection[facet.id][facetitem['@id']] ||
+            settings.facetCollection[facet.attribute][facetitem['@id']] = settings.facetCollection[facet.attribute][facetitem['@id']] ||
               count: 0
               id: _.uniqueId('facet_')
 
           else
-            settings.facetCollection[facet.id][facetitem] = settings.facetCollection[facet.id][facetitem] or
+            settings.facetCollection[facet.attribute][facetitem] = settings.facetCollection[facet.attribute][facetitem] or
               count: 0
               id: _.uniqueId('facet_')
 
       # IF OBJECT OR @ID
-      else if typeof(item[facet.id]) == 'object' && item[facet.id]['@id']
-        settings.facetCollection[facet.id][item[facet.id]['@id']] = settings.facetCollection[facet.id][item[facet.id]['@id']] ||
+      else if typeof(item[facet.attribute]) == 'object' && item[facet.attribute]['@id']
+        settings.facetCollection[facet.attribute][item[facet.attribute]['@id']] = settings.facetCollection[facet.attribute][item[facet.attribute]['@id']] ||
           count: 0
           id: _.uniqueId('facet_')
 
       # Not an array or object...
       else
-        if item[facet.id] != undefined
-          settings.facetCollection[facet.id][item[facet.id]] = settings.facetCollection[facet.id][item[facet.id]] or
+        if item[facet.attribute] != undefined
+          settings.facetCollection[facet.attribute][item[facet.attribute]] = settings.facetCollection[facet.attribute][item[facet.attribute]] or
             count: 0
             id: _.uniqueId('facet_')
 
@@ -142,8 +145,11 @@ resetFacetCount = ->
 filterSingleItem = (item) ->
   # Bool for _.select / _.filter
   filtersApply = true
-  # Iterates over each filter
 
+  # Aliases item.data
+  item = item.data
+
+  # Iterates over each filter
   for facet, filter of settings.state.filters
 
     # TODO - abstract this elsewhere, repeated
@@ -189,25 +195,27 @@ updateFacetCollection = ->
 
     for item in settings.currentResults
 
+      item = item.data
+
       # TODO - abstract this logic elswhere
       # TODO - document what's happening here...
-      if $.isArray(item[facet.id])
-        _.each item[facet.id], (facetitem) ->
+      if $.isArray(item[facet.attribute])
+        _.each item[facet.attribute], (facetitem) ->
 
           if typeof(facetitem) == 'object'
-            settings.facetCollection[facet.id][facetitem['@id']].count += 1
+            settings.facetCollection[facet.attribute][facetitem['@id']].count += 1
 
           else
-            settings.facetCollection[facet.id][facetitem].count += 1
+            settings.facetCollection[facet.attribute][facetitem].count += 1
             return
 
-      else if typeof(item[facet.id]) == 'object' && item[facet.id]['@id']
-        if item[facet.id]['@id'] != undefined
-          settings.facetCollection[facet.id][item[facet.id]['@id']].count += 1
+      else if typeof(item[facet.attribute]) == 'object' && item[facet.attribute]['@id']
+        if item[facet.attribute]['@id'] != undefined
+          settings.facetCollection[facet.attribute][item[facet.attribute]['@id']].count += 1
 
       else
-        if item[facet.id] != undefined
-          settings.facetCollection[facet.id][item[facet.id]].count += 1
+        if item[facet.attribute] != undefined
+          settings.facetCollection[facet.attribute][item[facet.attribute]].count += 1
 
 # # # # #
 
@@ -288,7 +296,7 @@ createFacetUI = ->
 
   # Iterates over each setting...
   for facet in settings.facets
-    facetHtml = $(containertemplate(id: facet.id))
+    facetHtml = $(containertemplate(id: facet.attribute))
 
     # Assembles facetItem
     facetItem =
@@ -302,7 +310,7 @@ createFacetUI = ->
     facetlist = $(settings.facetListContainer)
 
     # Iterates over each filter
-    _.each settings.facetCollection[facet.id], (filter, filtername) ->
+    _.each settings.facetCollection[facet.attribute], (filter, filtername) ->
 
       # Splits name, handles directories ending with '/'
       # TODO - abstract into function
@@ -318,7 +326,7 @@ createFacetUI = ->
 
       # Facet filter item CSS state
       filteritem = $(itemtemplate(item))
-      if _.indexOf(settings.state.filters[facet.id], filtername) >= 0
+      if _.indexOf(settings.state.filters[facet.attribute], filtername) >= 0
         filteritem.addClass('activefacet')
 
       if item.count == 0
@@ -559,6 +567,13 @@ jQuery.facetUpdate = ->
   order()
   updateFacetUI()
   updateResults()
+  return
+
+# TODO - this must be implemented in a cleaner way
+# The 'ENGINE' should operate as its own class with a clearFilters method
+jQuery.clearFacets = ->
+  settings.state.filters = {}
+  jQuery.facetUpdate()
   return
 
 # Shows more results

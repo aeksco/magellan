@@ -1,17 +1,22 @@
 include ../../../../base/partials/form_helpers
 
 .row
-  .col-xs-6
-    +formInput({ label: 'Label', placeholder: 'Label', name: 'label', type: 'text' })
-
-    +formInput({ label: 'ID', placeholder: 'ID', name: 'id', type: 'text' })
-
-  .col-xs-6(data-region='upload')
-
   .col-xs-12
-    +submitButton({})
+    .card.card-block
+      .row
+        .col-xs-12
+          h4.card-title New Dataset
 
-  //- .col-xs-6= id
-  //- .col-xs-12= label
-  //- .col-xs-12= tooltip
-  //- .col-xs-12= prefix
+        .col-xs-12
+          hr
+
+        .col-xs-12
+          +formInput({ label: 'Label', placeholder: 'Label', name: 'label', type: 'text' })
+
+        .col-xs-12(data-region='upload')
+
+        .col-xs-12
+          hr
+
+        .col-xs-12.text-xs-right
+          +submitButton({})
