@@ -96,6 +96,7 @@ dexieConfiguration =
     { name: 'datapoints', attrs: 'id, dataset_id' }
     { name: 'ontologies', attrs: 'id, prefix' }
     { name: 'knowledge_rules', attrs: 'id, dataset_id' }
+    { name: 'viewer_rules', attrs: 'id, dataset_id' }
   ]
 
 # # # # # #
