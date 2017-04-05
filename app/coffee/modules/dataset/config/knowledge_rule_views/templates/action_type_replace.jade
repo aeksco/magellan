@@ -5,9 +5,11 @@ include ../../../../base/partials/form_helpers
   input(type='hidden', name='action', value='replace')
 
   .alert.alert-info
-    i.fa.fa-fw.fa-hand-stop-o
+    i.fa.fa-fw.fa-strikethrough
     | &nbsp;
-    | Replace
+    strong Replace
+    br
+    | Returns a copy of text source with text replacement.
 
 .col-xs-4
   +formSelect({ label: 'Text Source', name: 'replace_source', options: sourceOptions })

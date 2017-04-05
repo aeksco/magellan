@@ -86,7 +86,7 @@ class RuleForm extends Mn.LayoutView
     @definitionsRegion.show definitionForm
 
   showDefinitionList: ->
-    definitionList = new DefinitionList({ collection: @collection })
+    definitionList = new DefinitionList({ collection: @collection, header: true })
     definitionList.on 'edit:definition', (definitionModel) => return @editDefinition(definitionModel)
 
     # Shows the list view in region
