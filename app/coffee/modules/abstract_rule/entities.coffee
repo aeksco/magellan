@@ -25,6 +25,147 @@ class DefinitionCollection extends Backbone.Collection
   model: DefinitionModel
   comparator: 'order'
 
+  evaluate: (target, target_object, target_property) =>
+
+    # EvaluateAction Helper
+    # TODO - this should be abstracted elsewhere - perhaps an ActionEvaluator class?
+    evaluateAction = (target, target_object, target_property, data, definition) =>
+
+      # TODO - should be a switch statement here
+
+      # Static
+      if definition.get('action') == 'static'
+        data[target_property] = definition.get('static_result')
+        target.set(target_object, data)
+        return
+
+      # Replace
+      if definition.get('action') == 'replace'
+
+        # Replace operation
+        replace_source = data[replace_source]
+        replace_with = definition.get('replace_with')
+        result = replace_source.replace(replace_with)
+
+        # Sets value
+        data[target_property] = result
+        target.set(target_object, data)
+        return
+
+    # Condition matched flag
+    # Target model is saved IF true
+    conditionMatched = false
+
+    # Iterates over each condition
+    # TODO - abstract into DefinitionCollection prototype?
+    for definition in @models
+
+      # Isolates pertinant variables
+      # TODO - not all of these are used by every operation
+      # This should be simplified to cache ONLY what's used.
+      data = target.get(target_object)
+
+      # Constraint
+      source    = data[definition.get('source')] # TODO - we must find a way to handle non-string datatypes here (Array, Object, Collection, etc.)
+      operation = definition.get('operation')
+      value     = definition.get('value')
+
+      # Action
+      result    = definition.get('result') # TODO - decomission this
+
+      # # # # # # # # # # # # # # # # # # # #
+      # TODO - this operation should be abstracted into RuleModel & Condition Model
+      # @target_object may be accessed via @collection, or passed by reference
+      # TODO - this operation must manage values that are arrays, objects, etc.
+
+      # Skip undefined
+      # continue unless source
+
+      # EXACT MATCH
+      if operation == 'exact_match'
+        if source == value
+          conditionMatched = true
+          data[target_property] = result
+          target.set(target_object, data)
+
+      # STARTS WITH
+      # TODO - STARTS_WITH_CASE_SENSITIVE
+      if operation == 'starts_with'
+        if _s.startsWith(source, value)
+          conditionMatched = true
+          data[target_property] = result
+          target.set(target_object, data)
+
+      # CONTAINS
+      if operation == 'contains'
+        if _s.include(source, value)
+          conditionMatched = true
+          data[target_property] = result
+          target.set(target_object, data)
+
+      # CONTAINS (Case-sensitive)
+      if operation == 'contains_case_sensitive'
+        if _s.startsWith(source.toLowerCase(), value.toLowerCase())
+          conditionMatched = true
+          data[target_property] = result
+          target.set(target_object, data)
+
+      # ENDS WITH
+      # TODO - ENDS_WITH_CASE_SENSITIVE
+      if operation == 'ends_with'
+        if _s.endsWith(source, value)
+          conditionMatched = true
+          evaluateAction(target, target_object, target_property, data, definition)
+
+          # data[target_property] = result
+          # target.set(target_object, data)
+
+      # # # # #
+      # REPLACE
+      # TODO - this is an ACTION
+      # if operation == 'replace'
+
+      #   # Ensures presence of substring
+      #   isSubstring = isSubstringOf(source, value)
+      #   if isSubstring
+      #     conditionMatched = true
+      #     data[target_property] = source.replace(value, result)
+      #     target.set(target_object, data)
+
+      # FORMAT UPPERCASE
+      # TODO - this is an ACTION
+      # if operation == 'format_uppercase'
+      #   continue unless source
+      #   formatted = source.toUpperCase()
+      #   if formatted
+      #     conditionMatched = true
+      #     data[target_property] = formatted
+      #     target.set(target_object, data)
+
+      # FORMAT LOWERCASE
+      # TODO - this is an ACTION
+      # if operation == 'format_lowercase'
+      #   continue unless source
+      #   formatted = source.toLowerCase()
+      #   if formatted
+      #     conditionMatched = true
+      #     data[target_property] = formatted
+      #     target.set(target_object, data)
+
+      # REGEX MATCH
+      # TODO - MUST PICK WHICH ARRAY INDEX IN MATCHED REGEX
+      # TODO - this is an ACTION?
+      # if operation == 'regex_match'
+      #   matched = value.exec(source)
+      #   if matched
+      #     conditionMatched = true
+      #     data[target_property] = matched
+      #     target.set(target_object, data)
+
+      # TODO - SPLIT_AT_CHAR
+      # TODO - this is an action -> inputs = 'char', 'index'
+
+
 # # # # #
 
 # TODO - this class probably needs some apply/evaluate-against method?
@@ -78,7 +219,7 @@ class AbstractRuleCollection extends Backbone.Collection
 
   # Object attribute to which the rules are applied
   # This should be overwritten when subclassed
-  target_attribute: null
+  target_object: null
 
   # Sort by order attribute
   comparator: 'order'
@@ -101,139 +242,20 @@ class AbstractRuleCollection extends Backbone.Collection
       Backbone.Radio.channel('loading').trigger('show', "Processing #{_s.numberFormat(index)} of #{count}")
 
       # # # # #
-
       # Condition-checking starts
 
       # Iterates over each rule...
       # TODO - this should be isolated to the rule model?
       for rule in @models
 
-        # Rule represented soley as JSON
-        rule = rule.toJSON()
-
         # Isolates target_property and conditions from Rule
-        target_property = rule.target_property
-        conditions = rule.conditions
+        target_property = rule.get('target_property')
+        definitionCollection = rule.get('conditions') # TODO - rename to definitions
 
-        # Condition matched flag
-        # Target model is saved IF true
-        conditionMatched = false
-
-        # Iterates over each condition
-        # TODO - continue to next target if condition is matched
-        # i.e., short-circuit conditions loop if match is found
-        for condition in conditions
-
-          # console.log condition.source
-          # console.log target.get('data')
-
-          # Isolates pertinant variables
-          # TODO - not all of these are used by every operation
-          # This should be simplified to cache ONLY what's used.
-          data      = target.get(@target_attribute)
-
-          # Condition
-          source    = data[condition.source] # TODO - we must find a way to handle non-string datatypes here (Array, Object, Collection, etc.)
-          operation = condition.operation
-          value     = condition.value
-
-          # Action
-          result    = condition.result # TODO - decomission this
-
-          # # # # # # # # # # # # # # # # # # # #
-          # TODO - this operation should be abstracted into RuleModel & Condition Model
-          # @target_attribute may be accessed via @collection, or passed by reference
-          # TODO - this operation must manage values that are arrays, objects, etc.
-
-          # Skip undefined
-          # continue unless source
-
-          # TODO - execute ACTIONS here
-
-          # EXACT MATCH
-          if operation == 'exact_match'
-            if source == value
-              conditionMatched = true
-              data[target_property] = result
-              target.set(@target_attribute, data)
-
-          # STARTS WITH
-          # TODO - STARTS_WITH_CASE_SENSITIVE
-          if operation == 'starts_with'
-            if _s.startsWith(source, value)
-              conditionMatched = true
-              data[target_property] = result
-              target.set(@target_attribute, data)
-
-          # CONTAINS
-          if operation == 'contains'
-            if _s.include(source, value)
-              conditionMatched = true
-              data[target_property] = result
-              target.set(@target_attribute, data)
-
-          # CONTAINS (Case-sensitive)
-          if operation == 'contains_case_sensitive'
-            if _s.startsWith(source.toLowerCase(), value.toLowerCase())
-              conditionMatched = true
-              data[target_property] = result
-              target.set(@target_attribute, data)
-
-          # ENDS WITH
-          # TODO - ENDS_WITH_CASE_SENSITIVE
-          if operation == 'ends_with'
-            if _s.endsWith(source, value)
-              conditionMatched = true
-              data[target_property] = result
-              target.set(@target_attribute, data)
-
-          # # # # #
-          # REPLACE
-          # TODO - this is an ACTION
-          if operation == 'replace'
-
-            # Ensures presence of substring
-            isSubstring = isSubstringOf(source, value)
-            if isSubstring
-              conditionMatched = true
-              data[target_property] = source.replace(value, result)
-              target.set(@target_attribute, data)
-
-          # FORMAT UPPERCASE
-          # TODO - this is an ACTION
-          if operation == 'format_uppercase'
-            continue unless source
-            formatted = source.toUpperCase()
-            if formatted
-              conditionMatched = true
-              data[target_property] = formatted
-              target.set(@target_attribute, data)
-
-          # FORMAT LOWERCASE
-          # TODO - this is an ACTION
-          if operation == 'format_lowercase'
-            continue unless source
-            formatted = source.toLowerCase()
-            if formatted
-              conditionMatched = true
-              data[target_property] = formatted
-              target.set(@target_attribute, data)
-
-          # REGEX MATCH
-          # TODO - MUST PICK WHICH ARRAY INDEX IN MATCHED REGEX
-          # TODO - this is an ACTION?
-          if operation == 'regex_match'
-            matched = value.exec(source)
-            if matched
-              conditionMatched = true
-              data[target_property] = matched
-              target.set(@target_attribute, data)
-
-          # TODO - SPLIT_AT_CHAR
-          # TODO - this is an action -> inputs = 'char', 'index'
+        # Evaluates the definitions againt the target, returns boolean
+        conditionMatched = definitionCollection.evaluate(target, @target_object, target_property)
 
       # Condition-checking finished
-
       # # # # #
 
       # Saves the target model ONLY if a condition has been matched

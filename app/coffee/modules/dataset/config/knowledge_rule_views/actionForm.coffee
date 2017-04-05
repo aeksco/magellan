@@ -13,6 +13,9 @@ class ActionTypeForm extends Mn.LayoutView
   getTemplate: ->
     return @templateMap[@options.actionType]
 
+  onRender: ->
+    Backbone.Syphon.deserialize( @, @model.attributes )
+
 # # # # #
 
 class ActionForm extends Mn.LayoutView
@@ -38,7 +41,6 @@ class ActionForm extends Mn.LayoutView
     return { isNew: @options.isNew, availableActions: @availableActions }
 
   onRender: ->
-    Backbone.Syphon.deserialize( @, @model.attributes )
     @renderDefaultTypeForm()
 
   actionSelected: (e) ->
@@ -61,10 +63,9 @@ class ActionForm extends Mn.LayoutView
       defaultAction = _.findWhere(@availableActions, { default: true })
       @showActionTypeForm(defaultAction.action)
 
+    # Shows the correct actionTypeForm view while editing
     else
-      console.log @model.get('action')
-      console.log 'SHOW ACTION TYPE'
-      console.log @model.attributes
+      @showActionTypeForm(@model.get('action'))
 
 # # # # #
 

@@ -32,7 +32,7 @@ class KnowledgeRuleCollection extends AbstractRuleEntities.Collection
   model: KnowledgeRuleModel
 
   # Object attribute to which the rules are applied
-  target_attribute: 'data'
+  target_object: 'data'
 
 # # # # #
 

@@ -30,7 +30,7 @@ class ViewerRuleCollection extends AbstractRuleEntities.Collection
   model: ViewerRuleModel
 
   # Object attribute to which the rules are applied
-  target_attribute: 'views'
+  target_object: 'views'
 
 # # # # #
 
