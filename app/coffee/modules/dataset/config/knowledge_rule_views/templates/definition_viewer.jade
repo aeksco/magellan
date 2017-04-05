@@ -49,10 +49,44 @@
           .col-xs-12
             p.lead Action
 
-          .col-xs-6
-            strong Action Type
-          .col-xs-6
-            strong Static Result
+          if action == 'literal'
 
-          .col-xs-6= action
-          .col-xs-6= static_result
+            .col-xs-6
+              strong Action Type
+            .col-xs-6
+              strong Literal Text
+
+            .col-xs-6 Literal
+            .col-xs-6= literal_text
+
+          if action == 'block'
+
+            .col-xs-12
+              strong Action Type
+            .col-xs-12 Block
+
+          if action == 'clone'
+
+            .col-xs-6
+              strong Action Type
+            .col-xs-6
+              strong Clone From
+
+            .col-xs-6 Clone
+            .col-xs-6= clone_source
+
+          if action == 'replace'
+
+            .col-xs-3
+              strong Action Type
+            .col-xs-3
+              strong Text Source
+            .col-xs-3
+              strong Text to Replace
+            .col-xs-3
+              strong Replace With
+
+            .col-xs-3 Replace
+            .col-xs-3= replace_source
+            .col-xs-3= replace_text
+            .col-xs-3= replace_with

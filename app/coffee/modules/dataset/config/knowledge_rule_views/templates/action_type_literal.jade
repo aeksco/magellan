@@ -5,9 +5,9 @@ include ../../../../base/partials/form_helpers
   input(type='hidden', name='action', value='static')
 
   .alert.alert-info
-    i.fa.fa-fw.fa-code
+    i.fa.fa-fw.fa-quote-right
     | &nbsp;
-    | Static Action
+    strong Literal
 
 .col-xs-12
-  +formInput({ label: 'static_result', placeholder: 'static_result', name: 'static_result', type: 'text' })
+  +formInput({ label: 'Literal Text', placeholder: 'Literal Text', name: 'literal_text', type: 'text' })

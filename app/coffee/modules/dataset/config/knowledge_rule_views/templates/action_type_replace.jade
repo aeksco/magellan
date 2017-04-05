@@ -10,10 +10,10 @@ include ../../../../base/partials/form_helpers
     | Replace
 
 .col-xs-4
-  +formSelect({ label: 'replace_source', name: 'replace_source', options: sourceOptions })
+  +formSelect({ label: 'Text Source', name: 'replace_source', options: sourceOptions })
 
 .col-xs-4
-  +formInput({ label: 'replace_text', placeholder: 'replace_text', name: 'replace_text', type: 'text' })
+  +formInput({ label: 'Text to Replace', placeholder: 'Text to Replace', name: 'replace_text', type: 'text' })
 
 .col-xs-4
-  +formInput({ label: 'replace_with', placeholder: 'replace_with', name: 'replace_with', type: 'text' })
+  +formInput({ label: 'Replace With', placeholder: 'Replace With', name: 'replace_with', type: 'text' })

@@ -5,7 +5,8 @@ class ActionTypeForm extends Mn.LayoutView
   templateMap:
     block:    require './templates/action_type_block'
     replace:  require './templates/action_type_replace'
-    static:   require './templates/action_type_static'
+    literal:  require './templates/action_type_literal'
+    clone:    require './templates/action_type_clone'
 
   initialize: (options) ->
     @model.set('action', @options.actionType)
@@ -35,15 +36,15 @@ class ActionForm extends Mn.LayoutView
     actionTypeRegion: '[data-region=action-type]'
 
   availableActions: [
-    { action: 'static',   icon: 'fa-quote-right', text: 'Static', default: true }
-    { action: 'block',    icon: 'fa-hand-stop-o', text: 'Blocking' }
-    { action: 'replace',  icon: 'fa-quote-right', text: 'Replace' }
+    { action: 'literal',  icon: 'fa-quote-right',   text: 'Literal', default: true }
+    { action: 'block',    icon: 'fa-hand-stop-o',   text: 'Blocking' }
+    { action: 'replace',  icon: 'fa-strikethrough', text: 'Replace' }
+    { action: 'clone',    icon: 'fa-copy',          text: 'Clone' }
   ]
 
   # TODO - Format Lowercase
   # TODO - Format Uppercase
   # TODO - Split
-  # TODO - Clone
 
   templateHelpers: ->
     return { isNew: @options.isNew, availableActions: @availableActions }

@@ -30,9 +30,9 @@ class DefinitionModel extends Backbone.RelationalModel
     if @get('action') == 'block'
       return
 
-    # Static
-    if @get('action') == 'static'
-      data[target_property] = @get('static_result')
+    # Literal
+    if @get('action') == 'literal'
+      data[target_property] = @get('literal_text')
       target.set(target_object, data)
       return
 
