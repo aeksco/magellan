@@ -4,12 +4,4 @@
   .col-xs-2
     i.fa.fa-fw.fa-bars.cursor-pointer.sortable
 
-  .col-xs-8= target_property
-
-  //- TODO - this should be a badge?
-  .col-xs-2
-    if type == 'definer'
-      i.fa.fa-fw.fa-plus-square-o( title='Definer' )&attributes(tooltipAttrs)
-
-    if type == 'decorator'
-      i.fa.fa-fw.fa-magic( title='Decorator' )&attributes(tooltipAttrs)
+  .col-xs-10= target_property

@@ -1,12 +1,7 @@
-
-RuleList = require './ruleList'
-RuleFormSelector = require './ruleFormSelector' # TODO - decomission this view
-
-ApplyRulesView = require './applyRules'
-ResetRulesView = require './resetRules'
-
-DefinerForm = require './ruleForm'
-DecoratorForm = require './decoratorForm' # TODO - decomission this view
+RuleList        = require './ruleList'
+RuleForm        = require './ruleForm'
+ApplyRulesView  = require './applyRules'
+ResetRulesView  = require './resetRules'
 
 # # # # #
 
@@ -20,7 +15,7 @@ class RuleLayout extends Mn.LayoutView
     reset:    '[data-click=reset]'
 
   events:
-    'click @ui.newRule':  'showRuleFormSelector'
+    'click @ui.newRule':  'showRuleForm'
     'click @ui.apply':    'applyRules'
     'click @ui.reset':    'resetDataset'
 
@@ -32,7 +27,7 @@ class RuleLayout extends Mn.LayoutView
 
   # fetchSourceOptions
   # Fetches the available facet IDs and Labels
-  # Used in the 'source' dropdown in the Decorator and Definer Forms
+  # Used in the 'source' dropdown in the RuleForm
   fetchSourceOptions: ->
 
     # Returns Promise to manage async operation
@@ -56,97 +51,50 @@ class RuleLayout extends Mn.LayoutView
   # Shows the list of defined rules
   showRuleList: ->
     ruleList = new RuleList({ collection: @collection })
-    ruleList.on 'edit', (ruleModel) => @editRule(ruleModel)
+    ruleList.on 'edit', (ruleModel) => @showRuleForm(ruleModel)
     @contentRegion.show ruleList
-
-  # editRule
-  # Shows the correct form to edit the ruleModel parameter
-  editRule: (ruleModel) =>
-    return @showDefinerForm(ruleModel) if ruleModel.get('type') == 'definer'
-    return @showDecoratorForm(ruleModel)
-
-  # showRuleFormSelector
-  # Shows the form to select which type of rule
-  # the user would like to create
-  showRuleFormSelector: ->
-
-    # Instantiates new RuleFormSelector
-    ruleForm = new RuleFormSelector()
-
-    # Cancel event callback
-    ruleForm.on 'cancel', => @showRuleList()
-
-    # Definer event callback
-    ruleForm.on 'new:definer', => @showDefinerForm()
-
-    # Decorator event callback
-    ruleForm.on 'new:decorator', => @showDecoratorForm()
-
-    # Shows the RuleForm in @contentRegion
-    @contentRegion.show(ruleForm)
 
   # TODO - this method should live on the collection, rather than in this view.
   # TODO - this should REALLY be abstracted into a factory method that accepts TYPE and DATASET_ID attributes
-  buildNewRule: (type) ->
+  buildNewRule: ->
     params =
       id:         window.buildUniqueId('kn_')
       order:      @collection.length + 1
-      type:       type
       dataset_id: @model.id
 
     return new @collection.model(params)
 
-  # showDecoratorForm
-  # Shows the form to create or edit a Decorator rule instance
-  showDecoratorForm: (model) ->
-
-    # Gets model to pass into DecoratorForm
-    formModel = model || @buildNewRule('decorator')
-
-    # Fetches SourceOptions
-    @fetchSourceOptions().then (sourceOptions) =>
-
-      # Instantiates new FormView instance
-      formView = new DecoratorForm({ model: formModel, sourceOptions: sourceOptions })
-
-      # Shows the DecoratorForm
-      @showRuleForm(formView)
-
-  # showDefinerForm
-  # Shows the form to create or edit a Definer rule instance
-  showDefinerForm: (model) ->
-
-    # Gets model to pass into DefinerForm
-    formModel = model || @buildNewRule('definer')
-
-    # Fetches SourceOptions
-    @fetchSourceOptions().then (sourceOptions) =>
-
-      # Instantiates new DefinerForm instance
-      formView = new DefinerForm({ model: formModel, collection: formModel.get('conditions'), sourceOptions: sourceOptions })
-
-      # Shows the DefinerForm
-      @showRuleForm(formView)
-
   # showRuleForm
-  # Shows either a Definer or Decorator form view
-  # Defines event listeners and callbacks shared between both forms
-  showRuleForm: (formView) ->
+  # Shows the form to create or edit a Definer rule instance
+  # RENAME TO - SHOW RULE FORM
+  showRuleForm: (model) ->
 
-    # Form 'cancel' event handler
-    formView.on 'cancel', => @showRuleList()
+    # HACK - assigns null if showRuleForm was invoked via jQuery event
+    model = null if model.currentTarget
 
-    # Form 'sync' event handler
-    formView.on 'sync', (model) =>
+    # Gets model to pass into RuleForm
+    formModel = model || @buildNewRule()
 
-      # Adds new model to the collection
-      @collection.add(model)
+    # Fetches SourceOptions
+    @fetchSourceOptions().then (sourceOptions) =>
 
-      # Renders the rule list
-      @showRuleList()
+      # Instantiates new RuleForm instance
+      formView = new RuleForm({ model: formModel, collection: formModel.get('conditions'), sourceOptions: sourceOptions })
 
-    # Shows the form inside the content region
-    @contentRegion.show(formView)
+      # Form 'cancel' event handler
+      formView.on 'cancel', => @showRuleList()
+
+      # Form 'sync' event handler
+      formView.on 'sync', (model) =>
+
+        # Adds new model to the collection
+        @collection.add(model)
+
+        # Renders the rule list
+        @showRuleList()
+
+      # Shows the form inside the content region
+      @contentRegion.show(formView)
 
   # applyRules
   # Shows the view to apply the rules to the dataset
