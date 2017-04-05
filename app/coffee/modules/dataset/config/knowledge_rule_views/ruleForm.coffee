@@ -1,6 +1,6 @@
 
 DefinitionForm = require './definitionForm'
-ConditionList = require './conditionList'
+DefinitionList = require './definitionList'
 
 # # # # #
 
@@ -37,64 +37,64 @@ class RuleForm extends Mn.LayoutView
     ModelEvents: {}
 
   ui:
-    addCondition: '[data-click=add]'
+    addDefinition: '[data-click=add]'
 
   events:
-    'click @ui.addCondition': 'addCondition'
+    'click @ui.addDefinition': 'addDefinition'
 
   regions:
-    ontologySelector: '[data-region=ontology-selector]'
-    conditionsRegion: '[data-region=conditions]'
+    ontologySelector:   '[data-region=ontology-selector]'
+    definitionsRegion:  '[data-region=definitions]'
 
-  addToCollection: (condition) ->
-    @collection.add(condition)
-    @showConditionList()
+  addToCollection: (definitionModel) ->
+    @collection.add(definitionModel)
+    @showDefinitionList()
 
   showOntologyAttributeSelector: ->
     Backbone.Radio.channel('ontology').request('attribute:dropdown').then (dropdown) =>
       @ontologySelector.show new OntologySelector({ model: @model, dropdown: dropdown })
 
-  addCondition: ->
+  addDefinition: ->
 
-    # Instantiates new ConditionModel from the collection
-    newCondition = new @collection.model({ id: buildUniqueId('cn_'), order: @collection.length + 1 })
+    # Instantiates new DefinitionModel from the collection
+    newDefinition = new @collection.model({ id: buildUniqueId('cn_'), order: @collection.length + 1 })
 
     # Instantiates new DefinitionForm instance
-    definitionForm = new DefinitionForm({ model: newCondition, isNew: true, sourceOptions: @options.sourceOptions })
+    definitionForm = new DefinitionForm({ model: newDefinition, isNew: true, sourceOptions: @options.sourceOptions })
 
     # Cancel event callback
-    definitionForm.on 'cancel', => @showConditionList()
+    definitionForm.on 'cancel', => @showDefinitionList()
 
     # Submit event callback
     definitionForm.on 'submit', (view) => @addToCollection(view.model)
 
     # Shows the form in region
-    @conditionsRegion.show definitionForm
+    @definitionsRegion.show definitionForm
 
-  editCondition: (conditionModel) ->
+  editDefinition: (definitionModel) ->
 
     # Instantiates new DefinitionForm instance
-    definitionForm = new DefinitionForm({ model: conditionModel, sourceOptions: @options.sourceOptions })
+    definitionForm = new DefinitionForm({ model: definitionModel, sourceOptions: @options.sourceOptions })
 
     # Cancel event callback
-    definitionForm.on 'cancel', => @showConditionList()
+    definitionForm.on 'cancel', => @showDefinitionList()
 
     # Submit event callback
-    definitionForm.on 'submit', (view) => @showConditionList()
+    definitionForm.on 'submit', (view) => @showDefinitionList()
 
     # Shows the form in region
-    @conditionsRegion.show definitionForm
+    @definitionsRegion.show definitionForm
 
-  showConditionList: ->
-    conditionList = new ConditionList({ collection: @collection })
-    conditionList.on 'edit:condition', (conditionModel) => return @editCondition(conditionModel)
+  showDefinitionList: ->
+    definitionList = new DefinitionList({ collection: @collection })
+    definitionList.on 'edit:definition', (definitionModel) => return @editDefinition(definitionModel)
 
     # Shows the list view in region
-    @conditionsRegion.show conditionList
+    @definitionsRegion.show definitionList
 
   onRender: ->
     Backbone.Syphon.deserialize( @, @model.attributes )
-    @showConditionList()
+    @showDefinitionList()
     @showOntologyAttributeSelector()
 
   onCancel: ->

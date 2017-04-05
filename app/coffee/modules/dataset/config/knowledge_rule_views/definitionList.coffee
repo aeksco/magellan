@@ -1,14 +1,14 @@
-ConditionViewer = require './conditionViewer'
+DefinitionViewer = require './definitionViewer'
 
 # # # # #
 
-class ConditionEmpty extends Mn.LayoutView
+class DefinitionEmpty extends Mn.LayoutView
   template: require './templates/definition_empty'
   className: 'list-group-item list-group-item-warning'
 
 # # # # #
 
-class ConditionChild extends Mn.LayoutView
+class DefinitionChild extends Mn.LayoutView
   template: require './templates/definition_child'
   className: 'list-group-item'
 
@@ -24,11 +24,11 @@ class ConditionChild extends Mn.LayoutView
 
 # # # # #
 
-# TODO - collection add and remove events
-class ConditionList extends Mn.CollectionView
+# TODO - collection add and remove events?
+class DefinitionList extends Mn.CollectionView
   className: 'list-group'
-  childView: ConditionChild
-  emptyView: ConditionEmpty
+  childView: DefinitionChild
+  emptyView: DefinitionEmpty
 
   behaviors:
     SortableList: {}
@@ -40,13 +40,12 @@ class ConditionList extends Mn.CollectionView
   # Resets the selected model in the list
   # When a selected rule has been removed
   onCollectionRemove: ->
-    console.log 'COLLECTION CHANGE'
     setTimeout( @reorderCollection, 250 )
     @collection.at(0)?.trigger('selected')
 
 # # # # #
 
-class ConditionLayout extends Mn.LayoutView
+class DefinitionLayout extends Mn.LayoutView
   className: 'row'
   template: require './templates/definition_list_layout'
 
@@ -59,19 +58,19 @@ class ConditionLayout extends Mn.LayoutView
     detailRegion: '[data-region=detail]'
 
   onRender: ->
-    @showConditionList()
+    @showDefinitionList()
 
-  showConditionList: ->
-    listView = new ConditionList({ collection: @collection })
-    listView.on 'childview:selected', (view) => @showConditionViewer(view.model)
+  showDefinitionList: ->
+    listView = new DefinitionList({ collection: @collection })
+    listView.on 'childview:selected', (view) => @showDefinitionViewer(view.model)
     @listRegion.show(listView)
     @collection.at(0)?.trigger('selected')
 
-  showConditionViewer: (model) ->
-    conditionViewer = new ConditionViewer({ model: model })
-    conditionViewer.on 'edit', (view) => @trigger('edit:condition', view.model)
-    @detailRegion.show conditionViewer
+  showDefinitionViewer: (model) ->
+    definitionViewer = new DefinitionViewer({ model: model })
+    definitionViewer.on 'edit', (view) => @trigger('edit:definition', view.model)
+    @detailRegion.show definitionViewer
 
 # # # # #
 
-module.exports = ConditionLayout
+module.exports = DefinitionLayout
