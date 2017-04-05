@@ -31,15 +31,11 @@ class RdfDetailView extends Mn.LayoutView
   onRender: ->
     # TODO - abstract this elsewhere.
     # TODO - overlay should be a region
-    # if @model.get('dmoa:FileType') == 'CSV'
+    if @model.get('views').csv
 
-    #   console.log 'SHOW CSV'
-
-    #   # TODO - fetch CSV file from Background App.
-    #   console.log @model
-    #   console.log @model.csvSrc()
-    #   @trigger 'show:underlay'
-    #   @loadCsv(@model.csvSrc())
+      # TODO - fetch CSV file from Background App.
+      @trigger 'show:underlay'
+      @loadCsv(@model.get('views').csv)
 
   # TODO - this needs to be abstracted into the CsvViewer class
   loadCsv: (url) ->

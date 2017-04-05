@@ -6,13 +6,12 @@
   .col-xs-12.m-t-1
     h4.card-title= data['@id'].split('/').pop()
 
-if data.imageSrc
+if views.img
   .row
     .col-xs-12.text-center
-      img.img-thumbnail(data-zoom=data.imageSrc, src=data.imageSrc, style='max-height:30rem;')
+      img.img-thumbnail(data-zoom=views.img, src=views.img, style='max-height:30rem;')
 
-else
-  .row.m-t-1
-    .col-xs-12
-      table.table.table-responsive.attr-table
-        include ./table
+.row.m-t-1
+  .col-xs-12
+    table.table.table-responsive.attr-table
+      include ./table
