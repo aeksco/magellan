@@ -11,11 +11,11 @@ include ../../../../base/partials/form_helpers
     br
     | Returns a copy of text source with text replacement.
 
-.col-xs-4
+.col-xs-12
   +formSelect({ label: 'Text Source', name: 'replace_source', options: sourceOptions })
 
-.col-xs-4
+.col-xs-12
   +formInput({ label: 'Text to Replace', placeholder: 'Text to Replace', name: 'replace_text', type: 'text' })
 
-.col-xs-4
+.col-xs-12
   +formInput({ label: 'Replace With', placeholder: 'Replace With', name: 'replace_with', type: 'text' })

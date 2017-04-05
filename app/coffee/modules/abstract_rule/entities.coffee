@@ -230,6 +230,9 @@ class AbstractRuleCollection extends Backbone.Collection
       # # # # #
       # Condition-checking starts
 
+      # Save flag variable
+      saveFlag = false
+
       # Iterates over each rule...
       for rule in @models
 
@@ -240,11 +243,15 @@ class AbstractRuleCollection extends Backbone.Collection
         # Evaluates the definitions againt the target, returns boolean
         conditionMatched = definitionCollection.evaluate(target, @target_object, target_property)
 
+        # Save if ANY condition has been matched
+        saveFlag = true if conditionMatched
+
       # Condition-checking finished
       # # # # #
 
       # Saves the target model ONLY if a condition has been matched
-      return target.save() if conditionMatched
+      # and the saveFlag has been set to 'true'
+      return target.save() if saveFlag
 
       # Returns an empty Promise :(
       return new Promise (resolve, reject) => resolve(true)

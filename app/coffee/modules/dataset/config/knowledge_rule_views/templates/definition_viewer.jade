@@ -77,16 +77,18 @@
 
           if action == 'replace'
 
-            .col-xs-3
+            .col-xs-6
               strong Action Type
-            .col-xs-3
+            .col-xs-6
               strong Text Source
-            .col-xs-3
-              strong Text to Replace
-            .col-xs-3
-              strong Replace With
 
-            .col-xs-3 Replace
-            .col-xs-3= replace_source
-            .col-xs-3= replace_text
-            .col-xs-3= replace_with
+            .col-xs-6 Replace
+            .col-xs-6= replace_source
+
+            .col-xs-12
+              strong Text to Replace
+            .col-xs-12= replace_text
+
+            .col-xs-12
+              strong Replace With
+            .col-xs-12= replace_with
