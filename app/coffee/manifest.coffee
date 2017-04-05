@@ -92,7 +92,7 @@ new OntologyRouter({ container: AppLayout.main })
 # Defines the tables and indexed attributes
 # used by the application
 dexieConfiguration =
-  db:     'dexie_database_alpha_11'
+  db:     'dexie_database_alpha_12'
 
   # Schema documentation:
   # http://dexie.org/docs/Version/Version.stores().html

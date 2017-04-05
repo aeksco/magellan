@@ -10,7 +10,7 @@ class ResultViewer extends require 'hn_views/lib/nav'
   navItems: ->
     items = [
       { icon: 'fa-table',   text: 'Table',  trigger: 'table', default: true }
-      { icon: 'fa-code',    text: 'JSON',   trigger: 'json' }
+      { icon: 'fa-code',    text: 'JSON',   trigger: 'json' } # TODO - disable for DEMO
       { icon: 'fa-sitemap', text: 'Graph',  trigger: 'graph' }
     ]
 
@@ -52,7 +52,7 @@ class RecordChild extends Mn.LayoutView
     return obj =
       Tooltips: {}
       ClickableRelations: {}
-      CopyToClipboard: { text: @options.model.stringifyJson() }
+      # CopyToClipboard: { text: @options.model.stringifyJson() }
       Flashes:
         success:
           message:  'Copied JSON to clipboard.'
