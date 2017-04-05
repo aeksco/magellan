@@ -1,5 +1,5 @@
 
-ConditionForm = require './conditionForm'
+DefinitionForm = require './definitionForm'
 ConditionList = require './conditionList'
 
 # # # # #
@@ -25,9 +25,11 @@ class OntologySelector extends Mn.LayoutView
 
 # # # # #
 
-class DefinerForm extends Mn.LayoutView
+# TODO - this form should be renamed to RuleForm
+# And RuleFormSelector should be decomissioned
+class RuleForm extends Mn.LayoutView
   className: 'row'
-  template: require './templates/definer_form'
+  template: require './templates/rule_form'
 
   behaviors:
     CancelButton: {}
@@ -55,34 +57,33 @@ class DefinerForm extends Mn.LayoutView
   addCondition: ->
 
     # Instantiates new ConditionModel from the collection
-    # TODO - THIS NEEDS AN ORDER ATTRIBUTE
     newCondition = new @collection.model({ id: buildUniqueId('cn_'), order: @collection.length + 1 })
 
-    # Instantiates new ConditionForm instance
-    conditionForm = new ConditionForm({ model: newCondition, isNew: true, sourceOptions: @options.sourceOptions })
+    # Instantiates new DefinitionForm instance
+    definitionForm = new DefinitionForm({ model: newCondition, isNew: true, sourceOptions: @options.sourceOptions })
 
     # Cancel event callback
-    conditionForm.on 'cancel', => @showConditionList()
+    definitionForm.on 'cancel', => @showConditionList()
 
     # Submit event callback
-    conditionForm.on 'submit', (view) => @addToCollection(view.model)
+    definitionForm.on 'submit', (view) => @addToCollection(view.model)
 
     # Shows the form in region
-    @conditionsRegion.show conditionForm
+    @conditionsRegion.show definitionForm
 
   editCondition: (conditionModel) ->
 
-    # Instantiates new ConditionForm instance
-    conditionForm = new ConditionForm({ model: conditionModel, sourceOptions: @options.sourceOptions })
+    # Instantiates new DefinitionForm instance
+    definitionForm = new DefinitionForm({ model: conditionModel, sourceOptions: @options.sourceOptions })
 
     # Cancel event callback
-    conditionForm.on 'cancel', => @showConditionList()
+    definitionForm.on 'cancel', => @showConditionList()
 
     # Submit event callback
-    conditionForm.on 'submit', (view) => @showConditionList()
+    definitionForm.on 'submit', (view) => @showConditionList()
 
     # Shows the form in region
-    @conditionsRegion.show conditionForm
+    @conditionsRegion.show definitionForm
 
   showConditionList: ->
     conditionList = new ConditionList({ collection: @collection })
@@ -116,4 +117,4 @@ class DefinerForm extends Mn.LayoutView
 
 # # # # #
 
-module.exports = DefinerForm
+module.exports = RuleForm

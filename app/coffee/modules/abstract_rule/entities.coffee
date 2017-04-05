@@ -7,11 +7,17 @@ class ConditionModel extends Backbone.RelationalModel
   # TODO - should 'source', 'operation', and 'value' be renamed?
   defaults:
     order:      null
-    blocking:   false
+
+    # Condition
     source:     ''
     operation:  ''
     value:      ''
-    result:     '' # TODO - re-think 'result' approach
+
+    # Action
+    action:     ''
+
+    # TODO - de-comission this approach
+    result:     ''
 
 # # # # #
 
@@ -125,11 +131,14 @@ class AbstractRuleCollection extends Backbone.Collection
           # TODO - not all of these are used by every operation
           # This should be simplified to cache ONLY what's used.
           data      = target.get(@target_attribute)
+
+          # Condition
           source    = data[condition.source] # TODO - we must find a way to handle non-string datatypes here (Array, Object, Collection, etc.)
           operation = condition.operation
           value     = condition.value
-          blocking  = condition.blocking # 'blocking' will short-circuit the conditions loop if a condition isn't met (used instead of 'result')
-          result    = condition.result
+
+          # Action
+          result    = condition.result # TODO - decomission this
 
           # # # # # # # # # # # # # # # # # # # #
           # TODO - this operation should be abstracted into RuleModel & Condition Model
@@ -139,15 +148,14 @@ class AbstractRuleCollection extends Backbone.Collection
           # Skip undefined
           # continue unless source
 
+          # TODO - execute ACTIONS here
+
           # EXACT MATCH
           if operation == 'exact_match'
             if source == value
               conditionMatched = true
               data[target_property] = result
               target.set(@target_attribute, data)
-            else if blocking
-              conditionMatched = false
-              break
 
           # STARTS WITH
           # TODO - STARTS_WITH_CASE_SENSITIVE
@@ -156,9 +164,6 @@ class AbstractRuleCollection extends Backbone.Collection
               conditionMatched = true
               data[target_property] = result
               target.set(@target_attribute, data)
-            else if blocking
-              conditionMatched = false
-              break
 
           # CONTAINS
           if operation == 'contains'
@@ -166,9 +171,6 @@ class AbstractRuleCollection extends Backbone.Collection
               conditionMatched = true
               data[target_property] = result
               target.set(@target_attribute, data)
-            else if blocking
-              conditionMatched = false
-              break
 
           # CONTAINS (Case-sensitive)
           if operation == 'contains_case_sensitive'
@@ -176,9 +178,6 @@ class AbstractRuleCollection extends Backbone.Collection
               conditionMatched = true
               data[target_property] = result
               target.set(@target_attribute, data)
-            else if blocking
-              conditionMatched = false
-              break
 
           # ENDS WITH
           # TODO - ENDS_WITH_CASE_SENSITIVE
@@ -187,9 +186,6 @@ class AbstractRuleCollection extends Backbone.Collection
               conditionMatched = true
               data[target_property] = result
               target.set(@target_attribute, data)
-            else if blocking
-              conditionMatched = false
-              break
 
           # # # # #
           # REPLACE
@@ -202,9 +198,6 @@ class AbstractRuleCollection extends Backbone.Collection
               conditionMatched = true
               data[target_property] = source.replace(value, result)
               target.set(@target_attribute, data)
-            else if blocking
-              conditionMatched = false
-              break
 
           # FORMAT UPPERCASE
           # TODO - this is an ACTION
@@ -215,9 +208,6 @@ class AbstractRuleCollection extends Backbone.Collection
               conditionMatched = true
               data[target_property] = formatted
               target.set(@target_attribute, data)
-            else if blocking
-              conditionMatched = false
-              break
 
           # FORMAT LOWERCASE
           # TODO - this is an ACTION
@@ -228,9 +218,6 @@ class AbstractRuleCollection extends Backbone.Collection
               conditionMatched = true
               data[target_property] = formatted
               target.set(@target_attribute, data)
-            else if blocking
-              conditionMatched = false
-              break
 
           # REGEX MATCH
           # TODO - MUST PICK WHICH ARRAY INDEX IN MATCHED REGEX
@@ -241,9 +228,6 @@ class AbstractRuleCollection extends Backbone.Collection
               conditionMatched = true
               data[target_property] = matched
               target.set(@target_attribute, data)
-            else if blocking
-              conditionMatched = false
-              break
 
           # TODO - SPLIT_AT_CHAR
           # TODO - this is an action -> inputs = 'char', 'index'

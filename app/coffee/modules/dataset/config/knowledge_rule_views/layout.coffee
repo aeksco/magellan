@@ -1,12 +1,12 @@
 
 RuleList = require './ruleList'
-RuleFormSelector = require './ruleFormSelector'
+RuleFormSelector = require './ruleFormSelector' # TODO - decomission this view
 
 ApplyRulesView = require './applyRules'
 ResetRulesView = require './resetRules'
 
-DefinerForm = require './definerForm'
-DecoratorForm = require './decoratorForm'
+DefinerForm = require './ruleForm'
+DecoratorForm = require './decoratorForm' # TODO - decomission this view
 
 # # # # #
 
