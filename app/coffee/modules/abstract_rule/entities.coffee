@@ -127,17 +127,6 @@ class DefinitionCollection extends Backbone.Collection
           break if definition.isBlocking()
 
       # # # # #
-      # REPLACE
-      # TODO - this is an ACTION
-      # if operation == 'replace'
-
-      #   # Ensures presence of substring
-      #   isSubstring = isSubstringOf(source, value)
-      #   if isSubstring
-      #     conditionMatched = true
-      #     data[target_property] = source.replace(value, result)
-      #     target.set(target_object, data)
-
       # FORMAT UPPERCASE
       # TODO - this is an ACTION
       # if operation == 'format_uppercase'
@@ -158,19 +147,11 @@ class DefinitionCollection extends Backbone.Collection
       #     data[target_property] = formatted
       #     target.set(target_object, data)
 
-      # REGEX MATCH
-      # TODO - MUST PICK WHICH ARRAY INDEX IN MATCHED REGEX
-      # TODO - this is an ACTION?
-      # if operation == 'regex_match'
-      #   matched = value.exec(source)
-      #   if matched
-      #     conditionMatched = true
-      #     data[target_property] = matched
-      #     target.set(target_object, data)
-
       # TODO - SPLIT_AT_CHAR
       # TODO - this is an action -> inputs = 'char', 'index'
 
+    # Returns conditionMatched
+    return conditionMatched
 
 # # # # #
 
@@ -189,12 +170,12 @@ class AbstractRuleModel extends Backbone.RelationalModel
     order:            0
     enabled:          true
     target_property:  ''
-    conditions:       []
+    definitions:      []
 
   # Backbone.Relational - @relations definition
   relations: [
       type:           Backbone.HasMany
-      key:            'conditions' # TODO - rename to 'definitions'
+      key:            'definitions' # TODO - rename to 'definitions'
       relatedModel:   DefinitionModel
       collectionType: DefinitionCollection
   ]
@@ -251,12 +232,11 @@ class AbstractRuleCollection extends Backbone.Collection
       # Condition-checking starts
 
       # Iterates over each rule...
-      # TODO - this should be isolated to the rule model?
       for rule in @models
 
         # Isolates target_property and definitions from Rule
         target_property = rule.get('target_property')
-        definitionCollection = rule.get('conditions') # TODO - rename to definitions
+        definitionCollection = rule.get('definitions')
 
         # Evaluates the definitions againt the target, returns boolean
         conditionMatched = definitionCollection.evaluate(target, @target_object, target_property)

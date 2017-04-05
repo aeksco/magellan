@@ -43,6 +43,7 @@ class ActionForm extends Mn.LayoutView
   # TODO - Format Lowercase
   # TODO - Format Uppercase
   # TODO - Split
+  # TODO - Clone
 
   templateHelpers: ->
     return { isNew: @options.isNew, availableActions: @availableActions }

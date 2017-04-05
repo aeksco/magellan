@@ -79,7 +79,7 @@ class RuleLayout extends Mn.LayoutView
     @fetchSourceOptions().then (sourceOptions) =>
 
       # Instantiates new RuleForm instance
-      formView = new RuleForm({ model: formModel, collection: formModel.get('conditions'), sourceOptions: sourceOptions })
+      formView = new RuleForm({ model: formModel, collection: formModel.get('definitions'), sourceOptions: sourceOptions })
 
       # Form 'cancel' event handler
       formView.on 'cancel', => @showRuleList()
