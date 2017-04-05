@@ -12,13 +12,11 @@ class DefinitionForm extends Mn.LayoutView
     SubmitButton: {}
 
   regions:
-    constraintRegion:  '[data-region=constraint]'
+    constraintRegion: '[data-region=constraint]'
     actionRegion:     '[data-region=action]'
 
   templateHelpers: ->
     return { isNew: @options.isNew }
-    # sourceOptions:    @options.sourceOptions
-    # operationOptions: @operationOptions
 
   onRender: ->
     @constraintRegion.show new ConstraintForm({ model: @model, sourceOptions: @options.sourceOptions })
@@ -31,12 +29,16 @@ class DefinitionForm extends Mn.LayoutView
   onSubmit: (e) ->
     e.stopPropagation()
 
-    # TODO - FormSerialize Behavior
+    # Serializes data from form
     data = Backbone.Syphon.serialize(@)
-    console.log data
-    # @model.set(data)
 
-    # @trigger 'submit', @
+    console.log data
+
+    # Sets the data on the model
+    @model.set(data)
+
+    # Triggers the submit event
+    @trigger 'submit', @
 
 # # # # #
 

@@ -4,7 +4,7 @@
     .row
 
       .col-xs-6
-        p.lead Condition
+        p.lead.m-b-0 Definition
 
       .col-xs-6.text-xs-right
         button.btn.btn-sm.btn-secondary.m-r-1( data-click='edit' )
@@ -21,8 +21,38 @@
         hr
 
       .col-xs-12
+
+        //- Constraint
         .row
-          .col-xs-6= source || 'UNDEFINED'
-          .col-xs-6= operation || 'UNDEFINED'
-          .col-xs-6= value || 'UNDEFINED'
-          .col-xs-6= result || 'UNDEFINED'
+          .col-xs-12
+            p.lead Constraint
+
+          .col-xs-4
+            strong Source
+          .col-xs-4
+            strong Operation
+          .col-xs-4
+            strong Value
+
+          .col-xs-4= source
+          .col-xs-4= operation
+          .col-xs-4= value
+
+        .row
+          .col-xs-12
+            hr
+
+        //- Action
+        //- TODO - needs action_type_viewer - separate view and region
+        //- Or a series of partials to conditionally render the correct template
+        .row
+          .col-xs-12
+            p.lead Action
+
+          .col-xs-6
+            strong Action Type
+          .col-xs-6
+            strong Static Result
+
+          .col-xs-6= action
+          .col-xs-6= static_result

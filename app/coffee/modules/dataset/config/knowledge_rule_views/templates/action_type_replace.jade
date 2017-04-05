@@ -1,8 +1,16 @@
+include ../../../../base/partials/form_helpers
+
 .col-xs-12
 
   input(type='hidden', name='action', value='replace')
 
-  .alert.alert-warning
+  .alert.alert-info
     i.fa.fa-fw.fa-hand-stop-o
     | &nbsp;
-    | REPLACE
+    | Replace
+
+.col-xs-6
+  +formSelect({ label: 'replace_source', name: 'replace_source', options: sourceOptions })
+
+.col-xs-6
+  +formInput({ label: 'replace_with', placeholder: 'replace_with', name: 'replace_with', type: 'text' })

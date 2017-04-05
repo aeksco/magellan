@@ -1,6 +1,6 @@
 
-# ConditionModel class definition
-class ConditionModel extends Backbone.RelationalModel
+# DefinitionModel class definition
+class DefinitionModel extends Backbone.RelationalModel
 
   # Default attributes
   # TODO - should these be NULL?
@@ -21,8 +21,8 @@ class ConditionModel extends Backbone.RelationalModel
 
 # # # # #
 
-class ConditionCollection extends Backbone.Collection
-  model: ConditionModel
+class DefinitionCollection extends Backbone.Collection
+  model: DefinitionModel
   comparator: 'order'
 
 # # # # #
@@ -41,15 +41,15 @@ class AbstractRuleModel extends Backbone.RelationalModel
   defaults:
     order:            0
     enabled:          true
-    target_property:  'UNDEFINED'
+    target_property:  ''
     conditions:       []
 
   # Backbone.Relational - @relations definition
   relations: [
       type:           Backbone.HasMany
-      key:            'conditions'
-      relatedModel:   ConditionModel
-      collectionType: ConditionCollection
+      key:            'conditions' # TODO - rename to 'definitions'
+      relatedModel:   DefinitionModel
+      collectionType: DefinitionCollection
   ]
 
   # Overwritten save method
@@ -221,7 +221,7 @@ class AbstractRuleCollection extends Backbone.Collection
 
           # REGEX MATCH
           # TODO - MUST PICK WHICH ARRAY INDEX IN MATCHED REGEX
-          # TODO - this is an ACTION
+          # TODO - this is an ACTION?
           if operation == 'regex_match'
             matched = value.exec(source)
             if matched

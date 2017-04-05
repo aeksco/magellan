@@ -5,6 +5,10 @@ class ActionTypeForm extends Mn.LayoutView
   templateMap:
     block:    require './templates/action_type_block'
     replace:  require './templates/action_type_replace'
+    static:   require './templates/action_type_static'
+
+  templateHelpers: ->
+    return { sourceOptions: @options.sourceOptions }
 
   getTemplate: ->
     return @templateMap[@options.actionType]
@@ -25,7 +29,8 @@ class ActionForm extends Mn.LayoutView
     actionTypeRegion: '[data-region=action-type]'
 
   availableActions: [
-    { action: 'block',    icon: 'fa-hand-stop-o', text: 'Blocking', default: true }
+    { action: 'static',   icon: 'fa-quote-right', text: 'Static', default: true }
+    { action: 'block',    icon: 'fa-hand-stop-o', text: 'Blocking' }
     { action: 'replace',  icon: 'fa-quote-right', text: 'Replace' }
   ]
 
@@ -40,6 +45,7 @@ class ActionForm extends Mn.LayoutView
     el = $(e.currentTarget)
     actionType = el.data('action')
     el.addClass('active').siblings('.btn').removeClass('active')
+    el.blur()
     @showActionTypeForm(actionType)
 
   showActionTypeForm: (actionType) ->

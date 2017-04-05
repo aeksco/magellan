@@ -1,0 +1,13 @@
+include ../../../../base/partials/form_helpers
+
+.col-xs-12
+
+  input(type='hidden', name='action', value='static')
+
+  .alert.alert-info
+    i.fa.fa-fw.fa-code
+    | &nbsp;
+    | Static Action
+
+.col-xs-12
+  +formInput({ label: 'static_result', placeholder: 'static_result', name: 'static_result', type: 'text' })
