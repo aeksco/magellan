@@ -7311,6 +7311,9 @@ a.bg-danger:focus, a.bg-danger:hover {
 .hide {
   display: none; }
 
+.cursor-pointer {
+  cursor: pointer; }
+
 ol.breadcrumb {
   margin-bottom: 0;
   background-color: #222; }
