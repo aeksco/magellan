@@ -3,13 +3,13 @@ ConditionViewer = require './conditionViewer'
 # # # # #
 
 class ConditionEmpty extends Mn.LayoutView
-  template: require './templates/condition_empty'
+  template: require './templates/definition_empty'
   className: 'list-group-item list-group-item-warning'
 
 # # # # #
 
 class ConditionChild extends Mn.LayoutView
-  template: require './templates/condition_child'
+  template: require './templates/definition_child'
   className: 'list-group-item'
 
   behaviors:
@@ -48,7 +48,7 @@ class ConditionList extends Mn.CollectionView
 
 class ConditionLayout extends Mn.LayoutView
   className: 'row'
-  template: require './templates/condition_list_layout'
+  template: require './templates/definition_list_layout'
 
   collectionEvents:
     'add':    'render'

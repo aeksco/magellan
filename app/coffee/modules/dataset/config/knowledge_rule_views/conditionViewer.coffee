@@ -1,11 +1,11 @@
 
-class ConditionViewer extends Mn.LayoutView
+class DefinitionViewer extends Mn.LayoutView
   className: 'row'
-  template: require './templates/condition_viewer'
+  template: require './templates/definition_viewer'
 
   behaviors:
     Confirmations:
-      message:      'Are you sure you want to discard this condition?'
+      message:      'Are you sure you want to discard this definition?'
       confirmIcon:  'fa-trash'
       confirmText:  'DISCARD'
       confirmCss:   'btn-danger'
@@ -23,4 +23,4 @@ class ConditionViewer extends Mn.LayoutView
 
 # # # # #
 
-module.exports = ConditionViewer
+module.exports = DefinitionViewer
