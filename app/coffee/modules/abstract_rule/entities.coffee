@@ -8,8 +8,8 @@ class DefinitionModel extends Backbone.RelationalModel
     order:      null
 
     # Condition
-    source:     ''
-    operation:  ''
+    source:     '@id'
+    operation:  'ends_with'
     value:      ''
 
     # Action
