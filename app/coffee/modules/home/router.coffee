@@ -1,6 +1,5 @@
 require './factory'
 
-RDFRoute = require './rdf_new/route'
 SettingsRoute = require './settings/route'
 SandboxRoute = require './sandbox/route'
 AboutRoute = require './about/route'

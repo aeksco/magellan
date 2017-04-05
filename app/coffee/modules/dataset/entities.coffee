@@ -23,6 +23,9 @@ class DatasetModel extends Backbone.Model
   fetchKnowledgeRules: ->
     return Backbone.Radio.channel('knowledge:rule').request('collection', @id)
 
+  fetchViewerRules: ->
+    return Backbone.Radio.channel('viewer:rule').request('collection', @id)
+
   generateNewFacets: (facetKeys, indexStart) ->
 
     # Adds an index to each facet for correct ordering

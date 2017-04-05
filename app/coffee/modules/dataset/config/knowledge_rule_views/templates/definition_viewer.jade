@@ -1,0 +1,94 @@
+.col-xs-12
+  .card.card-block
+
+    .row
+
+      .col-xs-6
+        p.lead.m-b-0 Definition
+
+      .col-xs-6.text-xs-right
+        button.btn.btn-sm.btn-secondary.m-r-1( data-click='edit' )
+          i.fa.fa-fw.fa-pencil
+          | &nbsp;
+          | Edit
+
+        button.btn.btn-sm.btn-danger-outline( data-click='discard' )
+          i.fa.fa-fw.fa-trash
+          | &nbsp;
+          | Discard
+
+      .col-xs-12
+        hr
+
+      .col-xs-12
+
+        //- Constraint
+        .row
+          .col-xs-12
+            p.lead Constraint
+
+          .col-xs-4
+            strong Source
+          .col-xs-4
+            strong Operation
+          .col-xs-4
+            strong Value
+
+          .col-xs-4= source
+          .col-xs-4= operation
+          .col-xs-4= value
+
+        .row
+          .col-xs-12
+            hr
+
+        //- Action
+        //- TODO - needs action_type_viewer - separate view and region
+        //- Or a series of partials to conditionally render the correct template
+        .row
+          .col-xs-12
+            p.lead Action
+
+          if action == 'literal'
+
+            .col-xs-6
+              strong Action Type
+            .col-xs-6
+              strong Literal Text
+
+            .col-xs-6 Literal
+            .col-xs-6= literal_text
+
+          if action == 'block'
+
+            .col-xs-12
+              strong Action Type
+            .col-xs-12 Block
+
+          if action == 'clone'
+
+            .col-xs-6
+              strong Action Type
+            .col-xs-6
+              strong Clone From
+
+            .col-xs-6 Clone
+            .col-xs-6= clone_source
+
+          if action == 'replace'
+
+            .col-xs-6
+              strong Action Type
+            .col-xs-6
+              strong Text Source
+
+            .col-xs-6 Replace
+            .col-xs-6= replace_source
+
+            .col-xs-12
+              strong Text to Replace
+            .col-xs-12= replace_text
+
+            .col-xs-12
+              strong Replace With
+            .col-xs-12= replace_with

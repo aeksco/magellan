@@ -1,0 +1,16 @@
+include ../../../../base/partials/form_helpers
+
+.col-xs-12
+  p.lead Constraint
+
+.col-xs-4
+  //- Source Selector
+  +formSelect({ label: 'Source', name: 'source', options: sourceOptions })
+
+.col-xs-4
+  //- Operation Selector
+  +formSelect({ label: 'Operation', name: 'operation', options: operationOptions })
+
+.col-xs-4
+  //- Value input
+  +formInput({ label: 'Value', placeholder: 'Value', name: 'value', type: 'text' })

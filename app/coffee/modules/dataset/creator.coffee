@@ -55,9 +55,17 @@ class DatasetCreator extends Backbone.Model
   # Returns a Promise that resolves when all datapoints have been persisted to Dexie
   ensureDatapoints: (dataset_id, datapoints) ->
 
+    # Index and count variables for Loading component updates
+    index = 0
+    count = _s.numberFormat(datapoints.length)
+
     # Save Datapoint function
     # Passed to Bluebird's Promise.each method, returns a Promise
     saveDatapoint = (datapoint) ->
+
+      # Loading component update message
+      index = index + 1
+      Backbone.Radio.channel('loading').trigger('show', "Processing #{_s.numberFormat(index)} of #{count}")
 
       # Assembles a new datapoint
       attrs =
@@ -65,6 +73,7 @@ class DatasetCreator extends Backbone.Model
         dataset_id: dataset_id
         raw:        datapoint
         data:       JSON.parse(JSON.stringify(datapoint))
+        views:      {}
 
       # Returns 'add' Promise from DB service
       return Backbone.Radio.channel('db').request('add', 'datapoints', attrs)
@@ -90,25 +99,28 @@ class DatasetCreator extends Backbone.Model
     # (important for views to function correctly)
     dataset.trigger('request')
 
+    # Shows Loading component
+    Radio.channel('loading').trigger('show', 'Saving Dataset...')
+
     # Adds the Dataset record to Dexie
     @ensureDataset(dataset).then (dataset_id) =>
 
-      # Triggers 'ensured:dataset' event on Dataset model  (UI related)
-      dataset.trigger('ensured:dataset')
+      # Updates Loading component
+      Radio.channel('loading').trigger('show', 'Saving Datapoints...')
 
       # Iterate over all datapoints
       # Format and add each to database
       @ensureDatapoints(dataset_id, datapoints).then () =>
 
-        # Triggers 'ensured:datapoints' event on Dataset model (UI related)
-        dataset.trigger('ensured:datapoints')
+        # Updates Loading component
+        Radio.channel('loading').trigger('show', 'Generating Facets...')
 
         # Generate the facets from the datapoints
         # Formats and adds each to database
         @ensureFacets(dataset_id, datapoints).then () =>
 
-          # Triggers 'ensured:facets' event on Dataset model (UI related)
-          dataset.trigger('ensured:facets')
+          # Updates Loading component
+          Radio.channel('loading').trigger('hide')
 
           # DONE.
           # Triggers 'sync' event on the Dataset model

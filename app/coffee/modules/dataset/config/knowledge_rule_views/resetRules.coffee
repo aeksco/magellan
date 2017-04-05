@@ -1,4 +1,5 @@
 
+# TODO - this should be generalized to flush both data and views attributes from datapoint models
 class ResetRulesView extends Mn.LayoutView
   template: require './templates/reset_rules'
   className: 'card card-block'
@@ -25,9 +26,12 @@ class ResetRulesView extends Mn.LayoutView
   onConfirmed: ->
     @model.fetchDatapoints().then (datapoints) =>
 
-      datapoints.resetDataFromRaw().then () =>
+      datapoints.resetTargetObject(@options.target_object).then () =>
 
         @model.regenerateFacets().then () =>
+
+          # Hides Loading component
+          Backbone.Radio.channel('loading').trigger('hide')
 
           # Shows success message
           @flashSuccess()
