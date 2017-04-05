@@ -37,6 +37,12 @@ mixin idRow(attr)
       td
         a(data-relation=data[attr]['@id']) #{data[attr]['@id']}
 
+mixin valueRow(attr)
+  if data[attr]
+    tr
+      td #{attr}:
+      td= data[attr]['@value']
+
 //- Outputs attributes using mixins
 //- if data.hasAggregates
 //-   tr
@@ -61,7 +67,12 @@ each val, key in data
     +arrayRow(key)
 
   else if typeof val == 'object'
-    +idRow(key)
+
+    if val['@id']
+      +idRow(key)
+
+    if val['@value']
+      +valueRow(key)
 
   else
     +attrRow(key)
