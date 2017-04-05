@@ -40,6 +40,10 @@ class ActionForm extends Mn.LayoutView
     { action: 'replace',  icon: 'fa-quote-right', text: 'Replace' }
   ]
 
+  # TODO - Format Lowercase
+  # TODO - Format Uppercase
+  # TODO - Split
+
   templateHelpers: ->
     return { isNew: @options.isNew, availableActions: @availableActions }
 

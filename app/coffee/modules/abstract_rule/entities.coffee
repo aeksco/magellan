@@ -40,9 +40,10 @@ class DefinitionModel extends Backbone.RelationalModel
     if @get('action') == 'replace'
 
       # Replace operation
-      replace_source = data[replace_source]
-      replace_with = @get('replace_with')
-      result = replace_source.replace(replace_with)
+      replace_source  = data[@get('replace_source')]
+      replace_text    = @get('replace_text')
+      replace_with    = @get('replace_with')
+      result          = replace_source.replace(replace_text, replace_with)
 
       # Sets value
       data[target_property] = result

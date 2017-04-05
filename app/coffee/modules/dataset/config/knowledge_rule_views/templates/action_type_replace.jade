@@ -9,8 +9,11 @@ include ../../../../base/partials/form_helpers
     | &nbsp;
     | Replace
 
-.col-xs-6
+.col-xs-4
   +formSelect({ label: 'replace_source', name: 'replace_source', options: sourceOptions })
 
-.col-xs-6
+.col-xs-4
+  +formInput({ label: 'replace_text', placeholder: 'replace_text', name: 'replace_text', type: 'text' })
+
+.col-xs-4
   +formInput({ label: 'replace_with', placeholder: 'replace_with', name: 'replace_with', type: 'text' })
