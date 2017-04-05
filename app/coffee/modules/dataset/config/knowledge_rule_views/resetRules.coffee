@@ -26,7 +26,7 @@ class ResetRulesView extends Mn.LayoutView
   onConfirmed: ->
     @model.fetchDatapoints().then (datapoints) =>
 
-      datapoints.resetDataFromRaw().then () =>
+      datapoints.resetTargetObject(@options.target_object).then () =>
 
         @model.regenerateFacets().then () =>
 

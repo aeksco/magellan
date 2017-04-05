@@ -12,9 +12,9 @@ class DatapointModel extends Backbone.Model
 class DatapointCollection extends Backbone.Collection
   model: DatapointModel
 
-  # resetDataFromRaw
+  # resetTargetObject
   # Resets the collection of datapoints to their default attributes
-  resetDataFromRaw: ->
+  resetTargetObject: (target_object) ->
 
     # Index and count variables for Loading component updates
     index = 0
@@ -27,10 +27,16 @@ class DatapointCollection extends Backbone.Collection
       index = index + 1
       Backbone.Radio.channel('loading').trigger('show', "Processing #{_s.numberFormat(index)} of #{count}")
 
-      # Deep-copy
+      # Deep-copy from raw
       # Ensures objects don't represent the same space in memory
-      raw = JSON.parse(JSON.stringify(dp.get('raw')))
-      dp.set('data', raw)
+      if target_object == 'data'
+        raw = JSON.parse(JSON.stringify(dp.get('raw')))
+        dp.set('data', raw)
+
+      # Reset views
+      if target_object == 'views'
+        dp.set('views', {})
+
       return dp.save()
 
     # Iterates over each model and invokes resetDatapoint

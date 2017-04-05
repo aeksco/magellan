@@ -99,7 +99,7 @@ class RuleLayout extends Mn.LayoutView
   # applyRules
   # Shows the view to apply the rules to the dataset
   applyRules: ->
-    applyView = new ApplyRulesView({ model: @model })
+    applyView = new ApplyRulesView({ model: @model, collection: @collection })
     applyView.on 'cancel', => @showRuleList()
     applyView.on 'success', => @showRuleList()
     @contentRegion.show(applyView)
@@ -107,7 +107,7 @@ class RuleLayout extends Mn.LayoutView
   # resetDataset
   # Shows the view to reset the dataset to it's default raw values
   resetDataset: ->
-    resetView = new ResetRulesView({ model: @model })
+    resetView = new ResetRulesView({ model: @model, target_object: @collection.target_object })
     resetView.on 'cancel', => @showRuleList()
     resetView.on 'success', => @showRuleList()
     @contentRegion.show(resetView)

@@ -24,7 +24,8 @@ class DefinitionModel extends Backbone.RelationalModel
   # Evaluates the DefinitionModel's action and assigns the result to the target model
   evaluateAction: (target, target_object, target_property, data) =>
 
-    # TODO - switch statement here?
+    # Isolates target_object_data
+    target_object_data = target.get(target_object)
 
     # Block
     if @get('action') == 'block'
@@ -32,8 +33,8 @@ class DefinitionModel extends Backbone.RelationalModel
 
     # Literal
     if @get('action') == 'literal'
-      data[target_property] = @get('literal_text')
-      target.set(target_object, data)
+      target_object_data[target_property] = @get('literal_text')
+      target.set(target_object, target_object_data)
       return
 
     # Replace
@@ -46,8 +47,8 @@ class DefinitionModel extends Backbone.RelationalModel
       result          = replace_source.replace(replace_text, replace_with)
 
       # Sets value
-      data[target_property] = result
-      target.set(target_object, data)
+      target_object_data[target_property] = result
+      target.set(target_object, target_object_data)
       return
 
 # # # # #
@@ -66,10 +67,8 @@ class DefinitionCollection extends Backbone.Collection
     # TODO - abstract into DefinitionCollection prototype?
     for definition in @models
 
-      # Isolates pertinant variables
-      # TODO - not all of these are used by every operation
-      # This should be simplified to cache ONLY what's used.
-      data = target.get(target_object)
+      # Isolates target data
+      data = target.get('data')
 
       # Constraint
       source    = data[definition.get('source')] # TODO - we must find a way to handle non-string datatypes here (Array, Object, Collection, etc.)

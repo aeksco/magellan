@@ -29,20 +29,18 @@ class ApplyRulesView extends Mn.LayoutView
 
     @model.fetchDatapoints().then (datapoints) =>
 
-      @model.fetchKnowledgeRules().then (rules) =>
+      @collection.applyRules(datapoints).then () =>
 
-        rules.applyRules(datapoints).then () =>
+        @model.regenerateFacets().then () =>
 
-          @model.regenerateFacets().then () =>
+          # Hides Loading component
+          Backbone.Radio.channel('loading').trigger('hide')
 
-            # Hides Loading component
-            Backbone.Radio.channel('loading').trigger('hide')
+          # Shows success message
+          @flashSuccess()
 
-            # Shows success message
-            @flashSuccess()
-
-            # Triggers 'success' event
-            @trigger('success')
+          # Triggers 'success' event
+          @trigger('success')
 
 # # # # #
 

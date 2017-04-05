@@ -1,6 +1,6 @@
 FacetLayout         = require '../facet_views/layout'
 KnowledgeRuleLayout = require '../knowledge_rule_views/layout'
-# ViewerRuleLayout    = require '../viewer_rule_views/layout'
+ViewerRuleLayout    = require '../viewer_rule_views/layout'
 
 # # # # #
 
@@ -10,13 +10,13 @@ class ConfigLayoutView extends require 'hn_views/lib/nav'
   navItems: [
     { icon: 'fa-list',            text: 'Facets',             trigger: 'facets' }
     { icon: 'fa-university',      text: 'Knowledge Rules',    trigger: 'knowledge', default: true}
-    # { icon: 'fa-window-maximize', text: 'Viewer Rules',       trigger: 'viewer' }
+    { icon: 'fa-window-maximize', text: 'Viewer Rules',       trigger: 'viewer' }
   ]
 
   navEvents:
     'facets':     'facetConfig'
     'knowledge':  'knowledgeConfig'
-    # 'viewer':     'viewerConfig'
+    'viewer':     'viewerConfig'
 
   navOptions:
     pills: true
@@ -29,9 +29,9 @@ class ConfigLayoutView extends require 'hn_views/lib/nav'
     @model.fetchKnowledgeRules().then (knowledgeRuleCollection) =>
       @contentRegion.show new KnowledgeRuleLayout({ model: @model, collection: knowledgeRuleCollection })
 
-  # viewerConfig: ->
-  #   @model.fetchViewerRules().then (viewerRuleCollection) =>
-  #     @contentRegion.show new ViewerRuleLayout({ model: @model, collection: viewerRuleCollection })
+  viewerConfig: ->
+    @model.fetchViewerRules().then (viewerRuleCollection) =>
+      @contentRegion.show new ViewerRuleLayout({ model: @model, collection: viewerRuleCollection })
 
 # # # # #
 
