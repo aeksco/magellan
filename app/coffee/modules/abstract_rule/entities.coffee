@@ -3,7 +3,6 @@
 class DefinitionModel extends Backbone.RelationalModel
 
   # Default attributes
-  # TODO - should these be NULL?
   # TODO - should 'source', 'operation', and 'value' be renamed?
   defaults:
     order:      null
@@ -16,8 +15,39 @@ class DefinitionModel extends Backbone.RelationalModel
     # Action
     action:     ''
 
-    # TODO - de-comission this approach
-    result:     ''
+  # isBlocking
+  # Helper function used while evaluating rules
+  isBlocking: ->
+    return @get('action') == 'block'
+
+  # evaluateAction
+  # Evaluates the DefinitionModel's action and assigns the result to the target model
+  evaluateAction: (target, target_object, target_property, data) =>
+
+    # TODO - switch statement here?
+
+    # Block
+    if @get('action') == 'block'
+      return
+
+    # Static
+    if @get('action') == 'static'
+      data[target_property] = @get('static_result')
+      target.set(target_object, data)
+      return
+
+    # Replace
+    if @get('action') == 'replace'
+
+      # Replace operation
+      replace_source = data[replace_source]
+      replace_with = @get('replace_with')
+      result = replace_source.replace(replace_with)
+
+      # Sets value
+      data[target_property] = result
+      target.set(target_object, data)
+      return
 
 # # # # #
 
@@ -26,31 +56,6 @@ class DefinitionCollection extends Backbone.Collection
   comparator: 'order'
 
   evaluate: (target, target_object, target_property) =>
-
-    # EvaluateAction Helper
-    # TODO - this should be abstracted elsewhere - perhaps an ActionEvaluator class?
-    evaluateAction = (target, target_object, target_property, data, definition) =>
-
-      # TODO - should be a switch statement here
-
-      # Static
-      if definition.get('action') == 'static'
-        data[target_property] = definition.get('static_result')
-        target.set(target_object, data)
-        return
-
-      # Replace
-      if definition.get('action') == 'replace'
-
-        # Replace operation
-        replace_source = data[replace_source]
-        replace_with = definition.get('replace_with')
-        result = replace_source.replace(replace_with)
-
-        # Sets value
-        data[target_property] = result
-        target.set(target_object, data)
-        return
 
     # Condition matched flag
     # Target model is saved IF true
@@ -70,55 +75,55 @@ class DefinitionCollection extends Backbone.Collection
       operation = definition.get('operation')
       value     = definition.get('value')
 
-      # Action
-      result    = definition.get('result') # TODO - decomission this
-
       # # # # # # # # # # # # # # # # # # # #
-      # TODO - this operation should be abstracted into RuleModel & Condition Model
-      # @target_object may be accessed via @collection, or passed by reference
       # TODO - this operation must manage values that are arrays, objects, etc.
 
       # Skip undefined
       # continue unless source
 
+      # # # # #
+
       # EXACT MATCH
       if operation == 'exact_match'
         if source == value
           conditionMatched = true
-          data[target_property] = result
-          target.set(target_object, data)
+          definition.evaluateAction(target, target_object, target_property, data)
+        else
+          break if definition.isBlocking()
 
       # STARTS WITH
       # TODO - STARTS_WITH_CASE_SENSITIVE
       if operation == 'starts_with'
         if _s.startsWith(source, value)
           conditionMatched = true
-          data[target_property] = result
-          target.set(target_object, data)
+          definition.evaluateAction(target, target_object, target_property, data)
+        else
+          break if definition.isBlocking()
 
       # CONTAINS
       if operation == 'contains'
         if _s.include(source, value)
           conditionMatched = true
-          data[target_property] = result
-          target.set(target_object, data)
+          definition.evaluateAction(target, target_object, target_property, data)
+        else
+          break if definition.isBlocking()
 
       # CONTAINS (Case-sensitive)
       if operation == 'contains_case_sensitive'
         if _s.startsWith(source.toLowerCase(), value.toLowerCase())
           conditionMatched = true
-          data[target_property] = result
-          target.set(target_object, data)
+          definition.evaluateAction(target, target_object, target_property, data)
+        else
+          break if definition.isBlocking()
 
       # ENDS WITH
       # TODO - ENDS_WITH_CASE_SENSITIVE
       if operation == 'ends_with'
         if _s.endsWith(source, value)
           conditionMatched = true
-          evaluateAction(target, target_object, target_property, data, definition)
-
-          # data[target_property] = result
-          # target.set(target_object, data)
+          definition.evaluateAction(target, target_object, target_property, data)
+        else
+          break if definition.isBlocking()
 
       # # # # #
       # REPLACE
@@ -248,7 +253,7 @@ class AbstractRuleCollection extends Backbone.Collection
       # TODO - this should be isolated to the rule model?
       for rule in @models
 
-        # Isolates target_property and conditions from Rule
+        # Isolates target_property and definitions from Rule
         target_property = rule.get('target_property')
         definitionCollection = rule.get('conditions') # TODO - rename to definitions
 

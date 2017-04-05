@@ -32,7 +32,7 @@ class DefinitionForm extends Mn.LayoutView
     # Serializes data from form
     data = Backbone.Syphon.serialize(@)
 
-    console.log data
+    # console.log data
 
     # Sets the data on the model
     @model.set(data)

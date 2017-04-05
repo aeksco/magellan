@@ -7,6 +7,9 @@ class ActionTypeForm extends Mn.LayoutView
     replace:  require './templates/action_type_replace'
     static:   require './templates/action_type_static'
 
+  initialize: (options) ->
+    @model.set('action', @options.actionType)
+
   templateHelpers: ->
     return { sourceOptions: @options.sourceOptions }
 
