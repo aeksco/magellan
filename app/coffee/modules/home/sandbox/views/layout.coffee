@@ -1,80 +1,66 @@
-JsonViewer = require 'hn_views/lib/json_viewer'
+RawRDFXML = require './rdf'
+
+UploadWidget = require '../../../../widgets/upload/upload'
 
 # # # # #
 
-class TargetChild extends Mn.LayoutView
-  className: 'list-group-item'
-  template: require './templates/target_child'
+$rdf = require 'rdflib'
+jsonld = require 'jsonld'
+rdfxml_parser = require 'rdf-parser-rdfxml'
+jsonld_serializer = require 'rdf-serializer-jsonld'
 
-  regions:
-    jsonRegion: '[data-region=json]'
+# # # # # #
 
-  onRender: ->
-    if @model.get('data')
-
-      if @options.processed
-        model = new Backbone.Model(@model.toJSON().data)
-
-      else
-        model = new Backbone.Model(@model.toJSON().raw)
-
-    else
-      model = @model
-
-    @jsonRegion.show new JsonViewer({ model: model })
-
-class TargetCollectionView extends Mn.CollectionView
-  className: 'list-group'
-  childView: TargetChild
-
-  childViewOptions: ->
-    return { processed: @options.processed }
+# For quick access to those namespaces:
+FOAF = $rdf.Namespace('http://xmlns.com/foaf/0.1/')
+RDF = $rdf.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
+RDFS = $rdf.Namespace('http://www.w3.org/2000/01/rdf-schema#')
+OWL = $rdf.Namespace('http://www.w3.org/2002/07/owl#')
+DC = $rdf.Namespace('http://purl.org/dc/elements/1.1/')
+RSS = $rdf.Namespace('http://purl.org/rss/1.0/')
+XSD = $rdf.Namespace('http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/#dt-')
+CONTACT = $rdf.Namespace('http://www.w3.org/2000/10/swap/pim/contact#')
 
 # # # # #
 
-class RuleLayout extends Marionette.LayoutView
-  template: require './templates/layout'
-  className: 'row'
-
-  regions:
-    listRegion: '[data-region=list]'
-
-  templateHelpers: ->
-    return { title: @options.title }
-
-  onRender: ->
-    @listRegion.show new TargetCollectionView({ collection: @collection, processed: @options.processed })
+kb = $rdf.graph()
+rdf_parser = new $rdf.RDFParser(kb)
 
 # # # # #
 
-class RuleDemoLayout extends require 'hn_views/lib/nav'
+class SandboxLayout extends Mn.LayoutView
   className: 'container-fluid'
+  template: require './templates/layout'
 
-  navItems: [
-    { icon: 'fa-database',    text: 'Raw Archive',  trigger: 'dataset', default: true }
-    { icon: 'fa-university',  text: 'Knowledge Rules',   trigger: 'rules' }
-    { icon: 'fa-table',       text: 'Processed Archive',  trigger: 'processed' }
-  ]
+  regions:
+    uploadRegion: '[data-region=upload]'
 
-  navEvents:
-    'dataset':    'showDataset'
-    'rules':      'showRules'
-    'processed':  'showProcessed'
+  onRender: ->
+    console.log 'RENDERD'
+    console.log RawRDFXML
 
-  # navOptions:
-  #   stacked: true
+    # Parses doc from raw XML
+    doc = rdfxml_parser.parseXmlDom(RawRDFXML)
 
-  showDataset: ->
-    @contentRegion.show new RuleLayout({ collection: @collection, title: 'Raw Archive' })
+    # Parses doc into graph
+    rdf_parser.parse(doc, 'http://foo.bar')
 
-  showRules: ->
-    @contentRegion.show new RuleLayout({ collection: @options.ruleCollection, title: 'Knowledge Rules' })
+    # Formats as NQUADS
+    nquads = kb.toString().replace(/{/g,'').replace(/}/g,'')
 
-  showProcessed: ->
-    @contentRegion.show new RuleLayout({ collection: @collection, title: 'Processed Archive', processed: true })
+    # Deserialize N-Quads (RDF) to JSON-LD
+    jsonld.fromRDF nquads, {format: 'application/nquads'}, (err, doc) =>
 
+      if err
+        console.log 'ERR!!!'
+        console.log err
+        return
 
+      output = { '@context': kb.namespaces, '@graph': doc }
+      # console.log output
+
+      $('.output').text JSON.stringify(output, null, 2)
 
 # # # # #
 
-module.exports = RuleDemoLayout
+module.exports = SandboxLayout
