@@ -44,6 +44,8 @@ class FacetModel extends Backbone.Model
           if typeof(attr) == 'object'
             return attr['@value']
 
+          # TODO - this must handle ARRAYS of objects as well.
+
         # Assembles the attributes to be updated
         update =
           label:    pluckAttr(ontologyAttribute['rdfs:label'])
