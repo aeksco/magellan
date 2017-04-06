@@ -1,5 +1,3 @@
-RawRDFXML = require './rdf'
-
 UploadWidget = require '../../../../widgets/upload/upload'
 
 # # # # #
@@ -36,11 +34,14 @@ class SandboxLayout extends Mn.LayoutView
     uploadRegion: '[data-region=upload]'
 
   onRender: ->
-    console.log 'RENDERD'
-    console.log RawRDFXML
+    uploadWidget = new UploadWidget() # TODO - options
+    uploadWidget.on 'file:loaded', (result) => @convertToJSON(result)
+    @uploadRegion.show uploadWidget
+
+  convertToJSON: (result) ->
 
     # Parses doc from raw XML
-    doc = rdfxml_parser.parseXmlDom(RawRDFXML)
+    doc = rdfxml_parser.parseXmlDom(result)
 
     # Parses doc into graph
     rdf_parser.parse(doc, 'http://foo.bar')
@@ -51,14 +52,18 @@ class SandboxLayout extends Mn.LayoutView
     # Deserialize N-Quads (RDF) to JSON-LD
     jsonld.fromRDF nquads, {format: 'application/nquads'}, (err, doc) =>
 
+      # TODO - better error handling
       if err
         console.log 'ERR!!!'
         console.log err
         return
 
+      # Forces correct format
       output = { '@context': kb.namespaces, '@graph': doc }
       # console.log output
 
+      # Appends output to view
+      # TODO - generate BLOB and download button
       $('.output').text JSON.stringify(output, null, 2)
 
 # # # # #
