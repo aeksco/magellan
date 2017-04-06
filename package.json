@@ -65,6 +65,7 @@
     "moment": "~2.10",
     "nw-builder": "^3.2.0",
     "qs": "~6.0",
+    "rdf-parser-n3": "^0.3.0",
     "rdf-parser-rdfxml": "^0.3.1",
     "rdf-serializer-jsonld": "^0.3.0",
     "rdflib": "^0.15.0",

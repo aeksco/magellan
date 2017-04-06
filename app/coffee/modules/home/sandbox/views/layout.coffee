@@ -5,6 +5,7 @@ UploadWidget = require '../../../../widgets/upload/upload'
 $rdf = require 'rdflib'
 jsonld = require 'jsonld'
 rdfxml_parser = require 'rdf-parser-rdfxml'
+# n3_parser = require 'rdf-parser-n3'
 jsonld_serializer = require 'rdf-serializer-jsonld'
 
 # # # # # #
@@ -39,6 +40,8 @@ class SandboxLayout extends Mn.LayoutView
     @uploadRegion.show uploadWidget
 
   convertToJSON: (result) ->
+
+    console.log result
 
     # Parses doc from raw XML
     doc = rdfxml_parser.parseXmlDom(result)
