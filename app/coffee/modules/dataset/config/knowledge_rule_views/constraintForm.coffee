@@ -4,8 +4,13 @@ class ConstraintForm extends Mn.LayoutView
   template: require './templates/constraint_form'
 
   # Defines operationOptions
-  # TODO - regex match, Starts With (case sensitive), Ends With (case sensitive), Exact Match (case sensitive)
+  # TODO:
+  # - regex match
+  # - Starts With (case sensitive)
+  # - Ends With (case sensitive)
+  # - Exact Match (case sensitive)
   operationOptions: [
+    ['exists',                  'Exists']
     ['exact_match',             'Exact Match']
     ['starts_with',             'Starts With']
     ['ends_with',               'Ends With']

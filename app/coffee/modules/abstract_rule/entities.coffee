@@ -15,6 +15,8 @@ class DefinitionModel extends Backbone.RelationalModel
     # Action
     action:     ''
 
+    applied: false # TODO - definitions should track wether or not they have been applied
+
   # isBlocking
   # Helper function used while evaluating rules
   isBlocking: ->
@@ -51,6 +53,19 @@ class DefinitionModel extends Backbone.RelationalModel
       target.set(target_object, target_object_data)
       return
 
+    # Index From Split
+    if @get('action') == 'index_from_split'
+      index_from_split_source = data[@get('index_from_split_source')]
+      split = index_from_split_source.split(@get('index_from_split_delimiter'))
+      result = split[@get('index_from_split_index')]
+
+      # Sets value
+      if result
+        target_object_data[target_property] = result
+        target.set(target_object, target_object_data)
+
+      return
+
 # # # # #
 
 class DefinitionCollection extends Backbone.Collection
@@ -82,6 +97,14 @@ class DefinitionCollection extends Backbone.Collection
       # continue unless source
 
       # # # # #
+
+      # Exists
+      if operation == 'exists'
+        if source
+          conditionMatched = true
+          definition.evaluateAction(target, target_object, target_property, data)
+        else
+          break if definition.isBlocking()
 
       # EXACT MATCH
       if operation == 'exact_match'

@@ -7,6 +7,7 @@ class ActionTypeForm extends Mn.LayoutView
     replace:  require './templates/action_type_replace'
     literal:  require './templates/action_type_literal'
     clone:    require './templates/action_type_clone'
+    index_from_split: require './templates/action_type_index_from_split'
 
   initialize: (options) ->
     @model.set('action', @options.actionType)
@@ -40,6 +41,7 @@ class ActionForm extends Mn.LayoutView
     { action: 'block',    icon: 'fa-hand-stop-o',   text: 'Blocking' }
     { action: 'replace',  icon: 'fa-strikethrough', text: 'Replace' }
     { action: 'clone',    icon: 'fa-copy',          text: 'Clone' }
+    { action: 'index_from_split',    icon: 'fa-globe',          text: 'Split and Index' }
   ]
 
   # TODO - Format Lowercase
