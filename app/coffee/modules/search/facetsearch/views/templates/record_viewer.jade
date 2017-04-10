@@ -2,8 +2,9 @@
   .col-xs-12
 
     h4.card-title
-      a(data-relation=data['@id'])= data['@id'].split('/').pop()
-      // a(data-click='show-detail' data-uri=data['@id'])= data['rdfs:Label']
+      i.fa.fa-fw(class=icon)
+      | &nbsp;
+      a(data-relation=data['@id'])= data['rdfs:label']
 
   //- .col-xs-3.text-xs-right
   //-   .btn.btn-secondary.btn-sm(data-toggle='tooltip', data-placement='left', title='Copy JSON to Clipboard', data-click='clipboard' style='line-height=0;')
