@@ -3,6 +3,7 @@ Marionette = require 'backbone.marionette'
 # # # # #
 
 # TODO - abstract into Henson
+# TODO - use existing abstraction
 class UploadWidget extends Mn.LayoutView
   template: require './templates/upload'
   className: 'form-group'

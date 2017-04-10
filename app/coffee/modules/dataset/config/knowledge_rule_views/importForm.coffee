@@ -1,3 +1,6 @@
+UploadWidget = require '../../../base/views/upload/upload'
+
+# # # # #
 
 class ImportForm extends Mn.LayoutView
   template: require './templates/import_form'
