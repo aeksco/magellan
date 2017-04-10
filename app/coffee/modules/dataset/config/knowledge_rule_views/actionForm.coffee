@@ -37,16 +37,15 @@ class ActionForm extends Mn.LayoutView
     actionTypeRegion: '[data-region=action-type]'
 
   availableActions: [
-    { action: 'literal',  icon: 'fa-quote-right',   text: 'Literal', default: true }
-    { action: 'block',    icon: 'fa-hand-stop-o',   text: 'Blocking' }
-    { action: 'replace',  icon: 'fa-strikethrough', text: 'Replace' }
-    { action: 'clone',    icon: 'fa-copy',          text: 'Clone' }
-    { action: 'index_from_split',    icon: 'fa-globe',          text: 'Split and Index' }
+    { action: 'literal',          icon: 'fa-quote-right',   text: 'Literal', default: true }
+    { action: 'block',            icon: 'fa-hand-stop-o',   text: 'Blocking' }
+    { action: 'replace',          icon: 'fa-strikethrough', text: 'Replace' }
+    { action: 'clone',            icon: 'fa-copy',          text: 'Clone' }
+    { action: 'index_from_split', icon: 'fa-code-fork',     text: 'Split and Index' }
   ]
 
   # TODO - Format Lowercase
   # TODO - Format Uppercase
-  # TODO - Split
 
   templateHelpers: ->
     return { isNew: @options.isNew, availableActions: @availableActions }

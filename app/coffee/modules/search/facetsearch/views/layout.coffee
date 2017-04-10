@@ -29,6 +29,7 @@ class FacetedViewLayout extends Mn.LayoutView
     # Clear Filters
     headerView.on 'clear', => jQuery.clearFacets()
 
+    # TODO - implement
     # # View as List
     # headerView.on 'list', =>
     #   console.log 'SHOW AS LIST'
@@ -100,8 +101,8 @@ class FacetedViewLayout extends Mn.LayoutView
       resultElement: '#results'
       facetElement:  '#facets'
       resultTemplate: 'placeholder'
-      resultTemplateBypass: (item) => @collection.add(item)
-      beforeResultRender: => @collection.reset([])
+      resultTemplateBypass: (item) => @collection.add(item) # TODO - PERFORMANCE
+      beforeResultRender: => @collection.reset([])          # TODO - PERFORMANCE
 
       # TODO - implement pagination
       paginationCount: 50
