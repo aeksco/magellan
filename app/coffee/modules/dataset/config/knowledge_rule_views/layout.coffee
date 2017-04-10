@@ -1,6 +1,7 @@
 RuleList        = require './ruleList'
 RuleForm        = require './ruleForm'
 ExportForm      = require './exportForm'
+ImportForm      = require './importForm'
 ApplyRulesView  = require './applyRules'
 ResetRulesView  = require './resetRules'
 
@@ -30,18 +31,10 @@ class RuleLayout extends Mn.LayoutView
   onRender: ->
     @showRuleList()
 
-  showExportForm: ->
-    exportForm = new ExportForm({ model: @model })
-    exportForm.on 'cancel', => @showRuleList()
-    exportForm.on 'success', => @showRuleList()
-    @contentRegion.show(exportForm)
-
-  showImportForm: ->
-    console.log 'showImportForm'
-
   # fetchSourceOptions
   # Fetches the available facet IDs and Labels
   # Used in the 'source' dropdown in the RuleForm
+  # TODO - should this be a Dataset model method?
   fetchSourceOptions: ->
 
     # Returns Promise to manage async operation
@@ -125,6 +118,22 @@ class RuleLayout extends Mn.LayoutView
     resetView.on 'cancel', => @showRuleList()
     resetView.on 'success', => @showRuleList()
     @contentRegion.show(resetView)
+
+  # showExportForm
+  # Shows the view to export KnowledgeRules
+  showExportForm: ->
+    exportForm = new ExportForm({ model: @model })
+    exportForm.on 'cancel', => @showRuleList()
+    exportForm.on 'success', => @showRuleList()
+    @contentRegion.show(exportForm)
+
+  # showImportForm
+  # Shows the view to import KnowledgeRules
+  showImportForm: ->
+    importForm = new ImportForm({ model: @model })
+    importForm.on 'cancel', => @showRuleList()
+    importForm.on 'success', => @showRuleList()
+    @contentRegion.show(importForm)
 
 # # # # #
 

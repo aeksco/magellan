@@ -9,7 +9,7 @@ class ExportForm extends Mn.LayoutView
     DownloadFile: {}
     Flashes:
       success:
-        message:  'Successfully reset dataset.'
+        message:  'Successfully exported Knowledge Rules.'
 
   onCancel: ->
     @trigger 'cancel'
