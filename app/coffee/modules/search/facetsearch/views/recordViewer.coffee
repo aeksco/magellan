@@ -42,8 +42,6 @@ class RecordViewerSelector extends require 'hn_views/lib/nav'
 
 class RecordViewer extends Mn.LayoutView
   template: require './templates/record_viewer'
-  # tagName:    'li'
-  # className:  'list-group-item'
   className:  'card card-block'
 
   regions:

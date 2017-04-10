@@ -1,5 +1,6 @@
 require './engine'
-RecordListView = require './recordList'
+RecordList = require './recordList'
+RecordListLayout = require './recordListLayout'
 DetailView = require './itemDetail'
 HeaderView = require './header'
 
@@ -29,14 +30,9 @@ class FacetedViewLayout extends Mn.LayoutView
     # Clear Filters
     headerView.on 'clear', => jQuery.clearFacets()
 
-    # TODO - implement
-    # # View as List
-    # headerView.on 'list', =>
-    #   console.log 'SHOW AS LIST'
-
-    # # View as Selector
-    # headerView.on 'viewer', =>
-    #   console.log 'SHOW AS VIEWER'
+    # View Records as List or Viewer
+    headerView.on 'list', @showRecordList
+    headerView.on 'viewer', @showRecordListLayout
 
     # Shows the HeaderView in the headerRegion
     @headerRegion.show headerView
@@ -45,10 +41,18 @@ class FacetedViewLayout extends Mn.LayoutView
     setTimeout(@initFacetView, 100)
 
     # Bypass List selector
-    listView = new RecordListView({ collection: @collection })
+    @showRecordListLayout()
+
+  showRecordList: =>
+    listView = new RecordList({ collection: @collection })
     listView.on 'childview:show:relation', (view, id) => @showItem(id)
     # listView.on 'show:underlay', => @$('.drift-underlay').addClass('active')
     # listView.on 'hide:underlay', => @$('.drift-underlay').removeClass('active')
+    @listRegion.show listView
+
+  showRecordListLayout: =>
+    listView = new RecordListLayout({ collection: @collection })
+    listView.on 'childview:show:relation', (view, id) => @showItem(id)
     @listRegion.show listView
 
   showItem: (id) =>
