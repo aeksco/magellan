@@ -3,11 +3,12 @@ class ActionTypeForm extends Mn.LayoutView
   className: 'row'
 
   templateMap:
-    block:    require './templates/action_type_block'
-    replace:  require './templates/action_type_replace'
-    literal:  require './templates/action_type_literal'
-    clone:    require './templates/action_type_clone'
-    index_from_split: require './templates/action_type_index_from_split'
+    block:                  require './templates/action_type_block'
+    replace:                require './templates/action_type_replace'
+    literal:                require './templates/action_type_literal'
+    clone:                  require './templates/action_type_clone'
+    index_from_split:       require './templates/action_type_index_from_split'
+    index_from_regex_match: require './templates/action_type_index_from_regex_match'
 
   initialize: (options) ->
     @model.set('action', @options.actionType)
@@ -37,11 +38,13 @@ class ActionForm extends Mn.LayoutView
     actionTypeRegion: '[data-region=action-type]'
 
   availableActions: [
-    { action: 'literal',          icon: 'fa-quote-right',   text: 'Literal', default: true }
-    { action: 'block',            icon: 'fa-hand-stop-o',   text: 'Blocking' }
-    { action: 'replace',          icon: 'fa-strikethrough', text: 'Replace' }
-    { action: 'clone',            icon: 'fa-copy',          text: 'Clone' }
-    { action: 'index_from_split', icon: 'fa-code-fork',     text: 'Split and Index' }
+    { action: 'literal',                icon: 'fa-quote-right',   text: 'Literal', default: true }
+    { action: 'block',                  icon: 'fa-hand-stop-o',   text: 'Blocking' }
+    { action: 'replace',                icon: 'fa-strikethrough', text: 'Replace' }
+    { action: 'clone',                  icon: 'fa-copy',          text: 'Clone' }
+    { action: 'index_from_split',       icon: 'fa-code-fork',     text: 'Split and Index' }
+    { action: 'index_from_regex_match', icon: 'fa-registered',    text: 'Index from RegEx Match' }
+
   ]
 
   # TODO - Format Lowercase

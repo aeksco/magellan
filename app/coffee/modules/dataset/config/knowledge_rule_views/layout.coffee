@@ -1,5 +1,6 @@
 RuleList        = require './ruleList'
 RuleForm        = require './ruleForm'
+ExportForm      = require './exportForm'
 ApplyRulesView  = require './applyRules'
 ResetRulesView  = require './resetRules'
 
@@ -10,11 +11,15 @@ class RuleLayout extends Mn.LayoutView
   template: require './templates/layout'
 
   ui:
+    export:   '[data-click=export]'
+    import:   '[data-click=import]'
     newRule:  '[data-click=new]'
     apply:    '[data-click=apply]'
     reset:    '[data-click=reset]'
 
   events:
+    'click @ui.export':   'showExportForm'
+    'click @ui.import':   'showImportForm'
     'click @ui.newRule':  'showRuleForm'
     'click @ui.apply':    'applyRules'
     'click @ui.reset':    'resetDataset'
@@ -24,6 +29,15 @@ class RuleLayout extends Mn.LayoutView
 
   onRender: ->
     @showRuleList()
+
+  showExportForm: ->
+    exportForm = new ExportForm({ model: @model })
+    exportForm.on 'cancel', => @showRuleList()
+    exportForm.on 'success', => @showRuleList()
+    @contentRegion.show(exportForm)
+
+  showImportForm: ->
+    console.log 'showImportForm'
 
   # fetchSourceOptions
   # Fetches the available facet IDs and Labels

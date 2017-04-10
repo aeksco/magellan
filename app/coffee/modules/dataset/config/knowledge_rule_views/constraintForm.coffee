@@ -15,6 +15,7 @@ class ConstraintForm extends Mn.LayoutView
     ['starts_with',             'Starts With']
     ['ends_with',               'Ends With']
     ['contains',                'Contains']
+    ['does_not_contain',        'Does Not Contain']
     ['contains_case_sensitive', 'Contains (case sensitive)']
   ]
 
