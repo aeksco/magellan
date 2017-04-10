@@ -14,4 +14,5 @@ module.exports =
   Tooltips:           require 'hn_behaviors/lib/tooltips'
   SortableList:       require './sortableList'
   SortableChild:      require './sortableChild'
+  KeyboardControls:   require './keyboardControls'
 

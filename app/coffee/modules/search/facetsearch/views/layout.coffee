@@ -46,6 +46,8 @@ class FacetedViewLayout extends Mn.LayoutView
     # Bypass List selector
     listView = new RecordListView({ collection: @collection })
     listView.on 'childview:show:relation', (view, id) => @showItem(id)
+    # listView.on 'show:underlay', => @$('.drift-underlay').addClass('active')
+    # listView.on 'hide:underlay', => @$('.drift-underlay').removeClass('active')
     @listRegion.show listView
 
   showItem: (id) =>
@@ -102,7 +104,7 @@ class FacetedViewLayout extends Mn.LayoutView
       beforeResultRender: => @collection.reset([])
 
       # TODO - implement pagination
-      # paginationCount: 50
+      paginationCount: 50
 
       # TODO - adjust ordering of elements
       # TODO - abstract into OrderModel, Settings Model??

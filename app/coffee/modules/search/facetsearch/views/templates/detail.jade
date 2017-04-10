@@ -15,3 +15,14 @@ if views.img
   .col-xs-12
     table.table.table-responsive.attr-table
       include ./table
+
+if views.audio
+  a.btn.btn-primary-outline(href=views.audio, target='_blank')
+    i.fa.fa-fw.fa-file-audio-o
+    | &nbsp;
+    | Listen
+
+if views.video
+  video(width='320', height='240', controls='')
+    source(src=views.video, type='video/mp4')
+    | Your browser does not support the video tag.
