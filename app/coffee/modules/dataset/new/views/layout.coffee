@@ -1,34 +1,4 @@
-Marionette = require 'backbone.marionette'
-
-# # # # #
-
-# TODO - abstract into Henson
-# TODO - use existing abstraction
-class UploadWidget extends Mn.LayoutView
-  template: require './templates/upload'
-  className: 'form-group'
-
-  events:
-    'change input[type=file]': 'onInputChange'
-
-  onInputChange: (e) ->
-
-    # Cache e.target
-    file = e.target.files[0]
-
-    # Return without a file
-    return unless file
-
-    # Parse text inside input file
-    fileReader = new FileReader()
-    fileReader.onload = => @onFileLoaded(fileReader.result)
-    fileReader.readAsText(file)
-
-  # On Uploaded callback
-  # Parses JSON from text and sends to parent view
-  onFileLoaded: (text) ->
-    parsed = JSON.parse(text)
-    @trigger 'parse', parsed
+UploadWidget = require '../../../base/views/upload/upload'
 
 # # # # #
 
@@ -45,13 +15,17 @@ class NewDatasetLayout extends Mn.LayoutView
 
   onRender: ->
     uploadWidget = new UploadWidget()
-    uploadWidget.on 'parse', @onJsonUpload # TODO
+    uploadWidget.on 'file:loaded', @onJsonUpload # TODO
     @uploadRegion.show uploadWidget
     @disableSubmit()
 
   # onJsonUpload
   # Invoked as a callback when a JSON file has
-  onJsonUpload: (parsedJson) =>
+  onJsonUpload: (uploadedText) =>
+
+    # Parses JSON from upload
+    parsedJson = JSON.parse(uploadedText)
+
     # Sets context and graph attributes on dataset model
     @model.set('context', parsedJson['@context'])
 

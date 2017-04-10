@@ -15,16 +15,17 @@ class UploadWidget extends Mn.LayoutView
     # Return without a file
     return unless file
 
-    # Parse text inside input file
+    # Parse text from input file
     fileReader = new FileReader()
     fileReader.onload = => @trigger('file:loaded', fileReader.result)
     fileReader.readAsText(file)
 
+  # TODO - optionally parse JSON from upload?
   # On Uploaded callback
   # Parses JSON from text and sends to parent view
-  onFileLoaded: (text) ->
-    parsed = JSON.parse(text)
-    @trigger 'parse', parsed
+  # onFileLoaded: (text) ->
+  #   parsed = JSON.parse(text)
+  #   @trigger 'parse', parsed
 
 # # # # #
 

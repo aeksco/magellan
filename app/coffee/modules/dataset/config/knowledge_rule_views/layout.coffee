@@ -63,6 +63,8 @@ class RuleLayout extends Mn.LayoutView
 
   # TODO - this method should live on the collection, rather than in this view.
   # TODO - this should REALLY be abstracted into a factory method that accepts TYPE and DATASET_ID attributes
+  # TODO - this DEFINITELY must be abstracted to be compatible with KNRule imports
+  # TODO - should this be a method on the collection?
   buildNewRule: ->
     params =
       id:         window.buildUniqueId('kn_')
