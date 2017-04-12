@@ -52,7 +52,7 @@ class RuleDemoLayout extends require 'hn_views/lib/nav'
 
   navItems: [
     { icon: 'fa-database',    text: 'Raw Archive',  trigger: 'dataset', default: true }
-    { icon: 'fa-university',  text: 'Knowledge Rules',   trigger: 'rules' }
+    { icon: 'fa-university',  text: 'Knowledge Capture',   trigger: 'rules' }
     { icon: 'fa-table',       text: 'Processed Archive',  trigger: 'processed' }
   ]
 
@@ -68,7 +68,7 @@ class RuleDemoLayout extends require 'hn_views/lib/nav'
     @contentRegion.show new RuleLayout({ collection: @collection, title: 'Raw Archive' })
 
   showRules: ->
-    @contentRegion.show new RuleLayout({ collection: @options.ruleCollection, title: 'Knowledge Rules' })
+    @contentRegion.show new RuleLayout({ collection: @options.ruleCollection, title: 'Knowledge Capture' })
 
   showProcessed: ->
     @contentRegion.show new RuleLayout({ collection: @collection, title: 'Processed Archive', processed: true })

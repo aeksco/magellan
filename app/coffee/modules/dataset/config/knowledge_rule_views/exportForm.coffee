@@ -9,7 +9,7 @@ class ExportForm extends Mn.LayoutView
     DownloadFile: {}
     Flashes:
       success:
-        message:  'Successfully exported Knowledge Rules.'
+        message:  'Successfully exported Knowledge Capture.'
 
   onCancel: ->
     @trigger 'cancel'

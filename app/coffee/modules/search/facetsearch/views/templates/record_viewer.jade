@@ -11,21 +11,21 @@
   //-     i.fa.fa-files-o
 
 //-
-if views.img
-  .row
-    .col-xs-12.text-center
-      img.img-thumbnail(data-zoom=views.img, src=views.img, style='max-height:40rem;')
+//- if views.img
+//-   .row
+//-     .col-xs-12.text-center
+//-       img.img-thumbnail(data-zoom=views.img, src=views.img, style='max-height:40rem;')
 
-if views.audio
-  a.btn.btn-primary-outline(href=views.audio, target='_blank')
-    i.fa.fa-fw.fa-file-audio-o
-    | &nbsp;
-    | Listen
+//- if views.audio
+//-   a.btn.btn-primary-outline(href=views.audio, target='_blank')
+//-     i.fa.fa-fw.fa-file-audio-o
+//-     | &nbsp;
+//-     | Listen
 
-if views.video
-  video(width='320', height='240', controls='')
-    source(src=views.video, type='video/mp4')
-    | Your browser does not support the video tag.
+//- if views.video
+//-   video(width='320', height='240', controls='')
+//-     source(src=views.video, type='video/mp4')
+//-     | Your browser does not support the video tag.
 
 .row
   .col-xs-12(data-region='viewer')

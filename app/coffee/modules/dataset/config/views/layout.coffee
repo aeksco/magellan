@@ -9,8 +9,8 @@ class ConfigLayoutView extends require 'hn_views/lib/nav'
 
   navItems: [
     { icon: 'fa-list',            text: 'Facets',             trigger: 'facets', default: true }
-    { icon: 'fa-university',      text: 'Knowledge Rules',    trigger: 'knowledge' }
-    { icon: 'fa-window-maximize', text: 'Viewer Rules',       trigger: 'viewer' }
+    { icon: 'fa-university',      text: 'Knowledge Capture',    trigger: 'knowledge' }
+    { icon: 'fa-window-maximize', text: 'View Settings',       trigger: 'viewer' }
   ]
 
   navEvents:

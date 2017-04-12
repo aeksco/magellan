@@ -12,7 +12,7 @@ class ImportForm extends Mn.LayoutView
     DownloadFile: {}
     Flashes:
       success:
-        message:  'Successfully imported Knowledge Rules.'
+        message:  'Successfully imported Knowledge Capture.'
 
   regions:
     uploadRegion: '[data-region=upload]'
