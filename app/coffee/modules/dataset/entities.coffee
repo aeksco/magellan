@@ -26,6 +26,11 @@ class DatasetModel extends Backbone.Model
   fetchViewerRules: ->
     return Backbone.Radio.channel('viewer:rule').request('collection', @id)
 
+  # analysisExport
+  # Exports the knowledge-enhanced dataset for external analysis
+  analysisExport: ->
+    console.log 'EXPORT FOR ANALYSIS'
+
   generateNewFacets: (facetKeys, indexStart) ->
 
     # Adds an index to each facet for correct ordering
@@ -56,6 +61,8 @@ class DatasetModel extends Backbone.Model
     # Iterates over each id in facetKeys returns a promise
     return Promise.each(facetKeys, saveFacet)
 
+  # TODO - perhaps this should be exported into a separate class to manage facets related to datasets
+  # rather than maintaining this directly on the dataset itself.
   # Destroys superfluous facets
   destroySuperfluousFacets: (toDestroy, facetCollection) =>
 
