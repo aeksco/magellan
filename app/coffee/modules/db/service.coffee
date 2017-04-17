@@ -9,7 +9,7 @@ class DexieService extends Marionette.Service
   radioRequests:
     'db add':     'addDocument'
     'db delete':  'deleteDocument'
-    'db db':  'getDb'
+    'db db':      'getDb'
 
   initialize: (options={})->
 
