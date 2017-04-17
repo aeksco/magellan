@@ -26,11 +26,6 @@ class DatasetModel extends Backbone.Model
   fetchViewerRules: ->
     return Backbone.Radio.channel('viewer:rule').request('collection', @id)
 
-  # analysisExport
-  # Exports the knowledge-enhanced dataset for external analysis
-  analysisExport: ->
-    console.log 'EXPORT FOR ANALYSIS'
-
   generateNewFacets: (facetKeys, indexStart) ->
 
     # Adds an index to each facet for correct ordering

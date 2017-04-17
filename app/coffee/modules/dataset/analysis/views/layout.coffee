@@ -1,7 +1,7 @@
 
 class ApplyRulesView extends Mn.LayoutView
   template: require './templates/analysis'
-  className: 'card card-block'
+  className: 'container'
 
   behaviors:
     DownloadFile: {}

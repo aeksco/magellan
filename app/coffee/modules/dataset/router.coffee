@@ -1,10 +1,11 @@
 require './factory'
 require './creator'
 
-ListRoute   = require './list/route'
-SearchRoute = require './search/route'
-ConfigRoute = require './config/route'
-NewRoute    = require './new/route'
+ListRoute     = require './list/route'
+SearchRoute   = require './search/route'
+ConfigRoute   = require './config/route'
+NewRoute      = require './new/route'
+AnalysisRoute = require './analysis/route'
 
 # # # # #
 
@@ -13,11 +14,12 @@ NewRoute    = require './new/route'
 class DatasetRouter extends require 'hn_routing/lib/router'
 
   routes:
-    '(/)':                    'list' # ROOT
-    'datasets(/)':            'list'
-    'datasets/:id/search(/)': 'search'
-    'datasets/:id/config(/)': 'config'
-    'datasets/new(/)':        'new'
+    '(/)':                      'list' # ROOT
+    'datasets(/)':              'list'
+    'datasets/:id/search(/)':   'search'
+    'datasets/:id/config(/)':   'config'
+    'datasets/:id/analysis(/)': 'analysis'
+    'datasets/new(/)':          'new'
 
   list: ->
     new ListRoute({ container: @container })
@@ -27,6 +29,9 @@ class DatasetRouter extends require 'hn_routing/lib/router'
 
   config: (id) ->
     new ConfigRoute({ container: @container, id: id })
+
+  analysis: (id) ->
+    new AnalysisRoute({ container: @container, id: id })
 
   new: ->
     new NewRoute({ container: @container })
