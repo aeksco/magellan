@@ -2,16 +2,16 @@ LayoutView  = require './views/layout'
 
 # # # # #
 
-class DatasetConfigRoute extends require 'hn_routing/lib/route'
+class DatasetExportRoute extends require 'hn_routing/lib/route'
 
   title: ->
-    return "Datasets - #{@model.get('label')} - Analysis"
+    return "Datasets - #{@model.get('label')} - Export"
 
   breadcrumbs: ->
     return [
       { href: "#datasets", text: 'Datasets' }
       { href: "#datasets/#{@model.id}/search", text: @model.get('label') }
-      { text: 'Analysis' }
+      { text: 'Export' }
     ]
 
   fetch: (id) ->
@@ -23,4 +23,4 @@ class DatasetConfigRoute extends require 'hn_routing/lib/route'
 
 # # # # #
 
-module.exports = DatasetConfigRoute
+module.exports = DatasetExportRoute

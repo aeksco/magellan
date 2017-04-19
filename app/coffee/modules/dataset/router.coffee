@@ -5,7 +5,7 @@ ListRoute     = require './list/route'
 SearchRoute   = require './search/route'
 ConfigRoute   = require './config/route'
 NewRoute      = require './new/route'
-AnalysisRoute = require './analysis/route'
+ExportRoute   = require './export/route'
 
 # # # # #
 
@@ -31,7 +31,7 @@ class DatasetRouter extends require 'hn_routing/lib/router'
     new ConfigRoute({ container: @container, id: id })
 
   analysis: (id) ->
-    new AnalysisRoute({ container: @container, id: id })
+    new ExportRoute({ container: @container, id: id })
 
   new: ->
     new NewRoute({ container: @container })
