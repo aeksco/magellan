@@ -18,7 +18,7 @@ class DatasetRouter extends require 'hn_routing/lib/router'
     'datasets(/)':              'list'
     'datasets/:id/search(/)':   'search'
     'datasets/:id/config(/)':   'config'
-    'datasets/:id/analysis(/)': 'analysis'
+    'datasets/:id/export(/)':   'export'
     'datasets/new(/)':          'new'
 
   list: ->
@@ -30,7 +30,7 @@ class DatasetRouter extends require 'hn_routing/lib/router'
   config: (id) ->
     new ConfigRoute({ container: @container, id: id })
 
-  analysis: (id) ->
+  export: (id) ->
     new ExportRoute({ container: @container, id: id })
 
   new: ->
