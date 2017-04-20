@@ -8,6 +8,7 @@ NewRoute      = require './new/route'
 EditRoute     = require './edit/route'
 DestroyRoute  = require './destroy/route'
 ExportRoute   = require './export/route'
+CaptureRoute  = require './knowledge_capture/route'
 
 # # # # #
 
@@ -17,6 +18,7 @@ class DatasetRouter extends require 'hn_routing/lib/router'
     '(/)':                      'list' # ROOT
     'datasets(/)':              'list'
     'datasets/:id/search(/)':   'search'
+    'datasets/:id/capture(/)':  'knowledgeCapture'
     'datasets/:id/config(/)':   'config'
     'datasets/:id/export(/)':   'export'
     'datasets/:id/edit(/)':     'edit'
@@ -28,6 +30,9 @@ class DatasetRouter extends require 'hn_routing/lib/router'
 
   search: (id) ->
     new SearchRoute({ container: @container, id: id })
+
+  knowledgeCapture: (id) ->
+    new CaptureRoute({ container: @container, id: id })
 
   config: (id) ->
     new ConfigRoute({ container: @container, id: id })

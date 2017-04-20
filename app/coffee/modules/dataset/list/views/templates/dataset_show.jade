@@ -9,10 +9,10 @@
       | &nbsp;
       | Edit
 
-    a.btn.btn-sm.btn-secondary(href="#datasets/#{id}/config")
-      i.fa.fa-fw.fa-cog
+    a.btn.btn-sm.btn-danger-outline(href="#datasets/#{id}/destroy")
+      i.fa.fa-fw.fa-trash
       | &nbsp;
-      | Settings
+      | Destroy
 
   .col-xs-12
     hr
@@ -22,7 +22,7 @@
     p.lead #{_s.numberFormat(count)} Items
 
   .col-xs-4
-    a.btn.btn-primary-outline.w-100(href="#datasets/#{id}/config")
+    a.btn.btn-primary-outline.w-100(href="#datasets/#{id}/capture")
       i.fa.fa-fw.fa-paperclip
       | &nbsp;
       | Knowledge Capture

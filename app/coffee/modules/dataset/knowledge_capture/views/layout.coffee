@@ -8,7 +8,7 @@ ResetRulesView  = require './resetRules'
 # # # # #
 
 class RuleLayout extends Mn.LayoutView
-  className: 'row'
+  className: 'container-fluid'
   template: require './templates/layout'
 
   ui:
