@@ -6,6 +6,7 @@ SearchRoute   = require './search/route'
 ConfigRoute   = require './config/route'
 NewRoute      = require './new/route'
 EditRoute     = require './edit/route'
+DestroyRoute  = require './destroy/route'
 ExportRoute   = require './export/route'
 
 # # # # #
@@ -19,6 +20,7 @@ class DatasetRouter extends require 'hn_routing/lib/router'
     'datasets/:id/config(/)':   'config'
     'datasets/:id/export(/)':   'export'
     'datasets/:id/edit(/)':     'edit'
+    'datasets/:id/destroy(/)':  'destroy'
     'datasets/new(/)':          'new'
 
   list: ->
@@ -35,6 +37,9 @@ class DatasetRouter extends require 'hn_routing/lib/router'
 
   edit: (id) ->
     new EditRoute({ container: @container, id: id })
+
+  destroy: (id) ->
+    new DestroyRoute({ container: @container, id: id })
 
   new: ->
     new NewRoute({ container: @container })

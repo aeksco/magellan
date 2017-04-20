@@ -1,6 +1,3 @@
-UploadWidget = require '../../../base/views/upload/upload'
-
-# # # # #
 
 class EditDatasetLayout extends Mn.LayoutView
   template: require './templates/layout'
