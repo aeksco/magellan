@@ -13,11 +13,45 @@ class NewDatasetLayout extends Mn.LayoutView
   regions:
     uploadRegion: '[data-region=upload]'
 
+  ui:
+    dirInput: '[name=dir]'
+
+  events:
+    'change @ui.dirInput': 'onDirChange'
+
   onRender: ->
     uploadWidget = new UploadWidget()
     uploadWidget.on 'file:loaded', @onJsonUpload # TODO
     @uploadRegion.show uploadWidget
     @disableSubmit()
+
+  # # # # #
+
+  # TODO - this should be abstracted into a separate view
+  onDirChange: (e) ->
+    # console.log e
+    # console.log e.target
+    # console.log e.target.files
+
+    graph = []
+
+    for f in e.target.files
+
+      # console.log f
+
+      el = {
+        '@id':              f.webkitRelativePath
+        'nfo:size':         f.size
+        'rdf:label':        f.name
+        'nfo:type':         f.type || 'nfo:Document'
+        'nfo:lastModified': f.lastModified
+      }
+
+      graph.push(el)
+
+    console.log graph
+
+  # # # # #
 
   # onJsonUpload
   # Invoked as a callback when a JSON file has
