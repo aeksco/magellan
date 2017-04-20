@@ -28,6 +28,7 @@ class NewDatasetLayout extends Mn.LayoutView
   # # # # #
 
   # TODO - this should be abstracted into a separate view
+  # TODO - this should leverage the same code present in the crawl script
   onDirChange: (e) ->
     # console.log e
     # console.log e.target

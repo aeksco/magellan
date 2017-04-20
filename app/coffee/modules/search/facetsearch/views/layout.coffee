@@ -100,9 +100,16 @@ class FacetedViewLayout extends Mn.LayoutView
 
   initFacetView: =>
 
+    # Isolates facet data
+    facets = @options.facetCollection.getEnabled()
+
+    # Generates orderByOptions
+    orderByOptions = {}
+    orderByOptions[f.attribute] = f.label for f in facets
+
     settings =
       items: @options.items.toJSON()
-      facets: @options.facetCollection.getEnabled()
+      facets: facets
       resultElement: '#results'
       facetElement:  '#facets'
       resultTemplate: 'placeholder'
@@ -113,10 +120,8 @@ class FacetedViewLayout extends Mn.LayoutView
       paginationCount: 50
 
       # TODO - adjust ordering of elements
-      # TODO - abstract into OrderModel, Settings Model??
-      orderByOptions:
-        'dmo:type':   'DMO Type'
-        'label':      'Label'
+      # TODO - this is broken and it must be re-worked.
+      orderByOptions: orderByOptions
 
       # TODO - this should be implemented..
       # TODO - what does this do????
