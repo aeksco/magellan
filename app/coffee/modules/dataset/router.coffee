@@ -5,12 +5,11 @@ ListRoute     = require './list/route'
 SearchRoute   = require './search/route'
 ConfigRoute   = require './config/route'
 NewRoute      = require './new/route'
+EditRoute     = require './edit/route'
 ExportRoute   = require './export/route'
 
 # # # # #
 
-# TODO - edit route
-# TODO - knowledge graph for each dataset?
 class DatasetRouter extends require 'hn_routing/lib/router'
 
   routes:
@@ -19,6 +18,7 @@ class DatasetRouter extends require 'hn_routing/lib/router'
     'datasets/:id/search(/)':   'search'
     'datasets/:id/config(/)':   'config'
     'datasets/:id/export(/)':   'export'
+    'datasets/:id/edit(/)':     'edit'
     'datasets/new(/)':          'new'
 
   list: ->
@@ -32,6 +32,9 @@ class DatasetRouter extends require 'hn_routing/lib/router'
 
   export: (id) ->
     new ExportRoute({ container: @container, id: id })
+
+  edit: (id) ->
+    new EditRoute({ container: @container, id: id })
 
   new: ->
     new NewRoute({ container: @container })

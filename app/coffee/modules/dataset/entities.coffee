@@ -11,6 +11,10 @@ class DatasetModel extends Backbone.Model
     label:    ''
     context:  {}
 
+  # Overwritten save method
+  save: ->
+    Backbone.Radio.channel('dataset').request('save', @)
+
   # fetchFacets
   # Fetches a FacetCollection instance populated with the facets associated
   # with this dataset. Returns a Promise.

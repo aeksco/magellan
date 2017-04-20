@@ -5,19 +5,13 @@ include ../../../../base/partials/form_helpers
     .card.card-block
       .row
         .col-xs-12
-          h4.card-title New Dataset
+          h4.card-title Edit Dataset
 
         .col-xs-12
           hr
 
         .col-xs-12
           +formInput({ label: 'Label', placeholder: 'Label', name: 'label', type: 'text' })
-
-        .col-xs-12
-          input(type='file' name='dir' webkitdirectory mozdirectory)
-          //- <p>Directory: <input type="file" webkitdirectory mozdirectory /></p>
-
-        .col-xs-12(data-region='upload')
 
         .col-xs-12
           hr
@@ -30,4 +24,3 @@ include ../../../../base/partials/form_helpers
             | Cancel
 
           +submitButton({})
-

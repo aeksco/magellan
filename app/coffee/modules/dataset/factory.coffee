@@ -9,6 +9,7 @@ class DatasetFactory extends DexieFactory
 
   radioRequests:
     'dataset model':      'getModel'
+    'dataset save':       'saveModel'
     'dataset collection': 'getCollection'
 
   initialize: ->
