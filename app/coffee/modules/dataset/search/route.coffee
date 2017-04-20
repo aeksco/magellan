@@ -11,6 +11,7 @@ class DatasetSearchRoute extends require 'hn_routing/lib/route'
     return [
       { text: 'Datasets', href: '#datasets' }
       { text: "#{@model.get('label')}" }
+      { text: 'Search' }
     ]
 
   # TODO - this should be re-evaluated
