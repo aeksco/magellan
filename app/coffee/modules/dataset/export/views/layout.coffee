@@ -80,7 +80,13 @@ class ApplyRulesView extends Mn.LayoutView
       # CSV Rows
       for el in jsonExport
         row = []
-        row.push(el[header]|| ' ') for header in allKeys
+
+        for header in allKeys
+          value = el[header]
+          value = value['@id'] if typeof value == 'object' && value['@id']
+          value = 'NULL' if value == undefined
+          row.push(value)
+
         csvOut.push(row.join(', '))
 
       # Filename and filetype
