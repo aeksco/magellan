@@ -2,16 +2,15 @@ LayoutView = require './views/layout'
 
 # # # # #
 
-class EditDatasetRoute extends require 'hn_routing/lib/route'
+class ShowDatasetRoute extends require 'hn_routing/lib/route'
 
   title: ->
-    return "Magellan - #{@model.get('label')} - Edit"
+    return "Magellan - #{@model.get('label')}"
 
   breadcrumbs: ->
     return [
       { text: 'Datasets', href: '#datasets' }
-      { href: "#datasets/#{@model.id}", text: @model.get('label') }
-      { text: 'Edit' }
+      { text: @model.get('label') }
     ]
 
   fetch: (id) ->
@@ -23,4 +22,4 @@ class EditDatasetRoute extends require 'hn_routing/lib/route'
 
 # # # # #
 
-module.exports = EditDatasetRoute
+module.exports = ShowDatasetRoute

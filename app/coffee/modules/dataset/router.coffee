@@ -2,6 +2,7 @@ require './factory'
 require './creator'
 
 ListRoute     = require './list/route'
+ShowRoute     = require './show/route'
 SearchRoute   = require './search/route'
 ConfigRoute   = require './config/route'
 NewRoute      = require './new/route'
@@ -17,6 +18,7 @@ class DatasetRouter extends require 'hn_routing/lib/router'
   routes:
     '(/)':                      'list' # ROOT
     'datasets(/)':              'list'
+    'datasets/:id(/)':         'show'
     'datasets/:id/search(/)':   'search'
     'datasets/:id/capture(/)':  'knowledgeCapture'
     'datasets/:id/config(/)':   'config'
@@ -27,6 +29,9 @@ class DatasetRouter extends require 'hn_routing/lib/router'
 
   list: ->
     new ListRoute({ container: @container })
+
+  show: (id) ->
+    new ShowRoute({ container: @container, id: id })
 
   search: (id) ->
     new SearchRoute({ container: @container, id: id })
