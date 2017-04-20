@@ -18,14 +18,14 @@ class DatasetRouter extends require 'hn_routing/lib/router'
   routes:
     '(/)':                      'list' # ROOT
     'datasets(/)':              'list'
-    'datasets/:id(/)':         'show'
+    'datasets/new(/)':          'new'
+    'datasets/:id(/)':          'show'
     'datasets/:id/search(/)':   'search'
     'datasets/:id/capture(/)':  'knowledgeCapture'
     'datasets/:id/config(/)':   'config'
     'datasets/:id/export(/)':   'export'
     'datasets/:id/edit(/)':     'edit'
     'datasets/:id/destroy(/)':  'destroy'
-    'datasets/new(/)':          'new'
 
   list: ->
     new ListRoute({ container: @container })

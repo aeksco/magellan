@@ -6,17 +6,13 @@ AboutRoute = require './about/route'
 
 # # # # #
 
-# HomeRouter class definition
-class HomeRouter extends require 'hn_routing/lib/router'
+# MainRouter class definition
+class MainRouter extends require 'hn_routing/lib/router'
 
   routes:
-    'rdf(/)':       'rdfViewer'
     'settings(/)':  'settings'
     'sandbox(/)':   'sandbox'
     'about(/)':     'about'
-
-  rdfViewer: ->
-    new RDFRoute({ container: @container })
 
   settings: ->
     new SettingsRoute({ container: @container })
@@ -29,4 +25,4 @@ class HomeRouter extends require 'hn_routing/lib/router'
 
 # # # # #
 
-module.exports = HomeRouter
+module.exports = MainRouter

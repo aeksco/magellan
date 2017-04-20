@@ -23,23 +23,20 @@ class DestroyDatasetLayout extends Mn.LayoutView
     confirmationTrigger:  '[data-click=confirm]'
 
 
-  # onConfirmed (from Confirmations behavior)
-  # TODO - implement DatasetDestructor class
-  # Destroy datapoints, facets, knowledge_rules, viewer_rules, and the dataset.
+  # onConfirmed (Confirmations behavior)
+  # Destroy datapoints, facets, knowledge_rules, viewer_rules, and dataset.
   onConfirmed: ->
-    console.log 'ON CONFIRMED'
-    console.log @model
-    console.log @options.destructor
-    console.log @options.destructor.deploy
     @options.destructor.deploy(@model)
 
-  # TODO - disable submit and cancel buttons
+  # onRequest (ModelEvents behavior)
   onRequest: ->
-    console.log 'ON REQUEST'
+    @ui.confirmationTrigger.addClass('disabled')
 
+  # onSync (ModelEvents behavior)
   onSync: ->
     Radio.channel('app').trigger('redirect', '#datasets')
 
+  # onError (ModelEvents behavior)
   # TODO - handle error event callbacks
   onError: (err) ->
     console.log 'ERROR'

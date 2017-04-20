@@ -78,12 +78,10 @@ require './modules/viewer_rule/factory'
 # They have routes and entities (models and collections)
 # Each route represents an endpoint, or 'page' in the app.
 DatasetRouter   = require './modules/dataset/router'
-HomeRouter      = require './modules/home/router'
-IframeRouter    = require './modules/iframe/router'
+MainRouter      = require './modules/main/router'
 OntologyRouter  = require './modules/ontology/router'
 new DatasetRouter({ container: AppLayout.main })
-new HomeRouter({ container: AppLayout.main })
-new IframeRouter({ container: AppLayout.main })
+new MainRouter({ container: AppLayout.main })
 new OntologyRouter({ container: AppLayout.main })
 
 # # # # #

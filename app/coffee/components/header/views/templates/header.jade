@@ -7,16 +7,34 @@ a.navbar-brand.btn.btn-secondary.btn-circle
 .navbar-brand
   small.text-muted Structured Data Explorer
 
-//- ul.nav.navbar-nav
+//- ul.nav.navbar-nav.pull-right(data-region='user')
+//-   li.nav-item.cursor-pointer
+//-     .icon.language.en
+//-     a.nav-link.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Alexander Schwartzberg 
+//-     .dropdown-menu(aria-labelledby='dropdownMenu1', style='right: 0; left: auto;', data-container='links')
+//-       a.dropdown-item(href='#profile') Profile
+//-       a.dropdown-item Feedback
+//-       a.dropdown-item About
+//-       .dropdown-divider
+//-       a.dropdown-item Logout
 
-//-   li.nav-item
-//-     a.nav-link(href='#datasets')
-//-       i.fa.fa-fw.fa-search
-//-       | &nbsp;
-//-       | Datasets
+ul.nav.navbar-nav.pull-right
 
-//-   li.nav-item
-//-     a.nav-link(href='#ontologies')
-//-       i.fa.fa-fw.fa-sitemap
-//-       | &nbsp;
-//-       | Ontologies
+  //- li.nav-item
+  //-   a.nav-link(href='#datasets')
+  //-     i.fa.fa-fw.fa-search
+  //-     | &nbsp;
+  //-     | Datasets
+
+  //- li.nav-item
+  //-   a.nav-link(href='#ontologies')
+  //-     i.fa.fa-fw.fa-sitemap
+  //-     | &nbsp;
+  //-     | Ontologies
+
+
+  li.nav-item
+    a.nav-link(href='#about')
+      i.fa.fa-fw.fa-question-circle-o
+      | &nbsp;
+      | About
