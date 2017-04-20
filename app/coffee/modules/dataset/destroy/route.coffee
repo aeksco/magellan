@@ -1,4 +1,5 @@
 LayoutView = require './views/layout'
+DatasetDestructor = require '../destructor'
 
 # # # # #
 
@@ -19,7 +20,7 @@ class DestroyDatasetRoute extends require 'hn_routing/lib/route'
     .then (model) => @model = model
 
   render: ->
-    @container.show new LayoutView({ model: @model })
+    @container.show new LayoutView({ model: @model, destructor: DatasetDestructor })
 
 # # # # #
 

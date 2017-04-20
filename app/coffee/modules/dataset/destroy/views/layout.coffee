@@ -28,6 +28,10 @@ class DestroyDatasetLayout extends Mn.LayoutView
   # Destroy datapoints, facets, knowledge_rules, viewer_rules, and the dataset.
   onConfirmed: ->
     console.log 'ON CONFIRMED'
+    console.log @model
+    console.log @options.destructor
+    console.log @options.destructor.deploy
+    @options.destructor.deploy(@model)
 
   # TODO - disable submit and cancel buttons
   onRequest: ->
