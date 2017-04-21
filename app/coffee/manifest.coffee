@@ -49,7 +49,6 @@ new LoadingComponent({ container: AppLayout.loading })
 menuItems = [
   { href: '#datasets',    icon: 'fa-search',    title: 'Datasets', divider: true }
   { href: '#ontologies',  icon: 'fa-sitemap',   title: 'Ontologies', divider: true }
-  { href: '#settings',    icon: 'fa-cog',       title: 'Settings', divider: true }
 ]
 
 # Henson.js Components

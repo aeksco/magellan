@@ -1,6 +1,6 @@
 require './factory'
 
-SettingsRoute = require './settings/route'
+# SettingsRoute = require './settings/route'
 SandboxRoute = require './sandbox/route'
 AboutRoute = require './about/route'
 
@@ -10,12 +10,12 @@ AboutRoute = require './about/route'
 class MainRouter extends require 'hn_routing/lib/router'
 
   routes:
-    'settings(/)':  'settings'
+    # 'settings(/)':  'settings'
     'sandbox(/)':   'sandbox'
     'about(/)':     'about'
 
-  settings: ->
-    new SettingsRoute({ container: @container })
+  # settings: ->
+  #   new SettingsRoute({ container: @container })
 
   sandbox: ->
     new SandboxRoute({ container: @container })

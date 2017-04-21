@@ -8,12 +8,12 @@
 
         .col-xs-4.text-xs-right
 
-          a.btn.btn-sm.btn-secondary.m-r-1(href="#datasets/#{id}/edit")
+          a.btn.btn-secondary.m-r-1(href="#datasets/#{id}/edit")
             i.fa.fa-fw.fa-pencil
             | &nbsp;
             | Edit
 
-          a.btn.btn-sm.btn-danger-outline(href="#datasets/#{id}/destroy")
+          a.btn.btn-danger-outline(href="#datasets/#{id}/destroy")
             i.fa.fa-fw.fa-trash
             | &nbsp;
             | Destroy
@@ -26,19 +26,19 @@
           p.lead #{_s.numberFormat(count)} Items
 
         .col-xs-4
-          a.btn.btn-primary-outline.w-100(href="#datasets/#{id}/capture")
+          a.btn.btn-lg.btn-primary-outline.w-100(href="#datasets/#{id}/capture")
             i.fa.fa-fw.fa-paperclip
             | &nbsp;
             | Knowledge Capture
 
         .col-xs-4
-          a.btn.btn-success-outline.w-100(href="#datasets/#{id}/search")
+          a.btn.btn-lg.btn-success-outline.w-100(href="#datasets/#{id}/search")
             i.fa.fa-fw.fa-search
             | &nbsp;
             | Search
 
         .col-xs-4
-          a.btn.btn-success-outline.w-100(href="#datasets/#{id}/export")
+          a.btn.btn-lg.btn-success-outline.w-100(href="#datasets/#{id}/export")
             i.fa.fa-fw.fa-cloud-download
             | &nbsp;
             | Export
