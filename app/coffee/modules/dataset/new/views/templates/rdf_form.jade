@@ -1,24 +1,18 @@
 include ../../../../base/partials/form_helpers
 
-
 .col-xs-12
   .alert.alert-info
     p.lead
-      i.fa.fa-fw.fa-folder-open-o
+      i.fa.fa-fw.fa-file
       | &nbsp;
-      | Archive
+      | RDF/XML
 
-    p.lead Imports a file system directory for processing by Magellan.
+    p.lead Imports an existing RDF/XML knowledge graph for processing by Magellan.
 
 .col-xs-12
   +formInput({ label: 'Label', placeholder: 'Label', name: 'label', type: 'text' })
 
-.col-xs-12
-  hr
-
 .col-xs-12(data-region='upload')
-.col-xs-12
-  input(type='file' name='dir' webkitdirectory mozdirectory)
 
 .col-xs-12
   hr
