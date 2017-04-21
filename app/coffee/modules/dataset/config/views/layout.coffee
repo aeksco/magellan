@@ -3,7 +3,6 @@ ViewerRuleLayout    = require '../viewer_rule_views/layout'
 
 # # # # #
 
-# TODO - this should be broken up into more granular routes
 class ConfigLayoutView extends require 'hn_views/lib/nav'
   className: 'container-fluid'
 

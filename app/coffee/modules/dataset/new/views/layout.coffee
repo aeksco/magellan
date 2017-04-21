@@ -2,6 +2,8 @@ UploadWidget = require '../../../base/views/upload/upload'
 
 # # # # #
 
+# TODO - this view should ONLY manage JSON-LD imports
+# There should be another view that selects what type of dataset to import (JSON-LD, RDF, Upload)
 class NewDatasetLayout extends Mn.LayoutView
   template: require './templates/layout'
   className: 'container'
@@ -34,6 +36,7 @@ class NewDatasetLayout extends Mn.LayoutView
     # console.log e.target
     # console.log e.target.files
 
+    # TODO - abstract into ArchiveImporter class
     graph = []
 
     for f in e.target.files
@@ -92,4 +95,27 @@ class NewDatasetLayout extends Mn.LayoutView
 
 # # # # #
 
-module.exports = NewDatasetLayout
+class ImportSelectorView extends require 'hn_views/lib/nav'
+  className: 'container-fluid'
+
+  navItems: [
+    { icon: 'fa-globe',    text: 'JSON-LD',   trigger: 'json', default: true }
+    { icon: 'fa-folder-open-o', text: 'Archive',    trigger: 'archive' }
+  ]
+
+  navEvents:
+    'json':   'jsonImport'
+    'archive': 'archive'
+
+  navOptions:
+    pills: true
+
+  jsonImport: ->
+    @contentRegion.show new NewDatasetLayout({ model: @model })
+
+  archive: ->
+    console.log 'viewerConfig'
+
+# # # # #
+
+module.exports = ImportSelectorView
