@@ -305,8 +305,6 @@ createFacetUI = ->
   containertemplate = _.template(settings.facetContainer)
   $(settings.facetElement).html('')
 
-  window.facets = settings.facetCollection
-
   # Iterates over each setting...
   for facet in settings.facets
     facetHtml = $(containertemplate(id: facet.attribute))

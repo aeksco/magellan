@@ -47,8 +47,8 @@ new LoadingComponent({ container: AppLayout.loading })
 
 # Henson.js Sidebar configuration
 menuItems = [
-  { href: '#datasets',    icon: 'fa-search',    title: 'Datasets', divider: true }
-  { href: '#ontologies',  icon: 'fa-sitemap',   title: 'Ontologies', divider: true }
+  { href: '#datasets',    icon: 'fa-folder-open-o', title: 'Archives', divider: true }
+  { href: '#ontologies',  icon: 'fa-list-alt',      title: 'Ontologies', divider: true }
 ]
 
 # Henson.js Components
