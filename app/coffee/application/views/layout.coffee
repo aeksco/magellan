@@ -19,12 +19,6 @@ class ApplicationLayout extends Marionette.LayoutView
       selector:     '[app-region=modal]'
       regionClass:  require 'hn_regions/lib/regions/modal'
 
-    # main:
-    #   selector:     '[app-region=main]'
-    #   regionClass:  require 'Marionette.AnimatedRegion/lib/animatedRegion'
-    #   inAnimation:  'fadeInUp'
-    #   outAnimation: 'fadeOutDown'
-
     main:     '[app-region=main]'
 
 # # # # #

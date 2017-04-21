@@ -1,8 +1,8 @@
 .row
-  .col-xs-8
+  .col-xs-6
     h4.card-title= label
 
-  .col-xs-4.text-xs-right
+  .col-xs-6.text-xs-right
 
     a.btn.btn-sm.btn-secondary.m-r-1(href="#datasets/#{id}")
       i.fa.fa-fw.fa-eye
@@ -27,20 +27,20 @@
     p.lead #{_s.numberFormat(count)} Items
 
   .col-xs-4
-    a.btn.btn-primary-outline.w-100(href="#datasets/#{id}/capture")
-      i.fa.fa-fw.fa-paperclip
+    a.btn.btn-mg.btn-lg.btn-primary-outline.w-100(href="#datasets/#{id}/capture")
+      i.fa.fa-fw.fa-lg.fa-paperclip
       | &nbsp;
       | Knowledge Capture
 
   .col-xs-4
-    a.btn.btn-success-outline.w-100(href="#datasets/#{id}/search")
-      i.fa.fa-fw.fa-search
+    a.btn.btn-mg.btn-lg.btn-success-outline.w-100(href="#datasets/#{id}/search")
+      i.fa.fa-fw.fa-lg.fa-search
       | &nbsp;
       | Search
 
   .col-xs-4
-    a.btn.btn-success-outline.w-100(href="#datasets/#{id}/export")
-      i.fa.fa-fw.fa-cloud-download
+    a.btn.btn-mg.btn-lg.btn-success-outline.w-100(href="#datasets/#{id}/export")
+      i.fa.fa-fw.fa-lg.fa-cloud-download
       | &nbsp;
       | Export
 
