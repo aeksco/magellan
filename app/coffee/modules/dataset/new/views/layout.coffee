@@ -1,120 +1,34 @@
-UploadWidget = require '../../../base/views/upload/upload'
-
-# # # # #
-
-# TODO - this view should ONLY manage JSON-LD imports
-# There should be another view that selects what type of dataset to import (JSON-LD, RDF, Upload)
-class NewDatasetLayout extends Mn.LayoutView
-  template: require './templates/layout'
-  className: 'container'
-
-  behaviors:
-    ModelEvents: {}
-    SubmitButton: {}
-
-  regions:
-    uploadRegion: '[data-region=upload]'
-
-  ui:
-    dirInput: '[name=dir]'
-
-  events:
-    'change @ui.dirInput': 'onDirChange'
-
-  onRender: ->
-    uploadWidget = new UploadWidget()
-    uploadWidget.on 'file:loaded', @onJsonUpload # TODO
-    @uploadRegion.show uploadWidget
-    @disableSubmit()
-
-  # # # # #
-
-  # TODO - this should be abstracted into a separate view
-  # TODO - this should leverage the same code present in the crawl script
-  onDirChange: (e) ->
-    # console.log e
-    # console.log e.target
-    # console.log e.target.files
-
-    # TODO - abstract into ArchiveImporter class
-    graph = []
-
-    for f in e.target.files
-
-      # console.log f
-
-      el = {
-        '@id':              f.webkitRelativePath
-        'nfo:size':         f.size
-        'rdf:label':        f.name
-        'nfo:type':         f.type || 'nfo:Document'
-        'nfo:lastModified': f.lastModified
-      }
-
-      graph.push(el)
-
-    console.log graph
-
-  # # # # #
-
-  # onJsonUpload
-  # Invoked as a callback when a JSON file has
-  onJsonUpload: (uploadedText) =>
-
-    # Parses JSON from upload
-    parsedJson = JSON.parse(uploadedText)
-
-    # Sets context and graph attributes on dataset model
-    @model.set('context', parsedJson['@context'])
-
-    # TODO - is there a better way to manage this?
-    # We'll need some additional logic to manage the state of the uploaded dataset
-    @uploadedGraph = parsedJson['@graph']
-
-    # Enables submitButton
-    # TODO - there should be a validate method that manages submitButton state
-    @enableSubmit()
-
-  # onSubmit (from SubmitButton behavior)
-  onSubmit: ->
-
-    # TODO - this should be abstracted into a behavior...or has it been at some point?
-    data = Backbone.Syphon.serialize(@)
-
-    # Saves Dataset model to Dexie
-    @model.set(data)
-    @options.creator.deploy(@model, @uploadedGraph)
-
-  onSync: ->
-    Radio.channel('app').trigger('redirect', '#datasets')
-
-  # TODO - handle error event callbacks
-  onError: (err) ->
-    console.log 'ERROR'
-    console.log err
+ArchiveForm = require './archiveForm'
+JsonForm    = require './jsonForm'
 
 # # # # #
 
 class ImportSelectorView extends require 'hn_views/lib/nav'
-  className: 'container-fluid'
+  className: 'container'
+  template: require './templates/layout'
 
   navItems: [
-    { icon: 'fa-globe',    text: 'JSON-LD',   trigger: 'json', default: true }
-    { icon: 'fa-folder-open-o', text: 'Archive',    trigger: 'archive' }
+    { icon: 'fa-folder-open-o', text: 'Archive',    trigger: 'archive', default: true }
+    { icon: 'fa-globe',    text: 'JSON-LD',   trigger: 'json' }
+    { icon: 'fa-file', text: 'RDF/XML',    trigger: 'rdf' }
   ]
 
   navEvents:
-    'json':   'jsonImport'
-    'archive': 'archive'
+    'archive':  'archive'
+    'json':     'json'
+    'rdf':      'rdf'
 
   navOptions:
     pills: true
 
-  jsonImport: ->
-    @contentRegion.show new NewDatasetLayout({ model: @model })
+  json: ->
+    @contentRegion.show new JsonForm({ model: @model, creator: @options.creator })
 
-  archive: ->
-    console.log 'viewerConfig'
+  archive: -> # TODO - pass archive importer to this view
+    @contentRegion.show new ArchiveForm({ model: @model, creator: @options.creator })
+
+  rdf: ->
+    console.log 'RDF'
 
 # # # # #
 

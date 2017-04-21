@@ -1,5 +1,3 @@
-include ../../../../base/partials/form_helpers
-
 .row
   .col-xs-12
     .card.card-block
@@ -10,24 +8,9 @@ include ../../../../base/partials/form_helpers
         .col-xs-12
           hr
 
-        .col-xs-12
-          +formInput({ label: 'Label', placeholder: 'Label', name: 'label', type: 'text' })
-
-        .col-xs-12
-          input(type='file' name='dir' webkitdirectory mozdirectory)
-          //- <p>Directory: <input type="file" webkitdirectory mozdirectory /></p>
-
-        .col-xs-12(data-region='upload')
+        .col-xs-12( data-region='nav' )
 
         .col-xs-12
           hr
 
-        .col-xs-12.text-xs-right
-
-          a.btn.btn-secondary.m-r-1( href='#datasets' )
-            i.fa.fa-fw.fa-times
-            | &nbsp;
-            | Cancel
-
-          +submitButton({})
-
+        .col-xs-12( data-region='content' )
