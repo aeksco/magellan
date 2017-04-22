@@ -14,61 +14,28 @@ class ArchiveForm extends Mn.LayoutView
   regions:
     uploadRegion: '[data-region=upload]'
 
-  ui:
-    dirInput: '[name=dir]'
-
-  events:
-    'change @ui.dirInput': 'onDirChange'
-
   onRender: ->
-    uploadWidget = new UploadWidget()
-    uploadWidget.on 'file:loaded', @onJsonUpload # TODO
-    @uploadRegion.show uploadWidget
+    uploadWidget = new UploadWidget({ directory: true })
+    uploadWidget.on 'directory:loaded', @onDirectoryUpload
+    @uploadRegion.show(uploadWidget)
     @disableSubmit()
 
-  # # # # #
-
-  # TODO - this should be abstracted into a separate view
-  # TODO - this should leverage the same code present in the crawl script
-  onDirChange: (e) ->
-    # console.log e
-    # console.log e.target
-    # console.log e.target.files
-
-    # TODO - abstract into ArchiveImporter class
-    graph = []
-
-    for f in e.target.files
-
-      # console.log f
-
-      el = {
-        '@id':              f.webkitRelativePath
-        'nfo:size':         f.size
-        'rdf:label':        f.name
-        'nfo:type':         f.type || 'nfo:Document'
-        'nfo:lastModified': f.lastModified
-      }
-
-      graph.push(el)
-
-    console.log graph
-
-  # # # # #
-
-  # onJsonUpload
+  # onDirectoryUpload
   # Invoked as a callback when a JSON file has
-  onJsonUpload: (uploadedText) =>
+  onDirectoryUpload: (files) =>
 
-    # Parses JSON from upload
-    parsedJson = JSON.parse(uploadedText)
+    # ArchiveImporter
+    @options.importer.parse(files)
 
-    # Sets context and graph attributes on dataset model
-    @model.set('context', parsedJson['@context'])
+    # # Parses JSON from upload
+    # parsedJson = JSON.parse(uploadedText)
 
-    # TODO - is there a better way to manage this?
-    # We'll need some additional logic to manage the state of the uploaded dataset
-    @uploadedGraph = parsedJson['@graph']
+    # # Sets context and graph attributes on dataset model
+    # @model.set('context', parsedJson['@context'])
+
+    # # TODO - is there a better way to manage this?
+    # # We'll need some additional logic to manage the state of the uploaded dataset
+    # @uploadedGraph = parsedJson['@graph']
 
     # Enables submitButton
     # TODO - there should be a validate method that manages submitButton state
@@ -79,10 +46,11 @@ class ArchiveForm extends Mn.LayoutView
 
     # TODO - this should be abstracted into a behavior...or has it been at some point?
     data = Backbone.Syphon.serialize(@)
+    console.log data
 
     # Saves Dataset model to Dexie
-    @model.set(data)
-    @options.creator.deploy(@model, @uploadedGraph)
+    # @model.set(data)
+    # @options.creator.deploy(@model, @uploadedGraph)
 
   onSync: ->
     Radio.channel('app').trigger('redirect', '#datasets')
@@ -92,5 +60,6 @@ class ArchiveForm extends Mn.LayoutView
     console.log 'ERROR'
     console.log err
 
-# ArchiveForm class definition
+# # # # #
+
 module.exports = ArchiveForm

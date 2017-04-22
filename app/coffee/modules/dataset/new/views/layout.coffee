@@ -26,7 +26,7 @@ class ImportSelectorView extends require 'hn_views/lib/nav'
     @contentRegion.show new JsonForm({ model: @model, creator: @options.creator })
 
   archive: -> # TODO - pass ArchiveImporter to this view
-    @contentRegion.show new ArchiveForm({ model: @model, creator: @options.creator })
+    @contentRegion.show new ArchiveForm({ model: @model, creator: @options.creator, importer: @options.importer })
 
   rdf: -> # TODO - pass RDFImporter to this view
     @contentRegion.show new RdfForm({ model: @model, creator: @options.creator })

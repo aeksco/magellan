@@ -1,2 +1,5 @@
 //- TODO - widget options
-input.form-control-file(type='file', id='file_upload', data-title='Drag and drop a file.')
+if directory
+  input.form-control-file(type='file', id='file_upload', data-title=title, webkitdirectory, mozdirectory)
+else
+  input.form-control-file(type='file', id='file_upload', data-title=title)
