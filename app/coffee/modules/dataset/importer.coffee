@@ -70,7 +70,7 @@ class ArchiveImporter
       dirElement =
         '@id':                    dir
         '@type':                  'nfo:Folder'
-        'rdf:label':              dir
+        'rdfs:label':             dir
         'nfo:belongsToContainer': belongsTo
 
       # Adds directory to knowledge graph
@@ -107,7 +107,7 @@ class ArchiveImporter
     el =
       '@id':                    filepath
       '@type':                  @getType(label)
-      'rdf:label':              label
+      'rdfs:label':             label
       'nfo:belongsToContainer': belongsTo
       # 'nfo:size':               file.size
       # 'nfo:lastModified':       file.lastModified

@@ -4,7 +4,7 @@
     i.fa.fa-2x.fa-times.detail-close(data-click='close')
 
   .col-xs-12.m-t-1
-    h4.card-title= data['@id'].split('/').pop()
+    h4.card-title= data['rdfs:label']
 
 if views.img
   .row

@@ -27,15 +27,6 @@ class ArchiveForm extends Mn.LayoutView
     # Caches uploaded files
     @uploadedFiles = files
 
-    # # ArchiveImporter
-    # json = @options.importer.parse(files, prefix)
-
-    # # Sets context and graph attributes on dataset model
-    # @model.set('context', json['@context'])
-
-    # # We'll need some additional logic to manage the state of the uploaded dataset
-    # @uploadedGraph = json['@graph']
-
     # Enables submitButton
     # TODO - validate presence of inputs
     @enableSubmit()
