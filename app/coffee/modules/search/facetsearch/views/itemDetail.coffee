@@ -42,22 +42,9 @@ class ResultDetailView extends Mn.LayoutView
     #   @trigger 'show:underlay'
     #   @loadCsv(@model.get('views').csv)
 
-  loadDicom: ->
-    url = @model.get('views').dicom
 
-    # Fetches file from Background app
-    Backbone.Radio.channel('background').request('file', url).then (dicomBuffer) =>
-      @renderDicom(dicomBuffer)
+  fetchDicom: (url) ->
 
-  renderDicom: (pixelData) ->
-
-    # Loads dicom image
-    # TODO - use data-attribute element
-    # TODO - this should be abstracted into a separate viewer
-    element = document.getElementById('dicomImage')
-    cornerstone.enable(element)
-
-    # String to ArrayBuffer
     str2ab = (str) ->
       buf = new ArrayBuffer(str.length * 2)
       # 2 bytes for each char
@@ -67,7 +54,42 @@ class ResultDetailView extends Mn.LayoutView
       while i < strLen
         bufView[i] = str.charCodeAt(i)
         i++
-      buf
+      return buf
+
+    # XHR Configuration
+    # TODO - will jQuery get work just as well here?
+    xhr = new XMLHttpRequest
+    xhr.open('GET', url, true)
+    xhr.responseType = 'text'
+
+    # XHR Callbacks, Backbone flavored events
+    xhr.onload = (e) =>
+      status = if xhr.status == 200 then 'success' else 'error'
+
+      # Renders CSV
+      return @renderDicom(str2ab(xhr.response)) if status == 'success'
+
+    # Sends XHR, triggers request event
+    xhr.send()
+
+  loadDicom: ->
+    url = @model.get('views').dicom
+
+    if _s.startsWith(url, 'file://')
+      # Fetches file from Background app
+      Backbone.Radio.channel('background').request('file', url).then (dicomBuffer) => @renderDicom(dicomBuffer)
+
+    else
+      console.log 'FETCH FROM SERVER'
+      @fetchDicom(encodeURI(url))
+
+  renderDicom: (pixelData) ->
+
+    # Loads dicom image
+    # TODO - use data-attribute element
+    # TODO - this should be abstracted into a separate viewer
+    element = document.getElementById('dicomImage')
+    cornerstone.enable(element)
 
     # # # # #
 
