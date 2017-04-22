@@ -86,6 +86,7 @@ paths =
       nodeModules + 'sortablejs/Sortable.min.js'
       nodeModules + 'bootstrap-switch/dist/js/bootstrap-switch.min.js'
       nodeModules + 'select2/dist/js/select2.full.js'
+      nodeModules + 'cornerstone/dist/cornerstone.min.js'
 
     ]
 
