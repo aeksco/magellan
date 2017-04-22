@@ -6,23 +6,33 @@
   .col-xs-12.m-t-1
     h4.card-title= data['rdfs:label']
 
+//- Image Viewer
 if views.img
   .row
     .col-xs-12.text-center
       img.img-thumbnail(data-zoom=views.img, src=views.img, style='max-height:30rem;')
 
-.row.m-t-1
-  .col-xs-12
-    table.table.table-responsive.attr-table
-      include ./table
+//- PDF Viewer
+if views.pdf
+  .row
+    .col-xs-12.text-center
+      iframe.w-100(src=views.pdf, style='min-height:30rem;')
 
+//- Audio Viewer
 if views.audio
   a.btn.btn-primary-outline(href=views.audio, target='_blank')
     i.fa.fa-fw.fa-file-audio-o
     | &nbsp;
     | Listen
 
+//- Video Viewer
 if views.video
   video(width='320', height='240', controls='')
     source(src=views.video, type='video/mp4')
     | Your browser does not support the video tag.
+
+//- Table View
+.row.m-t-1
+  .col-xs-12
+    table.table.table-responsive.attr-table
+      include ./table

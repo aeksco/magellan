@@ -1,5 +1,5 @@
 
-class RdfDetailView extends Mn.LayoutView
+class ResultDetailView extends Mn.LayoutView
   template: require './templates/detail'
   className: 'card card-block rdf-viewer-detail'
 
@@ -74,4 +74,4 @@ class RdfDetailView extends Mn.LayoutView
 
 # # # # #
 
-module.exports = RdfDetailView
+module.exports = ResultDetailView
