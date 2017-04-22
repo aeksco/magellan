@@ -1,5 +1,6 @@
 ArchiveForm = require './archiveForm'
 JsonForm    = require './jsonForm'
+RdfForm     = require './rdfForm'
 
 # # # # #
 
@@ -24,11 +25,11 @@ class ImportSelectorView extends require 'hn_views/lib/nav'
   json: ->
     @contentRegion.show new JsonForm({ model: @model, creator: @options.creator })
 
-  archive: -> # TODO - pass archive importer to this view
+  archive: -> # TODO - pass ArchiveImporter to this view
     @contentRegion.show new ArchiveForm({ model: @model, creator: @options.creator })
 
-  rdf: ->
-    console.log 'RDF'
+  rdf: -> # TODO - pass RDFImporter to this view
+    @contentRegion.show new RdfForm({ model: @model, creator: @options.creator })
 
 # # # # #
 

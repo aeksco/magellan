@@ -4,7 +4,7 @@ UploadWidget = require '../../../base/views/upload/upload'
 
 # RdfForm class definition
 class RdfForm extends Mn.LayoutView
-  template: require './templates/archive_form'
+  template: require './templates/rdf_form'
   className: 'row'
 
   behaviors:
@@ -28,51 +28,23 @@ class RdfForm extends Mn.LayoutView
 
   # # # # #
 
-  # TODO - this should be abstracted into a separate view
-  # TODO - this should leverage the same code present in the crawl script
-  onDirChange: (e) ->
-    # console.log e
-    # console.log e.target
-    # console.log e.target.files
-
-    # TODO - abstract into ArchiveImporter class
-    graph = []
-
-    for f in e.target.files
-
-      # console.log f
-
-      el = {
-        '@id':              f.webkitRelativePath
-        'nfo:size':         f.size
-        'rdf:label':        f.name
-        'nfo:type':         f.type || 'nfo:Document'
-        'nfo:lastModified': f.lastModified
-      }
-
-      graph.push(el)
-
-    console.log graph
-
-  # # # # #
-
   # onJsonUpload
-  # Invoked as a callback when a JSON file has
+  # Invoked as a callback when an RDF/XML file has been loaded
   onJsonUpload: (uploadedText) =>
 
     # Parses JSON from upload
-    parsedJson = JSON.parse(uploadedText)
+    # parsedJson = JSON.parse(uploadedText)
 
     # Sets context and graph attributes on dataset model
-    @model.set('context', parsedJson['@context'])
+    # @model.set('context', parsedJson['@context'])
 
     # TODO - is there a better way to manage this?
     # We'll need some additional logic to manage the state of the uploaded dataset
-    @uploadedGraph = parsedJson['@graph']
+    # @uploadedGraph = parsedJson['@graph']
 
     # Enables submitButton
     # TODO - there should be a validate method that manages submitButton state
-    @enableSubmit()
+    # @enableSubmit()
 
   # onSubmit (from SubmitButton behavior)
   onSubmit: ->
