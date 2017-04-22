@@ -20,10 +20,16 @@ if views.pdf
 
 //- Audio Viewer
 if views.audio
-  a.btn.btn-primary-outline(href=views.audio, target='_blank')
-    i.fa.fa-fw.fa-file-audio-o
-    | &nbsp;
-    | Listen
+  .row
+    .col-xs-12
+      a.btn.btn-primary-outline.w-100(href=views.audio, target='_blank')
+        i.fa.fa-fw.fa-file-audio-o
+        | &nbsp;
+        | Listen
+
+//- Viewer Region
+.row
+  .col-xs-12(data-region='viewer')
 
 //- DICOM
 if views.dicom

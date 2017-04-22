@@ -26,8 +26,10 @@ initServerRadio = () ->
       'background file': 'requestFile'
 
     requestFile: (filepath) ->
+      filepath = filepath.split('file://')[1] if filepath.indexOf('file://') > -1
       return new Promise (resolve,reject) =>
         fs.readFile filepath, (error, data) ->
+          console.log 'FETCHED FILE?????'
           return reject(error) if error
           return resolve(data) # Return as ArrayBuffer
 

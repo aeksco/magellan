@@ -1,3 +1,6 @@
+STLViewer = require './stlViewer'
+
+# # # # #
 
 class ResultDetailView extends Mn.LayoutView
   template: require './templates/detail'
@@ -7,6 +10,9 @@ class ResultDetailView extends Mn.LayoutView
     'click [data-click=close]': 'closeView'
     'mouseover img': 'onImageIn'
     'mouseout img': 'onImageOut'
+
+  regions:
+    viewerRegion: '[data-region=viewer]'
 
   onImageIn: (e) =>
     @trigger 'show:underlay'
@@ -32,6 +38,9 @@ class ResultDetailView extends Mn.LayoutView
 
     # Dicom Viewer
     return @loadDicom() if @model.get('views').dicom
+
+    # STL Viewer
+    @viewerRegion.show new STLViewer({ model: @model }) if @model.get('views').stl
 
     # TODO - abstract this elsewhere.
     # TODO - overlay should be a region
