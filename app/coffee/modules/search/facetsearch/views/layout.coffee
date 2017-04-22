@@ -41,8 +41,8 @@ class FacetedViewLayout extends Mn.LayoutView
     setTimeout(@initFacetView, 100)
 
     # Bypass List selector
-    @showRecordListLayout()
-    # @showRecordList()
+    # @showRecordListLayout()
+    @showRecordList()
 
   showRecordList: =>
     listView = new RecordList({ collection: @collection })

@@ -69,34 +69,46 @@ class ArchiveImporter
       # Assembles individual directory data structure
       dirElement =
         '@id':                    dir
+        '@type':                  'nfo:Folder'
         'rdf:label':              dir
         'nfo:belongsToContainer': belongsTo
-        'nfo:type':               'nfo:Folder'
 
       # Adds directory to knowledge graph
       @output['@graph'].push(dirElement)
 
   # parseFile
   # Parses an individual file and its parent directory
-  parseFile: (file) ->
+  parseFile: (file, prefix) ->
 
-    # Isolates filepath
-    filepath = '/' + file.webkitRelativePath
+    # Isolates filepath with prefix
+    if prefix
 
-    # Gets
-    pieces = filepath.split('/')
-    label = pieces.pop()
+      # Formats prefix
+      prefix = prefix + '/' unless _s.endsWith(prefix, '/')
+      prefix = '/' + prefix unless _s.startsWith(prefix, '/')
+
+      # Formats filepath
+      filepath = prefix + file.webkitRelativePath
+
+    # Isolate filepaht without prefix
+    else
+      filepath = '/' + file.webkitRelativePath
+
+    # Gets label & belongsTo
+    pieces    = filepath.split('/')
+    label     = pieces.pop()
     belongsTo = pieces.join('/') + '/'
 
     # Adds parent directory
     @collectDirectory(belongsTo)
 
     # Assembles individual file data structure
+    # TODO - should include file extension
     el =
       '@id':                    filepath
+      '@type':                  @getType(label)
       'rdf:label':              label
       'nfo:belongsToContainer': belongsTo
-      'nfo:type':               @getType(label)
       # 'nfo:size':               file.size
       # 'nfo:lastModified':       file.lastModified
 
@@ -105,7 +117,7 @@ class ArchiveImporter
   # parse
   # Parses a directory import from
   # a list of files from a file upload form
-  parse: (files) ->
+  parse: (files, prefix=null) ->
 
     # Flushes Directory IDs
     @directoryIDs = []
@@ -114,7 +126,7 @@ class ArchiveImporter
     @output = { "@context": @context, "@graph": [] }
 
     # Parses graph
-    @output['@graph'].push(@parseFile(f)) for f in files
+    @output['@graph'].push(@parseFile(f, prefix)) for f in files
 
     # Adds directories to graph
     @addDirectories()

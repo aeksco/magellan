@@ -7,19 +7,23 @@
 
   .col-xs-6.text-xs-right
 
-    .btn-group.m-r-1
-      button.btn.btn-secondary( data-click='list' )
-        i.fa.fa-fw.fa-list
-        | &nbsp;
-        | List View
+    //- .btn-group.m-r-1
+    //-   button.btn.btn-secondary( data-click='list' )
+    //-     i.fa.fa-fw.fa-list
+    //-     | &nbsp;
+    //-     | List View
 
-      button.btn.btn-secondary( data-click='viewer' )
-        i.fa.fa-fw.fa-list-alt
-        | &nbsp;
-        | Detail View
+    //-   button.btn.btn-secondary( data-click='viewer' )
+    //-     i.fa.fa-fw.fa-list-alt
+    //-     | &nbsp;
+    //-     | Detail View
 
-    .btn-group
-      a.btn.btn-primary-outline( href="#datasets/#{id}/config" )
-        i.fa.fa-fw.fa-cog
-        | &nbsp;
-        | Configuration
+    a.btn.btn-primary-outline.m-r-1( href="#datasets/#{id}/capture" )
+      i.fa.fa-fw.fa-paperclip
+      | &nbsp;
+      | Knowledge Capture
+
+    a.btn.btn-secondary( href="#datasets/#{id}/config" )
+      i.fa.fa-fw.fa-cog
+      | &nbsp;
+      | Configuration
