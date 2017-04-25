@@ -21,7 +21,7 @@
   -moz-osx-font-smoothing: grayscale; }
 
 /* makes the font 33% larger relative to the icon container */
-.fa-lg {
+.fa-lg, .btn i.fa, .btn i.rdf-icon, .btn .facetsearch .facettitle i.icon, .facetsearch .facettitle .btn i.icon {
   font-size: 1.33333em;
   line-height: 0.75em;
   vertical-align: -15%; }
@@ -55,7 +55,7 @@
   width: 2.14286em;
   top: 0.14286em;
   text-align: center; }
-  .fa-li.fa-lg {
+  .fa-li.fa-lg, .btn i.fa-li.fa, .btn i.fa-li.rdf-icon, .btn .facetsearch .facettitle i.fa-li.icon, .facetsearch .facettitle .btn i.fa-li.icon {
     left: -1.85714em; }
 
 .fa-border {
@@ -7688,8 +7688,8 @@ ol.breadcrumb {
     background-image: url("../img/logo.png");
     background-repeat: no-repeat;
     background-position: center;
-    margin-left: .35rem;
-    margin-top: .25rem;
+    margin-left: .3rem;
+    margin-top: .2rem;
     margin-right: 0;
     margin-bottom: 0;
     width: 1.6rem !important;
@@ -7802,11 +7802,6 @@ polygon.arrowhead {
   height: 10000;
   width: 10000; }
 
-.iframe-embed {
-  width: 100%;
-  height: 40rem;
-  border: none; }
-
 .nav.nav-tabs .nav-link {
   padding: 0.25rem 0.5rem; }
 
@@ -7842,7 +7837,10 @@ polygon.arrowhead {
     background-color: #dff0d8 !important;
     display: inherit; }
 
-.list-group.record-list-group .list-group-item:nth-child(odd), .facetsearch .record-list-group.facetlist .list-group-item:nth-child(odd), .list-group.record-list-group .facetsearch .facettitle:nth-child(odd), .facetsearch .list-group.record-list-group .facettitle:nth-child(odd), .facetsearch .record-list-group.facetlist .facettitle:nth-child(odd), .list-group.record-list-group .facetsearch .facetlist .facetitem:nth-child(odd), .facetsearch .facetlist .list-group.record-list-group .facetitem:nth-child(odd), .facetsearch .record-list-group.facetlist .facetitem:nth-child(odd) {
+.list-group.record-list-group .list-group-item.active, .facetsearch .record-list-group.facetlist .list-group-item.active, .list-group.record-list-group .facetsearch .active.facettitle, .facetsearch .list-group.record-list-group .active.facettitle, .facetsearch .record-list-group.facetlist .active.facettitle, .list-group.record-list-group .facetsearch .facetlist .active.facetitem, .facetsearch .facetlist .list-group.record-list-group .active.facetitem, .facetsearch .record-list-group.facetlist .active.facetitem {
+  z-index: 0 !important; }
+
+.list-group.record-list-group .list-group-item:not(.active):nth-child(odd), .facetsearch .record-list-group.facetlist .list-group-item:not(.active):nth-child(odd), .list-group.record-list-group .facetsearch .facettitle:not(.active):nth-child(odd), .facetsearch .list-group.record-list-group .facettitle:not(.active):nth-child(odd), .facetsearch .record-list-group.facetlist .facettitle:not(.active):nth-child(odd), .list-group.record-list-group .facetsearch .facetlist .facetitem:not(.active):nth-child(odd), .facetsearch .facetlist .list-group.record-list-group .facetitem:not(.active):nth-child(odd), .facetsearch .record-list-group.facetlist .facetitem:not(.active):nth-child(odd) {
   background-color: #fafafa; }
 
 .list-group.record-list-group .list-group-item h4.card-title, .facetsearch .record-list-group.facetlist .list-group-item h4.card-title, .list-group.record-list-group .facetsearch .facettitle h4.card-title, .facetsearch .list-group.record-list-group .facettitle h4.card-title, .facetsearch .record-list-group.facetlist .facettitle h4.card-title, .list-group.record-list-group .facetsearch .facetlist .facetitem h4.card-title, .facetsearch .facetlist .list-group.record-list-group .facetitem h4.card-title, .facetsearch .record-list-group.facetlist .facetitem h4.card-title {
@@ -8012,74 +8010,14 @@ body.window.sidebar-active .main-region {
     border-style: solid;
     box-shadow: inset 0px 0px 0px 0.25em currentColor; }
 
-@keyframes swapUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30rem); }
-  100% {
-    opacity: 100;
-    transform: translateY(0rem); } }
+.btn {
+  border-width: 2px;
+  font-weight: 400; }
+  .btn.btn-secondary, .predicate .btn, .btn.btn-secondary-outline {
+    border-color: #373a3c; }
 
-@keyframes swapDown {
-  0% {
-    opacity: 100;
-    transform: translateY(0rem); }
-  100% {
-    opacity: 0;
-    transform: translateY(30rem); } }
+p.lead.mg {
+  font-weight: 400; }
 
-@keyframes swapOutLeft {
-  0% {
-    opacity: 100;
-    transform: translateX(0rem); }
-  100% {
-    opacity: 0;
-    transform: translateX(-30rem); } }
-
-@keyframes swapInRight {
-  0% {
-    opacity: 0;
-    transform: translateX(30rem); }
-  100% {
-    opacity: 100;
-    transform: translateX(0rem); } }
-
-@keyframes swapOutRight {
-  0% {
-    opacity: 100;
-    transform: translateX(0rem); }
-  100% {
-    opacity: 0;
-    transform: translateX(30rem); } }
-
-@keyframes swapInLeft {
-  0% {
-    opacity: 0;
-    transform: translateX(-30rem); }
-  100% {
-    opacity: 100;
-    transform: translateX(0rem); } }
-
-.swap-wrapper {
-  position: relative; }
-  .swap-wrapper .swap {
-    width: 100%;
-    position: absolute; }
-    .swap-wrapper .swap.up-down.first {
-      animation: swapUp .3s normal forwards; }
-    .swap-wrapper .swap.up-down.out.coming {
-      animation: swapUp .5s normal forwards; }
-    .swap-wrapper .swap.up-down.in.leaving {
-      animation: swapDown .5s normal forwards; }
-    .swap-wrapper .swap.right-in.first {
-      animation: swapInRight .3s normal forwards; }
-    .swap-wrapper .swap.right-in.out.coming {
-      animation: swapInRight .5s normal forwards; }
-    .swap-wrapper .swap.right-in.in.leaving {
-      animation: swapOutLeft .5s normal forwards; }
-    .swap-wrapper .swap.left-in.first {
-      animation: swapInLeft .3s normal forwards; }
-    .swap-wrapper .swap.left-in.out.coming {
-      animation: swapInLeft .3s normal forwards; }
-    .swap-wrapper .swap.left-in.in.leaving {
-      animation: swapOutRight .3s normal forwards; }
+.card.card-block, .card-block.json-viewer, .card-block.facetsearch, .bottomline {
+  border-width: 3px; }
