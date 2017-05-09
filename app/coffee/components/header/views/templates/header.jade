@@ -1,32 +1,33 @@
-a.navbar-brand.btn.btn-secondary.btn-circle
-  .icon
-  //- i.fa.fa-fw.fa-database
+//- a.navbar-brand.btn.btn-secondary.btn-circle
+//-   .icon
+//-   //- i.fa.fa-fw.fa-database
+
+
+//- Nav Item Break
+mixin navItemBreak
+  li.nav-item
+    a.nav-link |
+
+//- Nav Item Mixin
+mixin navItem(opts)
+  +navItemBreak()
+
+  li.nav-item
+    a.nav-link(href=opts.href)
+      i.fa.fa-fw(class=opts.icon)
+      | &nbsp;
+      = opts.text
+
+//-
 
 .navbar-brand.title MAGELLAN
 
 .navbar-brand
   small.text-muted Archive Explorer
 
-ul.nav.navbar-nav.pull-right
-
-  li.nav-item
-    a.nav-link(href='#datasets')
-      i.fa.fa-fw.fa-folder-open-o
-      | &nbsp;
-      | Archives
-
-  li.nav-item
-    a.nav-link(href='#ontologies')
-      i.fa.fa-fw.fa-list-alt
-      | &nbsp;
-      | Ontologies
-
-  li.nav-item
-    a.nav-link |
-
-  li.nav-item
-    a.nav-link(href='#about')
-      i.fa.fa-fw.fa-question-circle-o
-      | &nbsp;
-      | About
-
+ul.nav.navbar-nav.pull-left.p-l-2
+  +navItem({ href: '#datasets', icon: 'fa-folder-open-o', text: 'Archives' })
+  +navItem({ href: '#ontologies', icon: 'fa-list-alt', text: 'Ontologies' })
+  +navItem({ href: '#settings', icon: 'fa-cog', text: 'Settings' })
+  +navItem({ href: '#about', icon: 'fa-question-circle-o', text: 'About' })
+  +navItemBreak()

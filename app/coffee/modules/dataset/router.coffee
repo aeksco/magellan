@@ -16,7 +16,6 @@ CaptureRoute  = require './knowledge_capture/route'
 class DatasetRouter extends require 'hn_routing/lib/router'
 
   routes:
-    '(/)':                      'list' # ROOT
     'datasets(/)':              'list'
     'datasets/new(/)':          'new'
     'datasets/:id(/)':          'show'
