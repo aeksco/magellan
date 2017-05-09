@@ -7,7 +7,7 @@ class WelcomeRoute extends require 'hn_routing/lib/route'
   title: 'Welcome'
 
   breadcrumbs: [
-    { text: 'Welcome' }
+    { text: 'Home' }
   ]
 
   render: ->
