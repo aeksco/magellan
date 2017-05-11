@@ -7,6 +7,7 @@ class DatasetListRoute extends require 'hn_routing/lib/route'
   title: 'Magellan - Datasets'
 
   breadcrumbs: [
+    { href: '#', text: 'Home' }
     { text: 'Datasets' }
   ]
 
