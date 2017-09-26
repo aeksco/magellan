@@ -9,12 +9,6 @@ class HeaderView extends Marionette.LayoutView
   tagName: 'nav'
   className: 'nav navbar navbar-static-top navbar-light'
 
-  events:
-    'click .navbar-brand': 'toggleSidebar'
-
-  toggleSidebar: ->
-    Backbone.Radio.channel('sidebar').trigger('toggle')
-
 # # # # #
 
 module.exports = HeaderView

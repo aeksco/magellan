@@ -32,9 +32,8 @@ class Application extends Marionette.Service
       # Hides loading message
       Backbone.Radio.channel('loading').trigger('hide')
 
-      # Starts Backbone.History & Sidebar component
+      # Starts Backbone.History
       Backbone.history.start()
-      Backbone.Radio.channel('sidebar').trigger('reset')
 
     .catch (err) =>
 

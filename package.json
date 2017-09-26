@@ -54,7 +54,6 @@
     "hn_overlay": "git+https://github.com/HensonJS/hn_overlay.git",
     "hn_regions": "git+https://github.com/HensonJS/hn_regions.git",
     "hn_routing": "git+https://github.com/HensonJS/hn_routing.git",
-    "hn_sidebar": "git+https://github.com/HensonJS/hn_sidebar.git",
     "hn_views": "git+https://github.com/HensonJS/hn_views.git",
     "jade": "~1.11.0",
     "jadeify": "~4.3.0",
