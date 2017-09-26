@@ -7,7 +7,7 @@
 class HeaderView extends Marionette.LayoutView
   template: require './templates/header'
   tagName: 'nav'
-  className: 'nav navbar navbar-static-top navbar-light'
+  className: 'navbar navbar-expand-lg navbar-light bg-light navbar-static-top'
 
 # # # # #
 
