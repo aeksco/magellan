@@ -9,12 +9,9 @@
 defaults =
   items: [{a:2,b:1,c:2},{a:2,b:2,c:1},{a:1,b:1,c:1},{a:3,b:3,c:1}],
   facets: {'a': 'Title A', 'b': 'Title B', 'c': 'Title C'},
-  # resultElement: '#results'
   facetElement: '#facets'
   listItemTemplate: '<div class="facetitem" id="<%= id %>"><%= name %> <span class="facetitemcount">(<%= count %>)</span></div>'
-  orderByTemplate: '<div class=orderby><span class="orderby-title">Sort by: </span><ul><% _.each(options, function(value, key) { %>' + '<li class=orderbyitem id=orderby_<%= key %>>' + '<%= value %> </li> <% }); %></ul></div>'
   countTemplate: '<div class=facettotalcount>Results</div>'
-  deselectTemplate: '<div class=deselectstartover>Deselect all filters</div>'
   resultTemplateBypass: null
   orderByOptions:
     'a': 'by A'
@@ -23,7 +20,6 @@ defaults =
   state:
     orderBy: false
     filters: {}
-  showMoreTemplate: '<a id=showmorebutton>Show more</a>'
   enablePagination: true
   paginationCount: 20
 
@@ -382,16 +378,17 @@ createFacetUI = ->
   # TODO - ABSTRACT INTO SEPARATE VIEW
   # FOR RESULT COUNTR AND ORDER CONTROLS
   # Append total result count
-
   bottomContainer = '<div class=bottomline></div>'
-
   bottom = $(bottomContainer)
   countHtml = _.template(settings.countTemplate, count: settings.currentResults.length or 0)
   $(bottom).append(countHtml)
 
 
   # generate the "order by" options:
-  ordertemplate = _.template(settings.orderByTemplate)
+
+  orderByTemplate = '<div class=orderby><span class="orderby-title">Sort by: </span><ul><% _.each(options, function(value, key) { %>' + '<li class=orderbyitem id=orderby_<%= key %>>' + '<%= value %> </li> <% }); %></ul></div>'
+
+  ordertemplate = _.template(orderByTemplate)
   itemHtml = $(ordertemplate('options': settings.orderByOptions))
   $(bottom).append itemHtml
   $(settings.facetElement).append bottom
@@ -416,7 +413,8 @@ createFacetUI = ->
 
   # Append deselect filters button
   # TODO - abstract into Backbone.View
-  deselect = $(settings.deselectTemplate).click((event) ->
+  deselectTemplate = '<div class=deselectstartover>Deselect all filters</div>'
+  deselect = $(deselectTemplate).click((event) ->
     settings.state.filters = {}
     jQuery.facetUpdate()
     return
@@ -543,10 +541,11 @@ showMoreResults = ->
   # $(settings.resultElement).append itemHtml
 
   # Append "MoreButton"
+  showMoreTemplate = '<a id=showmorebutton>Show more</a>'
   # TODO - we will _probably_ paginate using BB.Mn
   # TODO - pagination
   # if !moreButton
-  #   moreButton = $(settings.showMoreTemplate).click(showMoreResults)
+  #   moreButton = $(showMoreTemplate).click(showMoreResults)
   #   $(settings.resultElement).after moreButton
   # # ???/
   # if settings.state.shownResults == 0
