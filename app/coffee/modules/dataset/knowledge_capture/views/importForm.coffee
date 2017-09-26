@@ -4,7 +4,7 @@ UploadWidget = require '../../../base/views/upload/upload'
 
 class ImportForm extends Mn.LayoutView
   template: require './templates/import_form'
-  className: 'card card-block'
+  className: 'card card-body'
 
   behaviors:
     CancelButton: {}

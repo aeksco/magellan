@@ -4,7 +4,7 @@ STLViewer = require './stlViewer'
 
 class ResultDetailView extends Mn.LayoutView
   template: require './templates/detail'
-  className: 'card card-block rdf-viewer-detail'
+  className: 'card card-body rdf-viewer-detail'
 
   events:
     'click [data-click=close]': 'closeView'

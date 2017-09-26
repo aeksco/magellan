@@ -1,7 +1,7 @@
 
 class CsvViewer extends Mn.LayoutView
   template: require './templates/csv'
-  className: 'card card-block'
+  className: 'card card-body'
 
   onRender: ->
     url = @model.get('views').csv

@@ -2,19 +2,19 @@
   .col-lg-6
     h4.card-title= label
 
-  .col-lg-6.text-xs-right
+  .col-lg-6.text-right
 
-    a.btn.btn-sm.btn-secondary.m-r-1(href="#datasets/#{id}")
+    a.btn.btn-sm.btn-outline-secondary.mr-2(href="#datasets/#{id}")
       i.fa.fa-fw.fa-eye
       | &nbsp;
       | Show
 
-    a.btn.btn-sm.btn-secondary.m-r-1(href="#datasets/#{id}/edit")
+    a.btn.btn-sm.btn-outline-secondary.mr-2(href="#datasets/#{id}/edit")
       i.fa.fa-fw.fa-pencil
       | &nbsp;
       | Edit
 
-    a.btn.btn-sm.btn-danger-outline(href="#datasets/#{id}/destroy")
+    a.btn.btn-sm.btn-outline-danger(href="#datasets/#{id}/destroy")
       i.fa.fa-fw.fa-trash
       | &nbsp;
       | Destroy
@@ -33,13 +33,13 @@
       | Knowledge Capture
 
   .col-lg-4
-    a.btn.btn-mg.btn-lg.btn-success-outline.w-100(href="#datasets/#{id}/search")
+    a.btn.btn-mg.btn-lg.btn-outline-success.w-100(href="#datasets/#{id}/search")
       i.fa.fa-fw.fa-lg.fa-search
       | &nbsp;
       | Search
 
   .col-lg-4
-    a.btn.btn-mg.btn-lg.btn-success-outline.w-100(href="#datasets/#{id}/export")
+    a.btn.btn-mg.btn-lg.btn-outline-success.w-100(href="#datasets/#{id}/export")
       i.fa.fa-fw.fa-lg.fa-cloud-download
       | &nbsp;
       | Export

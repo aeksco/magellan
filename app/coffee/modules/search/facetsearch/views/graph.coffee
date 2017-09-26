@@ -10,7 +10,7 @@ jsonVis.default(d3)
 
 class JsonLDGraphView extends Mn.LayoutView
   template: require './templates/graph'
-  className: 'card card-block'
+  className: 'card card-body'
 
   graphOptions:
     w:                  800

@@ -1,7 +1,7 @@
 
 class ExportForm extends Mn.LayoutView
   template: require './templates/export_form'
-  className: 'card card-block'
+  className: 'card card-body'
 
   behaviors:
     CancelButton: {}

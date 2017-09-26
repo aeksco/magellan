@@ -42,7 +42,7 @@ class RecordViewerSelector extends require 'hn_views/lib/nav'
 
 class RecordViewer extends Mn.LayoutView
   template: require './templates/record_viewer'
-  className:  'card card-block'
+  className:  'card card-body'
 
   regions:
     viewerRegion: '[data-region=viewer]'
