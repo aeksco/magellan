@@ -8,7 +8,7 @@ class RecordList extends Mn.CollectionView
   childView:  RecordViewer
 
   childViewOptions: ->
-    return { tagName: 'li', className: 'list-group-item'}
+    return { tagName: 'li', className: 'list-group-item' }
 
 # # # # #
 

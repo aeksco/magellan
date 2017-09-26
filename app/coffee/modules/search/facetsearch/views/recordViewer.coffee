@@ -1,11 +1,11 @@
-JsonViewer  = require 'hn_views/lib/json_viewer'
+JsonViewer  = require 'lib/views/json_viewer'
 JsonGraph   = require './graph'
 TableView   = require './table'
 CsvViewer   = require './csvViewer'
 
 # # # # #
 
-class RecordViewerSelector extends require 'hn_views/lib/nav'
+class RecordViewerSelector extends require 'lib/views/nav'
 
   navItems: ->
     items = [

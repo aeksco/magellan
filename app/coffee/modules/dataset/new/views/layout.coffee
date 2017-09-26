@@ -4,7 +4,7 @@ RdfForm     = require './rdfForm'
 
 # # # # #
 
-class ImportSelectorView extends require 'hn_views/lib/nav'
+class ImportSelectorView extends require 'lib/views/nav'
   className: 'container'
   template: require './templates/layout'
 
