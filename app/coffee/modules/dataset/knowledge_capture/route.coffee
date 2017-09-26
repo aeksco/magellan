@@ -11,6 +11,7 @@ class KnowledgeCaptureRoute extends require 'hn_routing/lib/route'
     return [
       { href: "#datasets", text: 'Datasets' }
       { href: "#datasets/#{@model.id}", text: @model.get('label') }
+      { href: "#datasets/#{@model.id}/search", text: 'Search' }
       { text: 'Knowledge Capture' }
     ]
 
