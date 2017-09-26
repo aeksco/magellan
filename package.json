@@ -48,7 +48,6 @@
     "gulp-webserver": "^0.9.1",
     "gulp_tasks": "git+https://github.com/aeksco/gulp_tasks.git",
     "hn_behaviors": "git+https://github.com/HensonJS/hn_behaviors.git",
-    "hn_breadcrumb": "git+https://github.com/HensonJS/hn_breadcrumb.git",
     "hn_entities": "git+https://github.com/HensonJS/hn_entities.git",
     "hn_flash": "git+https://github.com/HensonJS/hn_flash.git",
     "hn_overlay": "git+https://github.com/HensonJS/hn_overlay.git",

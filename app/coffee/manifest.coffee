@@ -31,6 +31,10 @@ DexieService = require './modules/db/service'
 HeaderComponent = require './components/header/component'
 new HeaderComponent({ container: AppLayout.header })
 
+# Header Component Initialization
+BreadcrumbComponent = require './components/breadcrumb/component'
+new BreadcrumbComponent({ container: AppLayout.breadcrumb })
+
 # Modal Component Initialization
 ModalComponent = require './components/modal/component'
 new ModalComponent({ container: AppLayout.modal })
@@ -44,10 +48,8 @@ LoadingComponent = require './components/loading/component'
 new LoadingComponent({ container: AppLayout.loading })
 
 # Henson.js Components
-BreadcrumbComponent = require 'hn_breadcrumb/lib/component'
 OverlayComponent    = require 'hn_overlay/lib/component'
 FlashComponent      = require 'hn_flash/lib/component'
-new BreadcrumbComponent({ container: AppLayout.breadcrumb })
 new OverlayComponent({ container: AppLayout.overlay })
 new FlashComponent({ container: AppLayout.flash })
 
