@@ -43,7 +43,7 @@ paths =
       dest: './build/fonts'
 
     img:
-      src:  './app/img/*'
+      src:  './app/img/**/*'
       dest: './build/img'
 
     python:

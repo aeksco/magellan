@@ -2,7 +2,6 @@
 //-   .icon
 //-   //- i.fa.fa-fw.fa-database
 
-
 //- Nav Item Break
 mixin navItemBreak
   li.nav-item
@@ -20,12 +19,13 @@ mixin navItem(opts)
 
 //-
 
-.navbar-brand.title MAGELLAN
+a.navbar-brand( href='#' )
+  img(src="/img/brand/magellan/magellan-01.png" height="40")
 
-.navbar-brand
-  small.text-muted Archive Explorer
+//- .navbar-brand
+//-   small.text-muted Archive Explorer
 
-ul.nav.navbar-nav.pull-left.p-l-2
+ul.nav.navbar-nav.pull-left.p-l-1
   +navItem({ href: '#datasets', icon: 'fa-folder-open-o', text: 'Archives' })
   +navItem({ href: '#ontologies', icon: 'fa-list-alt', text: 'Ontologies' })
   +navItem({ href: '#settings', icon: 'fa-cog', text: 'Settings' })
