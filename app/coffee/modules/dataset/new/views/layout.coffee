@@ -10,7 +10,7 @@ class ImportSelectorView extends require 'lib/views/nav'
 
   navItems: [
     { icon: 'fa-folder-open-o', text: 'Archive',    trigger: 'archive', default: true }
-    { icon: 'fa-globe',    text: 'JSON-LD',   trigger: 'json' }
+    { icon: 'fa-code',    text: 'JSON-LD',   trigger: 'json' }
     { icon: 'fa-file', text: 'RDF/XML',    trigger: 'rdf' }
   ]
 
