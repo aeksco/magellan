@@ -19,7 +19,7 @@ class JsonLDGraphView extends Mn.LayoutView
     transitionDuration: 250
     transitionEase:     'cubic-in-out'
     minRadius:          5
-    scalingFactor:      1
+    scalingFactor:      1.5
 
   onRender: ->
     setTimeout(@initJsonChart, 100)
