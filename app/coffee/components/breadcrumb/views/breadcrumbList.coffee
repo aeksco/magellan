@@ -4,12 +4,14 @@ class BreadcrumbChild extends Mn.LayoutView
   template: require './templates/breadcrumb_child'
 
   className: ->
-    return 'active' unless @model.get('href')
+    css = 'breadcrumb-item'
+    return css + ' active' unless @model.get('href')
+    return css
 
 # # # # #
 
 class BreadcrumbList extends Mn.CollectionView
-  className: 'breadcrumb'
+  className: 'breadcrumb mb-0 bg-light'
   tagName: 'ol'
   childView: BreadcrumbChild
 
