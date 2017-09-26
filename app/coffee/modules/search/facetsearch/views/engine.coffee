@@ -9,19 +9,13 @@
 defaults =
   items: [{a:2,b:1,c:2},{a:2,b:2,c:1},{a:1,b:1,c:1},{a:3,b:3,c:1}],
   facets: {'a': 'Title A', 'b': 'Title B', 'c': 'Title C'},
-  resultElement: '#results'
+  # resultElement: '#results'
   facetElement: '#facets'
-  facetContainer: '<div class=facetsearch id=<%= id %> ></div>'
-  facetTitleTemplate: '<h3 class=facettitle><i class="icon"></i><%= title %><i class="fa fa-fw help" data-toggle="tooltip" data-placement="right" title="<%= tooltip %>"></i><br><span class="prefix <%= prefix %>"><%= prefix %> : <%= _id %></span></h3>'
-  facetListContainer: '<div class=facetlist></div>'
   listItemTemplate: '<div class="facetitem" id="<%= id %>"><%= name %> <span class="facetitemcount">(<%= count %>)</span></div>'
-  bottomContainer: '<div class=bottomline></div>'
   orderByTemplate: '<div class=orderby><span class="orderby-title">Sort by: </span><ul><% _.each(options, function(value, key) { %>' + '<li class=orderbyitem id=orderby_<%= key %>>' + '<%= value %> </li> <% }); %></ul></div>'
   countTemplate: '<div class=facettotalcount>Results</div>'
   deselectTemplate: '<div class=deselectstartover>Deselect all filters</div>'
-  resultTemplate: '<div class=facetresultbox><%= name %></div>'
   resultTemplateBypass: null
-  noResults: '<div class=results>Sorry, but no items match these criteria</div>'
   orderByOptions:
     'a': 'by A'
     'b': 'by B'
@@ -299,10 +293,14 @@ toggleFilter = (key, value) ->
 
 createFacetUI = ->
 
+  facetContainer = '<div class=facetsearch id=<%= id %> ></div>'
+  facetTitleTemplate = '<h3 class=facettitle><i class="icon"></i><%= title %><i class="fa fa-fw help" data-toggle="tooltip" data-placement="right" title="<%= tooltip %>"></i><br><span class="prefix <%= prefix %>"><%= prefix %> : <%= _id %></span></h3>'
+  facetListContainer = '<div class=facetlist></div>'
+
   # Templates & HTML setup
   itemtemplate = _.template(settings.listItemTemplate)
-  titletemplate = _.template(settings.facetTitleTemplate)
-  containertemplate = _.template(settings.facetContainer)
+  titletemplate = _.template(facetTitleTemplate)
+  containertemplate = _.template(facetContainer)
   $(settings.facetElement).html('')
 
   # Iterates over each setting...
@@ -325,7 +323,7 @@ createFacetUI = ->
 
     facetItemHtml = $(titletemplate(facetItem))
     facetHtml.append facetItemHtml
-    facetlist = $(settings.facetListContainer)
+    facetlist = $(facetListContainer)
 
     # Iterates over each filter
     # TODO - this will be replaced by the FACET_ITEM_COLLECTION_VIEW
@@ -379,8 +377,15 @@ createFacetUI = ->
     updateResults()
     return
 
+  # # # # #
+
+  # TODO - ABSTRACT INTO SEPARATE VIEW
+  # FOR RESULT COUNTR AND ORDER CONTROLS
   # Append total result count
-  bottom = $(settings.bottomContainer)
+
+  bottomContainer = '<div class=bottomline></div>'
+
+  bottom = $(bottomContainer)
   countHtml = _.template(settings.countTemplate, count: settings.currentResults.length or 0)
   $(bottom).append(countHtml)
 
@@ -503,7 +508,8 @@ updateFacetUI = ->
 
 # TODO - abstract into Backbone.View
 updateResults = ->
-  $(settings.resultElement).html if settings.currentResults.length == 0 then settings.noResults else ''
+  noResults = '<div class=results>Sorry, but no items match these criteria</div>'
+  # $(settings.resultElement).html if settings.currentResults.length == 0 then noResults else ''
   showMoreResults()
   return
 
@@ -534,7 +540,7 @@ showMoreResults = ->
     i++
 
   # Appends itemHTML
-  $(settings.resultElement).append itemHtml
+  # $(settings.resultElement).append itemHtml
 
   # Append "MoreButton"
   # TODO - we will _probably_ paginate using BB.Mn
