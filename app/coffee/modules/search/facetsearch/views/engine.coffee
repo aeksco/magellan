@@ -306,6 +306,8 @@ createFacetUI = ->
   $(settings.facetElement).html('')
 
   # Iterates over each setting...
+  # TODO - this will be replaced by the FACET_GROUP_COLLECTION_VIEW
+  # Each facet will have pagination, filtering, etc.
   for facet in settings.facets
     facetHtml = $(containertemplate(id: facet.attribute))
 
@@ -316,11 +318,17 @@ createFacetUI = ->
       prefix:   facet.prefix
       _id:      facet._id
 
+    # ABSTRACTION
+    # This is where we should collect the GROUPS of facets
+    # This MAY be accessible outside this little engine, passed in as settings.facets
+    console.log(facetItem);
+
     facetItemHtml = $(titletemplate(facetItem))
     facetHtml.append facetItemHtml
     facetlist = $(settings.facetListContainer)
 
     # Iterates over each filter
+    # TODO - this will be replaced by the FACET_ITEM_COLLECTION_VIEW
     _.each settings.facetCollection[facet.attribute], (filter, filtername) ->
 
       # Splits name, handles directories ending with '/'
@@ -334,6 +342,9 @@ createFacetUI = ->
         name: filtername
         count: filter.count
 
+      # ABSTRACTION - this is where the INITIAL facets are populated into the UI
+      # FROM HERE, we start the collection of facet items
+      # console.log(item);
 
       # Facet filter item CSS state
       filteritem = $(itemtemplate(item))
@@ -498,34 +509,35 @@ updateResults = ->
 
 showMoreResults = ->
   `var itemHtml`
+
   # ???
   showNowCount = if settings.enablePagination then Math.min(settings.currentResults.length - (settings.state.shownResults), settings.paginationCount) else settings.currentResults.length
   itemHtml = ''
+
   # TODO - remove
   if settings.beforeResultRender
     settings.beforeResultRender()
-  # Item Template (remove)
-  template = _.template(settings.resultTemplate)
+
+  # Iterates over each shown result
   i = settings.state.shownResults
   while i < settings.state.shownResults + showNowCount
 
     item = settings.currentResults[i]
+
     # item = $.extend(settings.currentResults[i],
     #   totalItemNr: i
     #   batchItemNr: i - (settings.state.shownResults)
     #   batchItemCount: showNowCount)
 
     if settings.resultTemplateBypass
-      settings.resultTemplateBypass item
-
-    else
-      itemHtml = itemHtml + template(item)
+      settings.resultTemplateBypass(item)
     i++
 
   # Appends itemHTML
   $(settings.resultElement).append itemHtml
 
-  # Append MoreButton
+  # Append "MoreButton"
+  # TODO - we will _probably_ paginate using BB.Mn
   # TODO - pagination
   # if !moreButton
   #   moreButton = $(settings.showMoreTemplate).click(showMoreResults)

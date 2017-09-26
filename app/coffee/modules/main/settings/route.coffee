@@ -4,7 +4,7 @@ LayoutView  = require './views/layout'
 
 class SearchSettingsRoute extends require 'hn_routing/lib/route'
 
-  title: 'Settings'
+  title: 'Magellan - Settings'
 
   breadcrumbs: [
     { href: '#', text: 'Home' }

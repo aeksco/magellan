@@ -4,7 +4,7 @@ LayoutView  = require './views/layout'
 
 class WelcomeRoute extends require 'hn_routing/lib/route'
 
-  title: 'Welcome'
+  title: 'Magellan - Welcome'
 
   breadcrumbs: [
     { text: 'Home' }
