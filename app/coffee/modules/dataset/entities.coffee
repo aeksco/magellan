@@ -11,6 +11,10 @@ class DatasetModel extends Backbone.Model
     label:    ''
     context:  {}
 
+  # Overwritten save method
+  save: ->
+    Backbone.Radio.channel('dataset').request('save', @)
+
   # fetchFacets
   # Fetches a FacetCollection instance populated with the facets associated
   # with this dataset. Returns a Promise.
@@ -56,6 +60,8 @@ class DatasetModel extends Backbone.Model
     # Iterates over each id in facetKeys returns a promise
     return Promise.each(facetKeys, saveFacet)
 
+  # TODO - perhaps this should be exported into a separate class to manage facets related to datasets
+  # rather than maintaining this directly on the dataset itself.
   # Destroys superfluous facets
   destroySuperfluousFacets: (toDestroy, facetCollection) =>
 

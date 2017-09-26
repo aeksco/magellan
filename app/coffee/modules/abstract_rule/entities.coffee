@@ -13,10 +13,17 @@ class DefinitionModel extends Backbone.RelationalModel
     value:      ''
 
     # Action
+    # TODO - Action should be an object, rather than string attributes
+    # The action = {} attribute can better store a variable number and type of attributes
     action:     ''
+
+    applied: false # TODO - definitions should track wether or not they have been applied
 
   # isBlocking
   # Helper function used while evaluating rules
+
+  # BIG TODO - 'block' esentially means 'filter' - it continues ONLY if the constraint is met.
+  # We need an opposite? Continues ONLY if the constraint is false?
   isBlocking: ->
     return @get('action') == 'block'
 
@@ -51,6 +58,57 @@ class DefinitionModel extends Backbone.RelationalModel
       target.set(target_object, target_object_data)
       return
 
+    # Index From Split
+    if @get('action') == 'index_from_split'
+      index_from_split_source = data[@get('index_from_split_source')]
+      split = index_from_split_source.split(@get('index_from_split_delimiter'))
+      result = split[@get('index_from_split_index')]
+
+      # Sets value
+      if result
+        target_object_data[target_property] = result
+        target.set(target_object, target_object_data)
+
+      return
+
+    # Index From Regex Match
+    if @get('action') == 'index_from_regex_match'
+
+      # Caches variables
+      match_source  = data[@get('index_from_regex_match_source')]
+      match_regex   = @get('index_from_regex_match_regex')
+      index         = @get('index_from_regex_match_index')
+
+      # Evaluates
+      result = new RegExp(match_regex).exec(match_source)
+
+      # Assigns
+      if result && result[index]
+        target_object_data[target_property] = result[index]
+        target.set(target_object, target_object_data)
+        return
+
+    # # # # #
+    # FORMAT UPPERCASE
+    # TODO - this is an ACTION
+    # if operation == 'format_uppercase'
+    #   continue unless source
+    #   formatted = source.toUpperCase()
+    #   if formatted
+    #     conditionMatched = true
+    #     data[target_property] = formatted
+    #     target.set(target_object, data)
+
+    # FORMAT LOWERCASE
+    # TODO - this is an ACTION
+    # if operation == 'format_lowercase'
+    #   continue unless source
+    #   formatted = source.toLowerCase()
+    #   if formatted
+    #     conditionMatched = true
+    #     data[target_property] = formatted
+    #     target.set(target_object, data)
+
 # # # # #
 
 class DefinitionCollection extends Backbone.Collection
@@ -83,6 +141,14 @@ class DefinitionCollection extends Backbone.Collection
 
       # # # # #
 
+      # Exists
+      if operation == 'exists'
+        if source
+          conditionMatched = true
+          definition.evaluateAction(target, target_object, target_property, data)
+        else
+          break if definition.isBlocking()
+
       # EXACT MATCH
       if operation == 'exact_match'
         if source == value
@@ -102,7 +168,7 @@ class DefinitionCollection extends Backbone.Collection
 
       # CONTAINS
       if operation == 'contains'
-        if _s.include(source, value)
+        if _s.include(source.toLowerCase(), value.toLowerCase())
           conditionMatched = true
           definition.evaluateAction(target, target_object, target_property, data)
         else
@@ -110,7 +176,15 @@ class DefinitionCollection extends Backbone.Collection
 
       # CONTAINS (Case-sensitive)
       if operation == 'contains_case_sensitive'
-        if _s.startsWith(source.toLowerCase(), value.toLowerCase())
+        if _s.include(source, value)
+          conditionMatched = true
+          definition.evaluateAction(target, target_object, target_property, data)
+        else
+          break if definition.isBlocking()
+
+      # DOES NOT CONTAIN
+      if operation == 'does_not_contain'
+        if not _s.include(source.toLowerCase(), value.toLowerCase())
           conditionMatched = true
           definition.evaluateAction(target, target_object, target_property, data)
         else
@@ -124,30 +198,6 @@ class DefinitionCollection extends Backbone.Collection
           definition.evaluateAction(target, target_object, target_property, data)
         else
           break if definition.isBlocking()
-
-      # # # # #
-      # FORMAT UPPERCASE
-      # TODO - this is an ACTION
-      # if operation == 'format_uppercase'
-      #   continue unless source
-      #   formatted = source.toUpperCase()
-      #   if formatted
-      #     conditionMatched = true
-      #     data[target_property] = formatted
-      #     target.set(target_object, data)
-
-      # FORMAT LOWERCASE
-      # TODO - this is an ACTION
-      # if operation == 'format_lowercase'
-      #   continue unless source
-      #   formatted = source.toLowerCase()
-      #   if formatted
-      #     conditionMatched = true
-      #     data[target_property] = formatted
-      #     target.set(target_object, data)
-
-      # TODO - SPLIT_AT_CHAR
-      # TODO - this is an action -> inputs = 'char', 'index'
 
     # Returns conditionMatched
     return conditionMatched

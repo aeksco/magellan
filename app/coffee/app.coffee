@@ -22,11 +22,25 @@ class Application extends Marionette.Service
     return true
 
   # Starts the application
-  # Starts Backbone.history (enables routing)
-  # And initializes sidebar module
+  # Populates the database with the bundled ontologies,
+  # starts Backbone.history (enables routing), and initializes sidebar module
   onReady: ->
-    Backbone.history.start()
-    Backbone.Radio.channel('sidebar').trigger('reset')
+
+    Backbone.Radio.channel('ontology').request('ensure:bundled')
+    .then () =>
+
+      # Hides loading message
+      Backbone.Radio.channel('loading').trigger('hide')
+
+      # Starts Backbone.History & Sidebar component
+      Backbone.history.start()
+      Backbone.Radio.channel('sidebar').trigger('reset')
+
+    .catch (err) =>
+
+      # TODO - this needs a graceful fallback
+      console.log 'ERROR FETCHING ONTOLOGIES'
+      console.log err
 
   # Redirection interface
   # Used accross the application to redirect

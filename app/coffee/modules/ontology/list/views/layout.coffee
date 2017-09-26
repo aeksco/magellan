@@ -90,12 +90,7 @@ class OntologyListLayout extends Mn.LayoutView
 
   regions:
     listRegion: '[data-region=list]'
-    # detailRegion: '[data-region=detail]'
-    detailRegion:
-      selector:     '[data-region=detail]'
-      regionClass:  require 'Marionette.AnimatedRegion/lib/animatedRegion'
-      inAnimation:  'fadeInUp'
-      outAnimation: 'fadeOutDown'
+    detailRegion: '[data-region=detail]'
 
   onShow: -> # TODO - abstract into SelectableList helper?
     listView = new OntologyList({ collection: @collection })

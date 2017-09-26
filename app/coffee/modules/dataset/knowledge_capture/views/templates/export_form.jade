@@ -1,0 +1,16 @@
+include ../../../../base/partials/form_helpers
+
+.row
+  .col-xs-12
+    p.lead Export Rules
+
+  .col-xs-12
+    .alert.alert-info
+      i.fa.fa-fw.fa-cloud-download
+      | &nbsp;
+      strong Export
+      p This action exports the rules defined on this dataset. They may then be imported by other datasets.
+
+  .col-xs-12
+    +cancelButton({})
+    +submitButton({})

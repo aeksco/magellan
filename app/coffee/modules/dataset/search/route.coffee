@@ -10,7 +10,8 @@ class DatasetSearchRoute extends require 'hn_routing/lib/route'
   breadcrumbs: ->
     return [
       { text: 'Datasets', href: '#datasets' }
-      { text: "#{@model.get('label')}" }
+      { text: "#{@model.get('label')}", href: "#datasets/#{@model.id}" }
+      { text: 'Search' }
     ]
 
   # TODO - this should be re-evaluated

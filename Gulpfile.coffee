@@ -43,7 +43,7 @@ paths =
       dest: './build/fonts'
 
     img:
-      src:  './app/img/*'
+      src:  './app/img/**/*'
       dest: './build/img'
 
     python:
@@ -86,6 +86,7 @@ paths =
       nodeModules + 'sortablejs/Sortable.min.js'
       nodeModules + 'bootstrap-switch/dist/js/bootstrap-switch.min.js'
       nodeModules + 'select2/dist/js/select2.full.js'
+      nodeModules + 'cornerstone/dist/cornerstone.min.js'
 
     ]
 

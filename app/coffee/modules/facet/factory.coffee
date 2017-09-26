@@ -13,9 +13,13 @@ class FacetFactory extends DexieFactory
     'facet collection': 'getCollection'
     'facet save':       'saveModel'
     'facet destroy':    'destroyModel'
+    'facet link:all':   'linkAllFacets'
 
   initialize: ->
     @cachedCollection = new Entities.Collection()
+
+  linkAllFacets: ->
+    return @cachedCollection.linkAllFacets()
 
 # # # # #
 

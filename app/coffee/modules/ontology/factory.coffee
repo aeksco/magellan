@@ -1,47 +1,46 @@
 Entities = require './entities'
+DexieFactory  = require '../base/dexieFactory'
 
 # # # # #
 
-# TODO - integrate DexieFactory
-class OntologyFactory extends Marionette.Service
+class OntologyFactory extends DexieFactory
 
-  # Defines radioRequests
+  tableName: 'ontologies'
+
   radioRequests:
     'ontology model':               'getModel'
+    'ontology save':                'saveModel'
     'ontology collection':          'getCollection'
     'ontology attribute':           'attribute'
     'ontology attribute:dropdown':  'getAttributeDropdown'
 
   initialize: ->
-    @cached = new Entities.Collection()
+    @cachedCollection = new Entities.Collection()
 
-  # getCollection: ->
-  #   return @cached if @cached._synced
-  #   @cached.reset(window.ontologies)
-  #   @cached._synced = true
-  #   return @cached
+  # getCollection
+  # Returns a collection of Ontologies
+  getCollection: (dataset_id) ->
 
-  # TODO - this should accept a query
-  getCollection: ->
+    # Ensures presence of @db
+    @ensureDb()
+
+    # Returns Promise to manage async DB operations
     return new Promise (resolve, reject) =>
 
-      # TODO - catch statement
-      table = 'ontologies' # MODEL.urlRoot
-      window.db[table].toArray().then (models) =>
-        @cached.reset(models)
-        return resolve(@cached)
+      # Queries DB
+      @db[@tableName].toArray()
 
-  getModel: (id) ->
-    return new Promise (resolve, reject) =>
+      # Resets the collection and resolves the promise
+      .then (models) =>
 
-      # Resolves if ID is undefined
-      return resolve(new Entities.Model()) unless id
+        # Resets the collection of models
+        @cachedCollection.reset(models)
 
-      # Returns from @cached if synced
-      return resolve(@cached.get(id)) if @cached._synced
+        # Resolves the Promise and returns the FacetCollection
+        return resolve(@cachedCollection)
 
-      # Gets @cached and returns
-      return @getCollection().then () => resolve(@cached.get(id))
+      # Error handling
+      .catch (err) => return reject(err)
 
   attribute: (prefix, attribute) ->
     return new Promise (resolve, reject) =>
@@ -95,3 +94,4 @@ class OntologyFactory extends Marionette.Service
 # # # # #
 
 module.exports = new OntologyFactory()
+

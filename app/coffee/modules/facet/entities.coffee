@@ -36,10 +36,20 @@ class FacetModel extends Backbone.Model
         # Resolves if no matching attribute has been found
         return resolve(true) unless ontologyAttribute
 
+        # Anonymous function to pluck attribute from ontology
+        pluckAttr = (attr) ->
+          if typeof(attr) == 'string'
+            return attr
+
+          if typeof(attr) == 'object'
+            return attr['@value']
+
+          # TODO - this must handle ARRAYS of objects as well.
+
         # Assembles the attributes to be updated
         update =
-          label:    ontologyAttribute['rdfs:label']
-          tooltip:  ontologyAttribute['rdfs:comment']
+          label:    pluckAttr(ontologyAttribute['rdfs:label'])
+          tooltip:  pluckAttr(ontologyAttribute['rdfs:comment'])
 
         # Updates the facet model
         @set(update)

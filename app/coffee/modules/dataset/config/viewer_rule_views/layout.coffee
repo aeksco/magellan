@@ -1,5 +1,5 @@
-KnowledgeRuleLayout = require '../knowledge_rule_views/layout'
-KnowledgeRuleForm = require '../knowledge_rule_views/ruleForm'
+KnowledgeRuleLayout = require '../../knowledge_capture/views/layout'
+KnowledgeRuleForm = require '../../knowledge_capture/views/ruleForm'
 
 # # # # #
 
@@ -14,6 +14,7 @@ class RuleForm extends KnowledgeRuleForm
 
 class RuleLayout extends KnowledgeRuleLayout
   template: require './templates/layout'
+  className: 'row'
 
   # showRuleForm
   # Shows the form to create or edit a Definer rule instance

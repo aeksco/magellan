@@ -1,22 +1,33 @@
-a.navbar-brand.btn.btn-secondary.btn-circle
-  .icon
-  //- i.fa.fa-fw.fa-database
+//- a.navbar-brand.btn.btn-secondary.btn-circle
+//-   .icon
+//-   //- i.fa.fa-fw.fa-database
 
-.navbar-brand.title MAGELLAN
+//- Nav Item Break
+mixin navItemBreak
+  li.nav-item
+    a.nav-link |
 
-.navbar-brand
-  small.text-muted Structured Data Explorer
+//- Nav Item Mixin
+mixin navItem(opts)
+  +navItemBreak()
 
-//- ul.nav.navbar-nav
+  li.nav-item
+    a.nav-link(href=opts.href)
+      i.fa.fa-fw(class=opts.icon)
+      | &nbsp;
+      = opts.text
 
-//-   li.nav-item
-//-     a.nav-link(href='#datasets')
-//-       i.fa.fa-fw.fa-search
-//-       | &nbsp;
-//-       | Datasets
+//-
 
-//-   li.nav-item
-//-     a.nav-link(href='#ontologies')
-//-       i.fa.fa-fw.fa-sitemap
-//-       | &nbsp;
-//-       | Ontologies
+a.navbar-brand( href='#' )
+  img(src="/img/brand/magellan/magellan-01.png" height="40")
+
+//- .navbar-brand
+//-   small.text-muted Archive Explorer
+
+ul.nav.navbar-nav.pull-left.p-l-1
+  +navItem({ href: '#datasets', icon: 'fa-folder-open-o', text: 'Archives' })
+  +navItem({ href: '#ontologies', icon: 'fa-list-alt', text: 'Ontologies' })
+  +navItem({ href: '#settings', icon: 'fa-cog', text: 'Settings' })
+  +navItem({ href: '#about', icon: 'fa-question-circle-o', text: 'About' })
+  +navItemBreak()

@@ -12,6 +12,7 @@ class DatapointFactory extends DexieFactory
   radioRequests:
     'datapoint collection': 'getCollection'
     'datapoint save':       'saveModel'
+    'datapoint destroy':    'destroyModel'
 
   initialize: ->
     @cachedCollection = new Entities.Collection()

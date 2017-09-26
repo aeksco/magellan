@@ -18,8 +18,12 @@
     //-     | &nbsp;
     //-     | Detail View
 
-    .btn-group
-      a.btn.btn-primary-outline( href="#datasets/#{id}/config" )
-        i.fa.fa-fw.fa-cog
-        | &nbsp;
-        | Configuration
+    a.btn.btn-primary-outline.m-r-1( href="#datasets/#{id}/capture" )
+      i.fa.fa-fw.fa-paperclip
+      | &nbsp;
+      | Knowledge Capture
+
+    a.btn.btn-secondary( href="#datasets/#{id}/config" )
+      i.fa.fa-fw.fa-cog
+      | &nbsp;
+      | Configuration

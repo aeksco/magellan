@@ -1,0 +1,29 @@
+
+mixin btn(opts)
+  a.btn.btn-lg.m-r-2(class=opts.css, href=opts.href)
+    i.fa.fa-fw(class=opts.icon)
+    .mr-1= opts.text
+
+.row
+  .col-xs-12
+    .card.card-block
+      img(src="/img/brand/magellan/magellan-13.png" height="200")
+
+      p.lead.m-t-2 Archive Exploration Tool
+
+      p.card-text Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat - Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+      hr
+
+      p.lead No archive too complex.
+
+      p.card-text Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat\. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+      +btn({ text: 'Archives', icon: 'fa-folder-open-o', href: '#archives', css: 'btn-primary-outline' })
+      +btn({ text: 'Ontologies', icon: 'fa-list-alt', href: '#ontologies', css: 'btn-success-outline' })
+      +btn({ text: 'Settings', icon: 'fa-cog', href: '#settings', css: 'btn-secondary' })
+      +btn({ text: 'About', icon: 'fa-question-circle-o', href: '#about', css: 'btn-secondary' })
+
+      hr
+
+      p.lead Completely Open Source

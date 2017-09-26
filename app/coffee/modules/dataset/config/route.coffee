@@ -11,7 +11,8 @@ class DatasetConfigRoute extends require 'hn_routing/lib/route'
   breadcrumbs: ->
     return [
       { href: "#datasets", text: 'Datasets' }
-      { href: "#datasets/#{@model.id}/search", text: @model.get('label') }
+      { href: "#datasets/#{@model.id}", text: @model.get('label') }
+      { href: "#datasets/#{@model.id}/search", text: 'Search' }
       { text: 'Configuration' }
     ]
 

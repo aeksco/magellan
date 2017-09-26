@@ -85,8 +85,12 @@ setZeroCounts = ->
               id: _.uniqueId('facet_')
 
       # IF OBJECT OR @ID
-      else if typeof(item[facet.attribute]) == 'object' && item[facet.attribute]['@id']
-        settings.facetCollection[facet.attribute][item[facet.attribute]['@id']] = settings.facetCollection[facet.attribute][item[facet.attribute]['@id']] ||
+      else if typeof(item[facet.attribute]) == 'object' && (item[facet.attribute]['@id'] || item[facet.attribute]['@value'])
+
+        # Sets attrKey
+        attrKey = if item[facet.attribute]['@id'] then '@id' else '@value'
+
+        settings.facetCollection[facet.attribute][item[facet.attribute][attrKey]] = settings.facetCollection[facet.attribute][item[facet.attribute][attrKey]] ||
           count: 0
           id: _.uniqueId('facet_')
 
@@ -167,8 +171,12 @@ filterSingleItem = (item) ->
         if inters.length == 0
           filtersApply = false
 
-    else if typeof(item[facet]) == 'object' && item[facet]['@id']
-      if filter.length and _.indexOf(filter, item[facet]['@id']) == -1
+    else if typeof(item[facet]) == 'object' && (item[facet]['@id'] || item[facet]['@value'])
+
+      # Sets attrKey
+      attrKey = if item[facet]['@id'] then '@id' else '@value'
+
+      if filter.length and _.indexOf(filter, item[facet][attrKey]) == -1
         filtersApply = false
 
     else
@@ -209,9 +217,12 @@ updateFacetCollection = ->
             settings.facetCollection[facet.attribute][facetitem].count += 1
             return
 
-      else if typeof(item[facet.attribute]) == 'object' && item[facet.attribute]['@id']
-        if item[facet.attribute]['@id'] != undefined
-          settings.facetCollection[facet.attribute][item[facet.attribute]['@id']].count += 1
+      else if typeof(item[facet.attribute]) == 'object' && (item[facet.attribute]['@id'] || item[facet.attribute]['@value'])
+
+        attrKey = if item[facet.attribute]['@id'] then '@id' else '@value'
+
+        if item[facet.attribute][attrKey] != undefined
+          settings.facetCollection[facet.attribute][item[facet.attribute][attrKey]].count += 1
 
       else
         if item[facet.attribute] != undefined

@@ -1,6 +1,9 @@
 require './factory'
+require './importer'
+
 ListRoute = require './list/route'
 NewRoute = require './new/route'
+
 # # # # #
 
 class OntologyRouter extends require 'hn_routing/lib/router'

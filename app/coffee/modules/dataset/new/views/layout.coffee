@@ -1,85 +1,36 @@
-Marionette = require 'backbone.marionette'
+ArchiveForm = require './archiveForm'
+JsonForm    = require './jsonForm'
+RdfForm     = require './rdfForm'
 
 # # # # #
 
-# TODO - abstract into Henson
-class UploadWidget extends Mn.LayoutView
-  template: require './templates/upload'
-  className: 'form-group'
-
-  events:
-    'change input[type=file]': 'onInputChange'
-
-  onInputChange: (e) ->
-
-    # Cache e.target
-    file = e.target.files[0]
-
-    # Return without a file
-    return unless file
-
-    # Parse text inside input file
-    fileReader = new FileReader()
-    fileReader.onload = => @onFileLoaded(fileReader.result)
-    fileReader.readAsText(file)
-
-  # On Uploaded callback
-  # Parses JSON from text and sends to parent view
-  onFileLoaded: (text) ->
-    parsed = JSON.parse(text)
-    @trigger 'parse', parsed
-
-# # # # #
-
-class NewDatasetLayout extends Mn.LayoutView
-  template: require './templates/layout'
+class ImportSelectorView extends require 'hn_views/lib/nav'
   className: 'container'
+  template: require './templates/layout'
 
-  behaviors:
-    ModelEvents: {}
-    SubmitButton: {}
+  navItems: [
+    { icon: 'fa-folder-open-o', text: 'Archive',    trigger: 'archive', default: true }
+    { icon: 'fa-globe',    text: 'JSON-LD',   trigger: 'json' }
+    { icon: 'fa-file', text: 'RDF/XML',    trigger: 'rdf' }
+  ]
 
-  regions:
-    uploadRegion: '[data-region=upload]'
+  navEvents:
+    'archive':  'archive'
+    'json':     'json'
+    'rdf':      'rdf'
 
-  onRender: ->
-    uploadWidget = new UploadWidget()
-    uploadWidget.on 'parse', @onJsonUpload # TODO
-    @uploadRegion.show uploadWidget
-    @disableSubmit()
+  navOptions:
+    pills: true
 
-  # onJsonUpload
-  # Invoked as a callback when a JSON file has
-  onJsonUpload: (parsedJson) =>
-    # Sets context and graph attributes on dataset model
-    @model.set('context', parsedJson['@context'])
+  json: ->
+    @contentRegion.show new JsonForm({ model: @model, creator: @options.creator })
 
-    # TODO - is there a better way to manage this?
-    # We'll need some additional logic to manage the state of the uploaded dataset
-    @uploadedGraph = parsedJson['@graph']
+  archive: -> # TODO - pass ArchiveImporter to this view
+    @contentRegion.show new ArchiveForm({ model: @model, creator: @options.creator, importer: @options.importer })
 
-    # Enables submitButton
-    # TODO - there should be a validate method that manages submitButton state
-    @enableSubmit()
-
-  # onSubmit (from SubmitButton behavior)
-  onSubmit: ->
-
-    # TODO - this should be abstracted into a behavior...or has it been at some point?
-    data = Backbone.Syphon.serialize(@)
-
-    # Saves Dataset model to Dexie
-    @model.set(data)
-    @options.creator.deploy(@model, @uploadedGraph)
-
-  onSync: ->
-    Radio.channel('app').trigger('redirect', '#datasets')
-
-  # TODO - handle error event callbacks
-  onError: (err) ->
-    console.log 'ERROR'
-    console.log err
+  rdf: -> # TODO - pass RDFImporter to this view
+    @contentRegion.show new RdfForm({ model: @model, creator: @options.creator })
 
 # # # # #
 
-module.exports = NewDatasetLayout
+module.exports = ImportSelectorView

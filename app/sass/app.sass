@@ -57,7 +57,6 @@ $fa-font-path: '../fonts/'
 
 // Modules
 @import './rdf_viewer'
-@import '../coffee/modules/iframe/styles'
 @import '../coffee/modules/search/styles'
 @import '../coffee/modules/dataset/styles'
 
@@ -68,5 +67,19 @@ $fa-font-path: '../fonts/'
 // TODO - this file should be moved elsewhere
 @import './upload'
 
-// AnimatedRegion SASS
-@import '../../node_modules/Marionette.AnimatedRegion/lib/styles'
+// MG styles
+.btn
+  border-width: 2px
+  font-weight: 400
+
+  i.fa
+    @extend .fa-lg
+
+  &.btn-secondary, &.btn-secondary-outline
+    border-color: #373a3c
+
+p.lead.mg
+  font-weight: 400
+
+.card.card-block
+  border-width: 3px

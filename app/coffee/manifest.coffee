@@ -47,9 +47,8 @@ new LoadingComponent({ container: AppLayout.loading })
 
 # Henson.js Sidebar configuration
 menuItems = [
-  { href: '#datasets',    icon: 'fa-search',    title: 'Datasets', divider: true }
-  { href: '#ontologies',  icon: 'fa-sitemap',   title: 'Ontologies', divider: true }
-  { href: '#settings',    icon: 'fa-cog',       title: 'Settings', divider: true }
+  { href: '#datasets',    icon: 'fa-folder-open-o', title: 'Archives', divider: true }
+  { href: '#ontologies',  icon: 'fa-list-alt',      title: 'Ontologies', divider: true }
 ]
 
 # Henson.js Components
@@ -78,12 +77,10 @@ require './modules/viewer_rule/factory'
 # They have routes and entities (models and collections)
 # Each route represents an endpoint, or 'page' in the app.
 DatasetRouter   = require './modules/dataset/router'
-HomeRouter      = require './modules/home/router'
-IframeRouter    = require './modules/iframe/router'
+MainRouter      = require './modules/main/router'
 OntologyRouter  = require './modules/ontology/router'
 new DatasetRouter({ container: AppLayout.main })
-new HomeRouter({ container: AppLayout.main })
-new IframeRouter({ container: AppLayout.main })
+new MainRouter({ container: AppLayout.main })
 new OntologyRouter({ container: AppLayout.main })
 
 # # # # #

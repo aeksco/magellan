@@ -3,29 +3,53 @@
     h4.card-title= label
 
   .col-xs-6.text-xs-right
-    a.btn.btn-sm.btn-primary-outline(href="#datasets/#{id}/config")
-      i.fa.fa-fw.fa-cog
+
+    a.btn.btn-sm.btn-secondary.m-r-1(href="#datasets/#{id}")
+      i.fa.fa-fw.fa-eye
       | &nbsp;
-      | Configuation
+      | Show
+
+    a.btn.btn-sm.btn-secondary.m-r-1(href="#datasets/#{id}/edit")
+      i.fa.fa-fw.fa-pencil
+      | &nbsp;
+      | Edit
+
+    a.btn.btn-sm.btn-danger-outline(href="#datasets/#{id}/destroy")
+      i.fa.fa-fw.fa-trash
+      | &nbsp;
+      | Destroy
 
   .col-xs-12
     hr
 
 .row
-  .col-xs-6
+  .col-xs-12
+    p.lead #{_s.numberFormat(count)} Items
 
-    p.lead #{count} Items
-
-    a.btn.btn-primary-outline.w-100(href="#datasets/#{id}/search")
-      i.fa.fa-fw.fa-search
+  .col-xs-4
+    a.btn.btn-mg.btn-lg.btn-primary-outline.w-100(href="#datasets/#{id}/capture")
+      i.fa.fa-fw.fa-lg.fa-paperclip
       | &nbsp;
-      | Search Dataset
+      | Knowledge Capture
 
-  .col-xs-6
-    p.lead Context
-    ul.list-group
-      each ctx, prefix in context
-        li.list-group-item
-          strong= prefix
-          br
-          = ctx
+  .col-xs-4
+    a.btn.btn-mg.btn-lg.btn-success-outline.w-100(href="#datasets/#{id}/search")
+      i.fa.fa-fw.fa-lg.fa-search
+      | &nbsp;
+      | Search
+
+  .col-xs-4
+    a.btn.btn-mg.btn-lg.btn-success-outline.w-100(href="#datasets/#{id}/export")
+      i.fa.fa-fw.fa-lg.fa-cloud-download
+      | &nbsp;
+      | Export
+
+  //- TODO - move to dataset show view
+  //- .col-xs-6
+  //-   p.lead Context
+  //-   ul.list-group
+  //-     each ctx, prefix in context
+  //-       li.list-group-item
+  //-         strong= prefix
+  //-         br
+  //-         = ctx
