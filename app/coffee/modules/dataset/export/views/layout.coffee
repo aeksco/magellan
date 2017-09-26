@@ -1,7 +1,7 @@
 
-class ApplyRulesView extends Mn.LayoutView
+class ExportView extends Mn.LayoutView
   template: require './templates/export'
-  className: 'container'
+  className: 'container d-flex align-items-center h-100 flex-column',
 
   behaviors:
     DownloadFile: {}
@@ -99,4 +99,4 @@ class ApplyRulesView extends Mn.LayoutView
 
 # # # # #
 
-module.exports = ApplyRulesView
+module.exports = ExportView

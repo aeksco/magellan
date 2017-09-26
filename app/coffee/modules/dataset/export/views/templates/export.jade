@@ -1,6 +1,6 @@
 include ../../../../base/partials/form_helpers
 
-.row
+.row.d-flex.w-100.flex-column
   .col-lg-12
 
     .card.card-body
@@ -15,13 +15,13 @@ include ../../../../base/partials/form_helpers
             | This action exports the dataset with Knowledge Capture.
 
         .col-lg-6
-          button.btn.btn-success-outline.w-100( data-export='json' )
+          button.btn.btn-outline-success.w-100( data-export='json' )
             i.fa.fa-fw.fa-file-code-o
             | &nbsp;
             | JSON Export
 
         .col-lg-6
-          button.btn.btn-success-outline.w-100( data-export='csv' )
+          button.btn.btn-outline-success.w-100( data-export='csv' )
             i.fa.fa-fw.fa-file-excel-o
             | &nbsp;
             | CSV Archive
