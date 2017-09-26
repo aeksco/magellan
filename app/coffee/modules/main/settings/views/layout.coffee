@@ -1,7 +1,7 @@
 
 class SettingsLayoutView extends Marionette.LayoutView
   template: require './templates/layout'
-  className: 'container-fluid d-flex align-items-center h-100 flex-column',
+  className: 'container d-flex align-items-center h-100 flex-column',
 
   behaviors:
     Confirmations:
