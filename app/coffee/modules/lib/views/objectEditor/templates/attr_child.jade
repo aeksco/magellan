@@ -1,0 +1,30 @@
+include /cm_ui/views/partials/form_helpers
+
+.row(style='align-items=center')
+
+  .col-xs-2.text-xs-left
+    .btn.btn-sm.btn-danger-outline(data-click='remove')
+      i.fa.fa-fw.fa-trash
+
+  .col-xs-2= attr
+
+  .col-xs-8
+    if type == 'string'
+      +formInput({ formGroupCss: 'm-b-0', placeholder: attr, name: 'val', type: 'text' })
+
+    else if type == 'number'
+      +formInput({ formGroupCss: 'm-b-0', placeholder: attr, name: 'val', type: 'number' })
+
+    else if type == 'boolean'
+      +formInput({ formGroupCss: 'm-b-0', placeholder: attr, name: 'val', type: 'checkbox' })
+
+    else if type == 'array'
+      +formSelect({ formGroupCss: 'm-b-0', name: 'val', multiple: true, options: val })
+
+    else if type == 'object'
+      .row
+        .col-xs-12(data-region='object-editor')
+
+    else
+      | Unhandled!!
+      = type
