@@ -4,12 +4,12 @@
 
   .col-lg-6.text-right
 
-    button.btn.btn-sm.btn-secondary.mr-2( data-click='link' )
+    button.btn.btn-sm.btn-outline-secondary.mr-2( data-click='link' )
       i.fa.fa-fw.fa-link
       | &nbsp;
       | Link to Ontology
 
-    button.btn.btn-sm.btn-success-outline( data-click='edit' )
+    button.btn.btn-sm.btn-outline-success( data-click='edit' )
       i.fa.fa-fw.fa-pencil
       | &nbsp;
       | Edit
@@ -21,7 +21,7 @@
 
   //- ATTRIBUTE
   .col-lg-12
-    .alert.alert-info
+    .alert.alert-primary
       i.fa.fa-fw.fa-search
       | &nbsp;
       | Matches the
@@ -31,7 +31,7 @@
   //- TOOLTIP
   .col-lg-12
     if tooltip
-      .alert.alert-info
+      .alert.alert-primary
         i.fa.fa-fw.fa-question-circle-o
         | &nbsp;
         =tooltip

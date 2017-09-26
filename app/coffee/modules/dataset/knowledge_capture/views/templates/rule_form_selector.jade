@@ -1,7 +1,7 @@
 include ../../../../base/partials/form_helpers
 
 mixin typeSelector(opts)
-  button.btn.btn-secondary( data-click='type-selector' data-type=opts.type )
+  button.btn.btn-outline-secondary( data-click='type-selector' data-type=opts.type )
     i.fa.fa-fw( class=opts.icon )
     | &nbsp;
     | #{opts.text}
@@ -10,7 +10,7 @@ mixin typeSelector(opts)
 //-   p.lead New Knowledge Rule
 
 .col-lg-12
-  .alert.alert-info
+  .alert.alert-primary
     strong New Knowledge Rule
     br
     | Select a Knowledge Rule type.
