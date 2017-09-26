@@ -2,25 +2,25 @@ include ../../../../base/partials/form_helpers
 
 .row
 
-  .col-xs-12
+  .col-lg-12
 
-    .card.card-block
+    .card.card-body
 
       .row
-        .col-xs-12
+        .col-lg-12
           h4.card-title New Ontology
 
-        .col-xs-12
+        .col-lg-12
           hr
 
-        .col-xs-12
+        .col-lg-12
           +formInput({ label: 'Label', placeholder: 'Label', name: 'label', type: 'text' })
           +formInput({ label: 'Prefix', placeholder: 'Prefix', name: 'prefix', type: 'text' })
 
-        .col-xs-12(data-region='upload')
+        .col-lg-12(data-region='upload')
 
-        .col-xs-12
+        .col-lg-12
           hr
 
-        .col-xs-12.text-xs-right
+        .col-lg-12.text-xs-right
           +submitButton({})

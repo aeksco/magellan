@@ -2,13 +2,13 @@ include /cm_ui/views/partials/form_helpers
 
 .row(style='align-items=center')
 
-  .col-xs-2.text-xs-left
+  .col-lg2.text-xs-left
     .btn.btn-sm.btn-danger-outline(data-click='remove')
       i.fa.fa-fw.fa-trash
 
-  .col-xs-2= attr
+  .col-lg2= attr
 
-  .col-xs-8
+  .col-lg8
     if type == 'string'
       +formInput({ formGroupCss: 'm-b-0', placeholder: attr, name: 'val', type: 'text' })
 
@@ -23,7 +23,7 @@ include /cm_ui/views/partials/form_helpers
 
     else if type == 'object'
       .row
-        .col-xs-12(data-region='object-editor')
+        .col-lg-12(data-region='object-editor')
 
     else
       | Unhandled!!

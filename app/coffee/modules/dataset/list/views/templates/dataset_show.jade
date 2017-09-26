@@ -1,8 +1,8 @@
 .row
-  .col-xs-6
+  .col-lg-6
     h4.card-title= label
 
-  .col-xs-6.text-xs-right
+  .col-lg-6.text-xs-right
 
     a.btn.btn-sm.btn-secondary.m-r-1(href="#datasets/#{id}")
       i.fa.fa-fw.fa-eye
@@ -19,33 +19,33 @@
       | &nbsp;
       | Destroy
 
-  .col-xs-12
+  .col-lg-12
     hr
 
 .row
-  .col-xs-12
+  .col-lg-12
     p.lead #{_s.numberFormat(count)} Items
 
-  .col-xs-4
-    a.btn.btn-mg.btn-lg.btn-primary-outline.w-100(href="#datasets/#{id}/capture")
+  .col-lg-4
+    a.btn.btn-mg.btn-lg.btn-outline-primary.w-100(href="#datasets/#{id}/capture")
       i.fa.fa-fw.fa-lg.fa-paperclip
       | &nbsp;
       | Knowledge Capture
 
-  .col-xs-4
+  .col-lg-4
     a.btn.btn-mg.btn-lg.btn-success-outline.w-100(href="#datasets/#{id}/search")
       i.fa.fa-fw.fa-lg.fa-search
       | &nbsp;
       | Search
 
-  .col-xs-4
+  .col-lg-4
     a.btn.btn-mg.btn-lg.btn-success-outline.w-100(href="#datasets/#{id}/export")
       i.fa.fa-fw.fa-lg.fa-cloud-download
       | &nbsp;
       | Export
 
   //- TODO - move to dataset show view
-  //- .col-xs-6
+  //- .col-lg-6
   //-   p.lead Context
   //-   ul.list-group
   //-     each ctx, prefix in context

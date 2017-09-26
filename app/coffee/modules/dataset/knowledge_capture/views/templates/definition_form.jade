@@ -1,31 +1,31 @@
 include ../../../../base/partials/form_helpers
 
-.col-xs-12
-  .card.card-block
+.col-lg-12
+  .card.card-body
 
     .row
 
-      .col-xs-12
+      .col-lg-12
         p.lead.m-b-0
           if isNew
             | New Definition
           else
             | Edit Definition
 
-      .col-xs-12
+      .col-lg-12
         hr
 
-      .col-xs-12( data-region='constraint' )
+      .col-lg-12( data-region='constraint' )
 
-      .col-xs-12
+      .col-lg-12
         hr
 
-      .col-xs-12( data-region='action' )
+      .col-lg-12( data-region='action' )
 
-      .col-xs-12
+      .col-lg-12
         hr
 
       //- TODO - these buttons should be custom-made for this particular form
-      .col-xs-12.text-xs-right
+      .col-lg-12.text-xs-right
         +cancelButton({})
         +submitButton({})

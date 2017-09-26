@@ -6,18 +6,18 @@ mixin typeSelector(opts)
     | &nbsp;
     | #{opts.text}
 
-//- .col-xs-12
+//- .col-lg-12
 //-   p.lead New Knowledge Rule
 
-.col-xs-12
+.col-lg-12
   .alert.alert-info
     strong New Knowledge Rule
     br
     | Select a Knowledge Rule type.
 
-.col-xs-12
+.col-lg-12
   +typeSelector({ type: 'definer',    icon: 'fa-plus-square-o', text: 'Definer' })
   +typeSelector({ type: 'decorator',  icon: 'fa-magic',         text: 'Decorator' })
 
-.col-xs-12.m-t-2
+.col-lg-12.m-t-2
   +cancelButton({})
