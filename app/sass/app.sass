@@ -5,16 +5,21 @@
 // Utility SASS
 @import './util/cursor'
 @import './util/material'
+@import './util/upload'
 
 // Nav styles (TODO - abstract into Henson)
 @import './nav'
+
+// Lib
+@import '../coffee/modules/lib/views/json_viewer/styles'
+@import '../coffee/modules/lib/views/nav/styles'
 
 // Henson Styles
 // @import '../../node_modules/hn_views/lib/json_viewer/styles.sass'
 // @import '../../node_modules/hn_views/lib/nav/styles.sass'
 
 // Components
-// @import '../coffee/components/loading/styles'
+@import '../coffee/components/loading/styles'
 
 // Modules
 // @import './rdf_viewer'
@@ -23,7 +28,3 @@
 
 // Layout SASS
 @import './layout'
-
-// UploadWidget SASS
-// TODO - this file should be moved elsewhere
-// @import './upload'
