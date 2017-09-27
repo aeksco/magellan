@@ -35,7 +35,12 @@ class DefinitionModel extends Backbone.RelationalModel
     target_object_data = target.get(target_object)
 
     # Block
+    # TODO - deprecated!!
     if @get('action') == 'block'
+      return
+
+    # Filter
+    if @get('action') == 'filter'
       return
 
     # Literal
