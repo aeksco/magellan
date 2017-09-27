@@ -65,7 +65,8 @@ paths =
       nodeModules + 'backbone.radio/build/backbone.radio.js'
       nodeModules + 'backbone.syphon/lib/backbone.syphon.js'
       nodeModules + 'marionette-service/dist/marionette-service.js'
-      nodeModules + 'tether/dist/js/tether.min.js'
+      # nodeModules + 'tether/dist/js/tether.min.js'
+      nodeModules + 'popper.js/dist/umd/popper.min.js'
       nodeModules + 'bootstrap/dist/js/bootstrap.min.js'
       nodeModules + 'bluebird/js/browser/bluebird.min.js'
       nodeModules + 'd3/build/d3.js' # TODO - RDF viewer is preventing update.
@@ -121,6 +122,10 @@ gulp.task 'bundle', ->
     .pipe plugins.browserify
       debug:      if process.env.NODE_ENV == 'prod' then 'production' else 'development'
       debug:      true
+      paths: [
+          './node_modules',
+          './app/coffee/modules'
+      ],
       transform:  ['coffeeify', 'jadeify']
       extensions: ['.coffee', '.jade']
     .pipe plugins.concat(paths.bundle.dest)
@@ -172,6 +177,7 @@ gulp.task 'nodewebkit_release', ->
     return
 
 # Bundle server task
+# TODO - is this still used?
 gulp.task 'server_bundle', ->
   gulp.src(paths.server_bundle.src)
     .pipe plugins.plumber()
@@ -179,6 +185,7 @@ gulp.task 'server_bundle', ->
     .pipe gulp.dest paths.server_bundle.dest
 
 # Copy Python files
+# TODO - is this still used?
 gulp.task 'copy_python', ->
   gulp.src paths.copy.python.src
     .pipe plugins.plumber()
@@ -186,28 +193,17 @@ gulp.task 'copy_python', ->
 
 # # # # #
 
-gulp.task 'sass_dark_compile', ->
-  gulp.src paths.sass_dark.src
-    .pipe plugins.sass()
-    .pipe if process.env.NODE_ENV in ['prod','stage'] then plugins.minifyCss({ keepSpecialComments: 0 }) else plugins.gutil.noop()
-    .pipe plugins.rename
-      basename: 'dark'
-      extname: '.min.css'
-    .pipe gulp.dest( paths.dest + 'css/' )
-
-# # # # #
-
 # Build tasks
 gulp.task 'default', ['dev']
 
 gulp.task 'dev', =>
-  plugins.runSequence.use(gulp)('env_dev', 'copy_fontawesome', 'copy_python', 'copy_images', 'sass', 'sass_dark_compile', 'jade', 'concat', 'bundle', 'server_bundle', 'watch', 'webserver')
+  plugins.runSequence.use(gulp)('env_dev', 'copy_fontawesome', 'copy_python', 'copy_images', 'sass', 'jade', 'concat', 'bundle', 'server_bundle', 'watch', 'webserver')
 
 gulp.task 'release', =>
-  plugins.runSequence.use(gulp)('env_prod', 'copy_fontawesome', 'copy_python', 'copy_images', 'sass', 'sass_dark_compile', 'jade', 'concat', 'bundle', 'server_bundle', => console.log 'Release completed.' )
+  plugins.runSequence.use(gulp)('env_prod', 'copy_fontawesome', 'copy_python', 'copy_images', 'sass', 'jade', 'concat', 'bundle', 'server_bundle', => console.log 'Release completed.' )
 
 gulp.task 'nwk_dev', =>
-  plugins.runSequence.use(gulp)('env_dev', 'copy_fontawesome', 'copy_python', 'copy_images', 'sass', 'sass_dark_compile', 'jade', 'concat', 'bundle', 'server_bundle', 'nodewebkit_package', 'watch', 'nodewebkit_watch')
+  plugins.runSequence.use(gulp)('env_dev', 'copy_fontawesome', 'copy_python', 'copy_images', 'sass', 'jade', 'concat', 'bundle', 'server_bundle', 'nodewebkit_package', 'watch', 'nodewebkit_watch')
 
 gulp.task 'nwk_release', =>
-  plugins.runSequence.use(gulp)('env_dev', 'copy_fontawesome', 'copy_python', 'copy_images', 'sass', 'sass_dark_compile', 'jade', 'concat', 'bundle', 'server_bundle', 'nodewebkit_package', 'nodewebkit_release', => console.log 'NWK Release completed.' )
+  plugins.runSequence.use(gulp)('env_dev', 'copy_fontawesome', 'copy_python', 'copy_images', 'sass', 'jade', 'concat', 'bundle', 'server_bundle', 'nodewebkit_package', 'nodewebkit_release', => console.log 'NWK Release completed.' )

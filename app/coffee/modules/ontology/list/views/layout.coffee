@@ -1,3 +1,9 @@
+# TODO - move LD viewer into modules/lib/views
+LdViewer = require '../../../search/facetsearch/views/graph.coffee'
+# JsonViewer = require 'hn_views/lib/json_viewer'
+JsonViewer = require 'lib/views/json_viewer'
+
+# # # # #
 
 class OntologyEmpty extends Mn.LayoutView
   template: require './templates/ontology_empty'
@@ -25,10 +31,9 @@ class OntologyList extends Mn.CompositeView
 
 # # # # #
 
-# TODO - abstract into separate library
-LdViewer = require '../../../search/facetsearch/views/graph.coffee'
-JsonViewer = require 'hn_views/lib/json_viewer'
-class AttributeDetail extends require 'hn_views/lib/nav'
+class AttributeDetail extends require 'lib/views/nav'
+
+  className: 'col-lg-12'
 
   navItems: [
     { icon: 'fa-code',    text: 'JSON',   trigger: 'json', default: true }
@@ -46,8 +51,8 @@ class AttributeDetail extends require 'hn_views/lib/nav'
     @contentRegion.show new LdViewer({ json: @model.toJSON() })
 
 # # # # #
-# TODO - abstract Attribute viewing into a separate file
 
+# TODO - abstract Attribute viewing into a separate file
 class AttributeChild extends Mn.LayoutView
   className: 'list-group-item'
   template: require './templates/attribute_child'

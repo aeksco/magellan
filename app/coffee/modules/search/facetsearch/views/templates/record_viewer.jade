@@ -1,23 +1,24 @@
 .row
-  .col-xs-12
+  .col-lg-12
 
     h4.card-title
-      i.fa.fa-fw(class=icon)
-      | &nbsp;
+      if icon
+        i.fa.fa-fw(class=icon)
+        | &nbsp;
       a.cursor-pointer(data-relation=data['@id'])= data['@id']
 
-  //- .col-xs-3.text-xs-right
-  //-   .btn.btn-secondary.btn-sm(data-toggle='tooltip', data-placement='left', title='Copy JSON to Clipboard', data-click='clipboard' style='line-height=0;')
+  //- .col-lg-3.text-right
+  //-   .btn.btn-outline-secondary.btn-sm(data-toggle='tooltip', data-placement='left', title='Copy JSON to Clipboard', data-click='clipboard' style='line-height=0;')
   //-     i.fa.fa-files-o
 
 //-
 //- if views.img
 //-   .row
-//-     .col-xs-12.text-center
+//-     .col-lg-12.text-center
 //-       img.img-thumbnail(data-zoom=views.img, src=views.img, style='max-height:40rem;')
 
 //- if views.audio
-//-   a.btn.btn-primary-outline(href=views.audio, target='_blank')
+//-   a.btn.btn-outline-primary(href=views.audio, target='_blank')
 //-     i.fa.fa-fw.fa-file-audio-o
 //-     | &nbsp;
 //-     | Listen
@@ -28,4 +29,4 @@
 //-     | Your browser does not support the video tag.
 
 .row
-  .col-xs-12(data-region='viewer')
+  .col-lg-12(data-region='viewer')

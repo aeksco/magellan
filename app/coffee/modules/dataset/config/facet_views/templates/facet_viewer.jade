@@ -1,27 +1,27 @@
 .row
-  .col-xs-6
+  .col-lg-6
     h4.card-title= label
 
-  .col-xs-6.text-xs-right
+  .col-lg-6.text-right
 
-    button.btn.btn-sm.btn-secondary.m-r-1( data-click='link' )
+    button.btn.btn-sm.btn-outline-secondary.mr-2( data-click='link' )
       i.fa.fa-fw.fa-link
       | &nbsp;
       | Link to Ontology
 
-    button.btn.btn-sm.btn-success-outline( data-click='edit' )
+    button.btn.btn-sm.btn-outline-success( data-click='edit' )
       i.fa.fa-fw.fa-pencil
       | &nbsp;
       | Edit
 
-  .col-xs-12
+  .col-lg-12
     hr
 
 .row
 
   //- ATTRIBUTE
-  .col-xs-12
-    .alert.alert-info
+  .col-lg-12
+    .alert.alert-primary
       i.fa.fa-fw.fa-search
       | &nbsp;
       | Matches the
@@ -29,9 +29,9 @@
       |  attribute.
 
   //- TOOLTIP
-  .col-xs-12
+  .col-lg-12
     if tooltip
-      .alert.alert-info
+      .alert.alert-primary
         i.fa.fa-fw.fa-question-circle-o
         | &nbsp;
         =tooltip
@@ -43,7 +43,7 @@
         | No tooltip defined for this facet.
 
   //- ENABLED
-  .col-xs-12
+  .col-lg-12
     if enabled
       .alert.alert-success
         i.fa.fa-fw.fa-check-circle-o

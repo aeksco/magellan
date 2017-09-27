@@ -1,6 +1,6 @@
 
 class FacetForm extends Mn.LayoutView
-  className: 'card card-block'
+  className: 'card card-body'
   template: require './templates/facet_form'
 
   behaviors:

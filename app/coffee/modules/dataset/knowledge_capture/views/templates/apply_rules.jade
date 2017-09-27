@@ -1,16 +1,19 @@
 include ../../../../base/partials/form_helpers
 
 .row
-  .col-xs-12
+  .col-lg-12
     p.lead Apply Rules
 
-  .col-xs-12
-    .alert.alert-info
+  .col-lg-12
+    .alert.alert-primary
       i.fa.fa-fw.fa-question-circle
       | &nbsp;
       strong HELP
-      p This action applies the defined rules to the dataset and updates its facets.
+      p.mb-0 This action applies the defined rules to the dataset and updates its facets.
 
-  .col-xs-12
+  .col-lg-12
+    hr
+
+  .col-lg-12
     +cancelButton({})
     +submitButton({})

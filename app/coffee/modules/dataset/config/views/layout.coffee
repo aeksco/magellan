@@ -3,7 +3,7 @@ ViewerRuleLayout    = require '../viewer_rule_views/layout'
 
 # # # # #
 
-class ConfigLayoutView extends require 'hn_views/lib/nav'
+class ConfigLayoutView extends require 'lib/views/nav'
   className: 'container-fluid'
 
   navItems: [

@@ -1,4 +1,7 @@
 
+.ld__graph
+  overflow: scroll
+
 .nav.nav-tabs
   .nav-link
     padding: 0.25rem 0.5rem
@@ -6,7 +9,8 @@
 // FacetSearch Styles
 .facetsearch
   @extend .card
-  @extend .card-inverse
+  // @extend .card-inverse
+  margin-bottom: 0.5rem
 
   // Active
   &.active
@@ -27,21 +31,8 @@
 
     span.prefix
       display: none
-      @extend .label
       float: right
       margin-right: 1rem
-
-      &.dmo
-        @extend .label-default
-
-      &.dmoi
-        @extend .label-success
-
-      &.dmoa
-        @extend .label-primary
-
-      &.ore
-        @extend .label-warning
 
     i.help
       @extend .fa-question-circle-o
@@ -77,12 +68,12 @@
 
       &.activefacet
         background-color: #dff0d8 !important
-        // @extend .list-group-item-success
+        @extend .list-group-item-success
         display: inherit
 
 .bottomline
   @extend .card
-  @extend .card-block
+  @extend .card-body
 
 // Result List
 .list-group.record-list-group

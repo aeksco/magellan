@@ -1,18 +1,18 @@
 include ../../../../base/partials/form_helpers
 
-.col-xs-3
+.col-lg-3
 
   .row
-    .col-xs-12
+    .col-lg-12
       +formSelect({ label: 'Viewer Type', name: 'target_property', options: ['img', 'stl', 'dicom', 'pdf', 'csv', 'audio', 'video'] })
 
-  button.btn.btn-primary-outline.w-100.m-b-1( data-click='add' )
+  button.btn.btn-outline-primary.w-100.mb-2( data-click='add' )
     i.fa.fa-fw.fa-plus-circle
     | &nbsp;
     | Add Definition
 
-.col-xs-9(data-region='definitions')
+.col-lg-9(data-region='definitions')
 
-.col-xs-12
+.col-lg-12
   +cancelButton({})
   +submitButton({})

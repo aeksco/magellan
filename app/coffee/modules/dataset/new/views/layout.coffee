@@ -4,13 +4,13 @@ RdfForm     = require './rdfForm'
 
 # # # # #
 
-class ImportSelectorView extends require 'hn_views/lib/nav'
+class ImportSelectorView extends require 'lib/views/nav'
   className: 'container'
   template: require './templates/layout'
 
   navItems: [
     { icon: 'fa-folder-open-o', text: 'Archive',    trigger: 'archive', default: true }
-    { icon: 'fa-globe',    text: 'JSON-LD',   trigger: 'json' }
+    { icon: 'fa-code',    text: 'JSON-LD',   trigger: 'json' }
     { icon: 'fa-file', text: 'RDF/XML',    trigger: 'rdf' }
   ]
 

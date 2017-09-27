@@ -1,32 +1,32 @@
 include ../../../../base/partials/form_helpers
 
 
-.col-xs-12
-  .alert.alert-info
-    p.lead
+.col-lg-12
+  .alert.alert-primary
+    p.lead.mb-0
       i.fa.fa-fw.fa-folder-open-o
       | &nbsp;
       | Archive
 
-    p.lead Imports a file system directory for processing by Magellan.
+    p.lead.mb-0 Imports a file system directory for processing by Magellan.
 
-.col-xs-12
+.col-lg-12
   +formInput({ label: 'Label', placeholder: 'Label', name: 'label', type: 'text' })
 
-.col-xs-12
+.col-lg-12
   +formInput({ label: 'Directory Prefix', placeholder: 'Directory Prefix', name: 'prefix', type: 'text' })
 
-.col-xs-12
+.col-lg-12
   hr
 
-.col-xs-12(data-region='upload')
+.col-lg-12(data-region='upload')
 
-.col-xs-12
+.col-lg-12
   hr
 
-.col-xs-12.text-xs-right
+.col-lg-12.text-right
 
-  a.btn.btn-secondary.m-r-1( href='#datasets' )
+  a.btn.btn-outline-secondary.mr-2( href='#datasets' )
     i.fa.fa-fw.fa-times
     | &nbsp;
     | Cancel

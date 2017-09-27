@@ -2,7 +2,7 @@
 # TODO - this should be generalized to flush both data and views attributes from datapoint models
 class ResetRulesView extends Mn.LayoutView
   template: require './templates/reset_rules'
-  className: 'card card-block'
+  className: 'card card-body'
 
   behaviors:
     CancelButton: {}

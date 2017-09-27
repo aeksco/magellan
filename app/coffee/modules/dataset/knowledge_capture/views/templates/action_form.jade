@@ -1,16 +1,16 @@
 mixin actionSelector(opts)
-  button.btn.btn-secondary( data-select='action' data-action=opts.action )
+  button.btn.btn-outline-secondary( data-select='action' data-action=opts.action )
     i.fa.fa-fw( class=opts.icon )
     | &nbsp;
     | #{opts.text}
 
-.col-xs-12
+.col-lg-12
   p.lead Action
 
 if isNew
-  .col-xs-12
+  .col-lg-12
     .btn-group.w-100
       each actionType in availableActions
         +actionSelector(actionType)
 
-.col-xs-12.m-t-1( data-region='action-type' )
+.col-lg-12.mt-2( data-region='action-type' )

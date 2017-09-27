@@ -38,7 +38,7 @@ class DatasetCreator extends Backbone.Model
         attribute:  facet
         label:      facet
         order:      index
-        enabled:    true
+        enabled:    if facet in ['@id'] then false else true
         tooltip:    ''
 
       # Increments index
@@ -120,13 +120,27 @@ class DatasetCreator extends Backbone.Model
         @ensureFacets(dataset_id, datapoints).then () =>
 
           # Updates Loading component
-          Radio.channel('loading').trigger('hide')
+          Radio.channel('loading').trigger('show', 'Loading Facets...')
 
-          # DONE.
-          # Triggers 'sync' event on the Dataset model
-          dataset.trigger('sync')
+          # Loads the facets for this dataset
+          Radio.channel('facet').request('collection', dataset_id).then () =>
 
-        # Error handling.
+            # Updates Loading component
+            Radio.channel('loading').trigger('show', 'Linking Facets to Ontologies...')
+
+            # Links facets to Ontologies
+            Radio.channel('facet').request('link:all').then () =>
+
+              # Updates Loading component
+              Radio.channel('loading').trigger('hide')
+
+              # DONE.
+              # Triggers 'sync' event on the Dataset model
+              dataset.trigger('sync')
+
+            # Error handling.
+            .catch (err) => dataset.trigger('error', err)
+          .catch (err) => dataset.trigger('error', err)
         .catch (err) => dataset.trigger('error', err)
       .catch (err) => dataset.trigger('error', err)
     .catch (err) => dataset.trigger('error', err)

@@ -9,19 +9,10 @@
 defaults =
   items: [{a:2,b:1,c:2},{a:2,b:2,c:1},{a:1,b:1,c:1},{a:3,b:3,c:1}],
   facets: {'a': 'Title A', 'b': 'Title B', 'c': 'Title C'},
-  resultElement: '#results'
   facetElement: '#facets'
-  facetContainer: '<div class=facetsearch id=<%= id %> ></div>'
-  facetTitleTemplate: '<h3 class=facettitle><i class="icon"></i><%= title %><i class="fa fa-fw help" data-toggle="tooltip" data-placement="right" title="<%= tooltip %>"></i><br><span class="prefix <%= prefix %>"><%= prefix %> : <%= _id %></span></h3>'
-  facetListContainer: '<div class=facetlist></div>'
   listItemTemplate: '<div class="facetitem" id="<%= id %>"><%= name %> <span class="facetitemcount">(<%= count %>)</span></div>'
-  bottomContainer: '<div class=bottomline></div>'
-  orderByTemplate: '<div class=orderby><span class="orderby-title">Sort by: </span><ul><% _.each(options, function(value, key) { %>' + '<li class=orderbyitem id=orderby_<%= key %>>' + '<%= value %> </li> <% }); %></ul></div>'
   countTemplate: '<div class=facettotalcount>Results</div>'
-  deselectTemplate: '<div class=deselectstartover>Deselect all filters</div>'
-  resultTemplate: '<div class=facetresultbox><%= name %></div>'
   resultTemplateBypass: null
-  noResults: '<div class=results>Sorry, but no items match these criteria</div>'
   orderByOptions:
     'a': 'by A'
     'b': 'by B'
@@ -29,7 +20,6 @@ defaults =
   state:
     orderBy: false
     filters: {}
-  showMoreTemplate: '<a id=showmorebutton>Show more</a>'
   enablePagination: true
   paginationCount: 20
 
@@ -299,13 +289,19 @@ toggleFilter = (key, value) ->
 
 createFacetUI = ->
 
+  facetContainer = '<div class=facetsearch id=<%= id %> ></div>'
+  facetTitleTemplate = '<h3 class=facettitle><i class="icon"></i><%= title %><i class="fa fa-fw help" data-toggle="tooltip" data-placement="right" title="<%= tooltip %>"></i><br><span class="prefix <%= prefix %>"><%= prefix %> : <%= _id %></span></h3>'
+  facetListContainer = '<div class=facetlist></div>'
+
   # Templates & HTML setup
   itemtemplate = _.template(settings.listItemTemplate)
-  titletemplate = _.template(settings.facetTitleTemplate)
-  containertemplate = _.template(settings.facetContainer)
+  titletemplate = _.template(facetTitleTemplate)
+  containertemplate = _.template(facetContainer)
   $(settings.facetElement).html('')
 
   # Iterates over each setting...
+  # TODO - this will be replaced by the FACET_GROUP_COLLECTION_VIEW
+  # Each facet will have pagination, filtering, etc.
   for facet in settings.facets
     facetHtml = $(containertemplate(id: facet.attribute))
 
@@ -316,11 +312,17 @@ createFacetUI = ->
       prefix:   facet.prefix
       _id:      facet._id
 
+    # ABSTRACTION
+    # This is where we should collect the GROUPS of facets
+    # This MAY be accessible outside this little engine, passed in as settings.facets
+    console.log(facetItem);
+
     facetItemHtml = $(titletemplate(facetItem))
     facetHtml.append facetItemHtml
-    facetlist = $(settings.facetListContainer)
+    facetlist = $(facetListContainer)
 
     # Iterates over each filter
+    # TODO - this will be replaced by the FACET_ITEM_COLLECTION_VIEW
     _.each settings.facetCollection[facet.attribute], (filter, filtername) ->
 
       # Splits name, handles directories ending with '/'
@@ -334,6 +336,9 @@ createFacetUI = ->
         name: filtername
         count: filter.count
 
+      # ABSTRACTION - this is where the INITIAL facets are populated into the UI
+      # FROM HERE, we start the collection of facet items
+      # console.log(item);
 
       # Facet filter item CSS state
       filteritem = $(itemtemplate(item))
@@ -368,14 +373,22 @@ createFacetUI = ->
     updateResults()
     return
 
+  # # # # #
+
+  # TODO - ABSTRACT INTO SEPARATE VIEW
+  # FOR RESULT COUNTR AND ORDER CONTROLS
   # Append total result count
-  bottom = $(settings.bottomContainer)
+  bottomContainer = '<div class=bottomline></div>'
+  bottom = $(bottomContainer)
   countHtml = _.template(settings.countTemplate, count: settings.currentResults.length or 0)
   $(bottom).append(countHtml)
 
 
   # generate the "order by" options:
-  ordertemplate = _.template(settings.orderByTemplate)
+
+  orderByTemplate = '<div class=orderby><span class="orderby-title">Sort by: </span><ul><% _.each(options, function(value, key) { %>' + '<li class=orderbyitem id=orderby_<%= key %>>' + '<%= value %> </li> <% }); %></ul></div>'
+
+  ordertemplate = _.template(orderByTemplate)
   itemHtml = $(ordertemplate('options': settings.orderByOptions))
   $(bottom).append itemHtml
   $(settings.facetElement).append bottom
@@ -400,7 +413,8 @@ createFacetUI = ->
 
   # Append deselect filters button
   # TODO - abstract into Backbone.View
-  deselect = $(settings.deselectTemplate).click((event) ->
+  deselectTemplate = '<div class=deselectstartover>Deselect all filters</div>'
+  deselect = $(deselectTemplate).click((event) ->
     settings.state.filters = {}
     jQuery.facetUpdate()
     return
@@ -492,43 +506,46 @@ updateFacetUI = ->
 
 # TODO - abstract into Backbone.View
 updateResults = ->
-  $(settings.resultElement).html if settings.currentResults.length == 0 then settings.noResults else ''
+  noResults = '<div class=results>Sorry, but no items match these criteria</div>'
+  # $(settings.resultElement).html if settings.currentResults.length == 0 then noResults else ''
   showMoreResults()
   return
 
 showMoreResults = ->
   `var itemHtml`
+
   # ???
   showNowCount = if settings.enablePagination then Math.min(settings.currentResults.length - (settings.state.shownResults), settings.paginationCount) else settings.currentResults.length
   itemHtml = ''
+
   # TODO - remove
   if settings.beforeResultRender
     settings.beforeResultRender()
-  # Item Template (remove)
-  template = _.template(settings.resultTemplate)
+
+  # Iterates over each shown result
   i = settings.state.shownResults
   while i < settings.state.shownResults + showNowCount
 
     item = settings.currentResults[i]
+
     # item = $.extend(settings.currentResults[i],
     #   totalItemNr: i
     #   batchItemNr: i - (settings.state.shownResults)
     #   batchItemCount: showNowCount)
 
     if settings.resultTemplateBypass
-      settings.resultTemplateBypass item
-
-    else
-      itemHtml = itemHtml + template(item)
+      settings.resultTemplateBypass(item)
     i++
 
   # Appends itemHTML
-  $(settings.resultElement).append itemHtml
+  # $(settings.resultElement).append itemHtml
 
-  # Append MoreButton
+  # Append "MoreButton"
+  showMoreTemplate = '<a id=showmorebutton>Show more</a>'
+  # TODO - we will _probably_ paginate using BB.Mn
   # TODO - pagination
   # if !moreButton
-  #   moreButton = $(settings.showMoreTemplate).click(showMoreResults)
+  #   moreButton = $(showMoreTemplate).click(showMoreResults)
   #   $(settings.resultElement).after moreButton
   # # ???/
   # if settings.state.shownResults == 0

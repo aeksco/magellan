@@ -1,29 +1,58 @@
 
 mixin btn(opts)
-  a.btn.btn-lg.m-r-2(class=opts.css, href=opts.href)
-    i.fa.fa-fw(class=opts.icon)
-    .mr-1= opts.text
+  a.btn.btn-lg.w-50(class=opts.css, href=opts.href)
+    i.fa.fa-fw.mr-1(class=opts.icon)
+    = opts.text
 
-.row
-  .col-xs-12
-    .card.card-block
-      img(src="/img/brand/magellan/magellan-13.png" height="200")
+.row.w-100.d-flex.flex-column
+  .col-lg-12
 
-      p.lead.m-t-2 Archive Exploration Tool
+    .jumbotron.jumbotron-fluid.bg-light.mb-0.pb-4
 
-      p.card-text Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat - Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      .text-center
+        img.w-50(src="/img/brand/magellan/magellan-13.png")
 
-      hr
+        p.lead.mt-3(style='font-size:180%;') Archive Explorer
 
-      p.lead No archive too complex.
+      hr.my-4
 
-      p.card-text Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat\. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      p.lead
+        strong Magellan
+        |  is an ontology-driven application for browsing and curating unstructured archival datasets. The objective was to create a highly-configurable faceted browsing solution capable of knowledge-enhanced search queries driven by ontologies.
 
-      +btn({ text: 'Archives', icon: 'fa-folder-open-o', href: '#archives', css: 'btn-primary-outline' })
-      +btn({ text: 'Ontologies', icon: 'fa-list-alt', href: '#ontologies', css: 'btn-success-outline' })
-      +btn({ text: 'Settings', icon: 'fa-cog', href: '#settings', css: 'btn-secondary' })
-      +btn({ text: 'About', icon: 'fa-question-circle-o', href: '#about', css: 'btn-secondary' })
+      hr.my-4
 
-      hr
+      .text-center.mt-3
+        p.lead Let's Get Started
 
-      p.lead Completely Open Source
+      .btn-group.w-100.mt-3
+        +btn({ text: 'Explore Archives', icon: 'fa-folder-open-o', href: '#datasets', css: 'btn-outline-primary' })
+        +btn({ text: 'Explore Ontologies', icon: 'fa-list-alt', href: '#ontologies', css: 'btn-outline-success' })
+
+  .col-lg-12.mb-3
+
+    .card
+      .card-body
+        p.lead No archive too complex.
+
+        p.card-text The software allows domain expert curators to declaratively define rules that generate new, query-able properties on the archival data - thus making the search experience knowledge-enhanced. The processed archival data may then be exported in a fashion that makes future consumption easier.
+
+        p.lead Completely Open Source
+
+        p.card-text The software solution was developed using the Agile software development methodology and is entirely open-source under the MIT License. The result of this study has successfully produced a functioning publicly available software solution in accordance with its objectives. The resulting software from this study has conclusively demonstrated the ability to layer query-able knowledge on top of unstructured archival datasets.
+
+  .col-lg-12.my-4.text-center
+
+    a.btn.btn-sm.btn-outline-dark(href='https://github.com/tetherless-world/magellan', target='_blank')
+      i.fa.fa-fw.fa-github.mr-1
+      | Github
+
+    p.mt-4
+      | Built with
+      i.fa.fa-heart-o.ml-1
+      | &nbsp;by&nbsp;
+      //- a(href='http://aeks.co', target='_blank') Alexander Schwartzberg
+      //- | &nbsp;for&nbsp;
+      a(href='https://tw.rpi.edu/', target='_blank') TWC
+      | &nbsp;@&nbsp;
+      a(href='https://rpi.edu/', target='_blank') RPI.

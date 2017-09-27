@@ -1,7 +1,7 @@
 
 class ApplyRulesView extends Mn.LayoutView
   template: require './templates/apply_rules'
-  className: 'card card-block'
+  className: 'card card-body'
 
   behaviors:
     CancelButton: {}

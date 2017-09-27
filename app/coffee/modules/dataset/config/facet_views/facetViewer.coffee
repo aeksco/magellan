@@ -1,7 +1,7 @@
 
 class FacetViewer extends Mn.LayoutView
   template: require './templates/facet_viewer'
-  className: 'card card-block'
+  className: 'card card-body'
 
   ui:
     edit: '[data-click=edit]'
