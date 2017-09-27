@@ -8,7 +8,7 @@ class DatasetListRoute extends require 'hn_routing/lib/route'
 
   breadcrumbs: [
     { href: '#', text: 'Home' }
-    { text: 'Datasets' }
+    { text: 'Archives' }
   ]
 
   fetch: ->

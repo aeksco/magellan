@@ -10,7 +10,8 @@ class DestroyDatasetRoute extends require 'hn_routing/lib/route'
 
   breadcrumbs: ->
     return [
-      { text: 'Datasets', href: '#datasets' }
+      { text: 'Home', href: '#' }
+      { text: 'Archives', href: '#datasets' }
       { href: "#datasets/#{@model.id}", text: @model.get('label') }
       { text: 'Destroy' }
     ]
