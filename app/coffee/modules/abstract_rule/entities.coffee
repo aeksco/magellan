@@ -25,7 +25,8 @@ class DefinitionModel extends Backbone.RelationalModel
   # BIG TODO - 'block' esentially means 'filter' - it continues ONLY if the constraint is met.
   # We need an opposite? Continues ONLY if the constraint is false?
   isBlocking: ->
-    return @get('action') == 'block'
+    # return @get('action') == 'block'
+    return @get('action') in ['filter', 'block']
 
   # evaluateAction
   # Evaluates the DefinitionModel's action and assigns the result to the target model
