@@ -1,7 +1,3 @@
-# TODO - abstract into separate library
-LdViewer = require '../../../search/facetsearch/views/graph.coffee'
-
-# # # # #
 
 class DatasetEmpty extends Mn.LayoutView
   template: require './templates/dataset_empty'

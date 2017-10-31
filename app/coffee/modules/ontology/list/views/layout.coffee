@@ -1,6 +1,4 @@
-# TODO - move LD viewer into modules/lib/views
-LdViewer = require '../../../search/facetsearch/views/graph.coffee'
-# JsonViewer = require 'hn_views/lib/json_viewer'
+LdViewer = require 'lib/views/json_graph'
 JsonViewer = require 'lib/views/json_viewer'
 
 # # # # #
@@ -36,8 +34,8 @@ class AttributeDetail extends require 'lib/views/nav'
   className: 'col-lg-12'
 
   navItems: [
-    { icon: 'fa-code',    text: 'JSON',   trigger: 'json', default: true }
-    { icon: 'fa-sitemap', text: 'Graph',  trigger: 'graph' }
+    { icon: 'fa-sitemap', text: 'Graph',  trigger: 'graph', default: true }
+    { icon: 'fa-code',    text: 'JSON',   trigger: 'json' }
   ]
 
   navEvents:

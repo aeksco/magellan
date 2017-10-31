@@ -1,5 +1,5 @@
 JsonViewer  = require 'lib/views/json_viewer'
-JsonGraph   = require './graph'
+JsonGraph   = require 'lib/views/json_graph'
 TableView   = require './table'
 CsvViewer   = require './csvViewer'
 
