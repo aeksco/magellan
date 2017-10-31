@@ -28,8 +28,6 @@ class JsonLDGraphView extends Mn.LayoutView
   initJsonChart: =>
     # el = @$('[data-display=graph]')
     # d3.jsonldVis(@model.toJSON(), el[0], @graphOptions)	
-
-    return d3.jsonldVis(@options.json, '[data-display=graph]', @graphOptions)
     
     json = @options.json
 
