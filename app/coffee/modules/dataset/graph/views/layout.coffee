@@ -3,9 +3,9 @@ class GraphDatasetLayout extends Mn.LayoutView
   template: require './templates/layout'
   className: 'container'
 
-  # # # # # 
-  
-  # TODO - abstract this into a separate file
+  # # # # #
+
+  # TODO - abstract this into a separate view class
   onRender: ->
     elements = {
     	nodes: []

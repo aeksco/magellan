@@ -10,6 +10,11 @@ class ArchiveForm extends Mn.LayoutView
   behaviors:
     ModelEvents: {}
     SubmitButton: {}
+    Flashes:
+      success:
+        message:  'Successfully opened archive'
+      error:
+        message:  'Error - no files selected'
 
   regions:
     uploadRegion: '[data-region=upload]'
@@ -27,9 +32,23 @@ class ArchiveForm extends Mn.LayoutView
     # Caches uploaded files
     @uploadedFiles = files
 
-    # Enables submitButton
-    # TODO - validate presence of inputs
-    @enableSubmit()
+    # Ensures that files have _actually_ been selected
+    if files.length == 0
+
+      # Disables submit
+      @disableSubmit()
+
+      # Shows error message
+      @flashError()
+
+    else
+
+      # Flashes success message
+      @flashSuccess()
+
+      # Enables submitButton
+      # TODO - validate presence of inputs
+      @enableSubmit()
 
   # onSubmit (from SubmitButton behavior)
   onSubmit: ->
@@ -54,6 +73,8 @@ class ArchiveForm extends Mn.LayoutView
     @model.set(data)
     @options.creator.deploy(@model, @uploadedGraph)
 
+  # onSync (from ModelEvents behavior)
+  # Redirects the app to #datasets
   onSync: ->
     Radio.channel('app').trigger('redirect', '#datasets')
 
