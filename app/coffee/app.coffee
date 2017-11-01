@@ -35,6 +35,10 @@ class Application extends Marionette.Service
       # Starts Backbone.History
       Backbone.history.start()
 
+      # Prevents non-chrome browsers from using the tool
+      if !window.chrome
+        Backbone.Radio.channel('unsupported').trigger('show')
+
     .catch (err) =>
 
       # TODO - this needs a graceful fallback

@@ -51,6 +51,10 @@ new LoadingComponent({ container: AppLayout.loading })
 FlashComponent = require './components/flash/component'
 new FlashComponent({ container: AppLayout.flash })
 
+# Unsupported Component Initialization
+UnsupportedComponent = require './components/unsupported/component'
+new UnsupportedComponent({ container: AppLayout.modal })
+
 # Henson.js Components
 OverlayComponent = require 'hn_overlay/lib/component'
 new OverlayComponent({ container: AppLayout.overlay })
