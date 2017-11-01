@@ -87,6 +87,54 @@ class AttributeListLayout extends Mn.LayoutView
 
 # # # # #
 
+class OntologyDagre extends require 'lib/views/dagre'
+
+  onRender: ->
+    elements = {
+      nodes: []
+      edges: []
+    }
+
+    # Nodes to be added to the graph
+    datapoints = @model.get('graph')
+
+    # Gets the nodes and edges
+    _.each(datapoints, (n) =>
+      elements.nodes.push({ data: { id: n['@id'], label: n['rdfs:label'] } })
+      for k, v of n
+        if _.isObject(v) && v['@id'] && v['@id'] != 'root'
+          elements.edges.push({ data: { source: n['@id'], target: v['@id'] } })
+    )
+
+    # Renders the graph
+    setTimeout( =>
+      @renderGraph(elements)
+    , 500 )
+
+# # # # #
+
+class OntologyViewSelector extends require 'lib/views/nav'
+  template: require './templates/ontology_view_selector'
+  className: 'col-lg-12'
+
+  navItems: [
+    { icon: 'fa-list-alt', text: 'Attributes', trigger: 'attrs', default: true }
+    { icon: 'fa-sitemap', text: 'Graph',  trigger: 'graph' }
+  ]
+
+  navEvents:
+    'attrs':    'showAttrs'
+    'graph':    'showGraph'
+
+  showAttrs: ->
+    @contentRegion.show new AttributeListLayout({ model: @model })
+
+  showGraph: ->
+    @contentRegion.show new OntologyDagre({ model: @model })
+
+
+# # # # #
+
 class OntologyListLayout extends Mn.LayoutView
   template: require './templates/layout'
   className: 'container-fluid'
@@ -102,7 +150,7 @@ class OntologyListLayout extends Mn.LayoutView
     @collection.at(0)?.trigger('selected')
 
   showGraph: (ontology) ->
-    @detailRegion.show new AttributeListLayout({ model: ontology })
+    @detailRegion.show new OntologyViewSelector({ model: ontology })
 
 # # # # #
 
