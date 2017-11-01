@@ -1,6 +1,5 @@
 
-class GraphDatasetLayout extends Mn.LayoutView
-  template: require './templates/layout'
+class GraphDatasetLayout extends require 'lib/views/dagre'
   className: 'container'
 
   # # # # #
