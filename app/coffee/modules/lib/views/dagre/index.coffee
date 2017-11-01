@@ -4,7 +4,7 @@ class DagreGraph extends Mn.LayoutView
   className: 'row'
 
   renderGraph: (elements) ->
-    cy = window.cytoscape({
+    @cy = window.cytoscape({
       container: document.getElementById('cy'),
 
       boxSelectionEnabled: false,
@@ -44,6 +44,11 @@ class DagreGraph extends Mn.LayoutView
 
       elements: elements
     })
+
+  # onBeforeDestroy
+  # Destroyes the Cytoscape.js graph
+  onBeforeDestroy: ->
+    return @cy.destroy()
 
 # # # # #
 
