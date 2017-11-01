@@ -47,11 +47,13 @@ new ConfirmComponent({ container: AppLayout.modal })
 LoadingComponent = require './components/loading/component'
 new LoadingComponent({ container: AppLayout.loading })
 
-# Henson.js Components
-OverlayComponent    = require 'hn_overlay/lib/component'
-FlashComponent      = require 'hn_flash/lib/component'
-new OverlayComponent({ container: AppLayout.overlay })
+# Flash Component Initialization
+FlashComponent = require './components/flash/component'
 new FlashComponent({ container: AppLayout.flash })
+
+# Henson.js Components
+OverlayComponent = require 'hn_overlay/lib/component'
+new OverlayComponent({ container: AppLayout.overlay })
 
 # # # # #
 
