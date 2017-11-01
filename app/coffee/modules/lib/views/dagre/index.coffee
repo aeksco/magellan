@@ -48,7 +48,7 @@ class DagreGraph extends Mn.LayoutView
   # onBeforeDestroy
   # Destroyes the Cytoscape.js graph
   onBeforeDestroy: ->
-    return @cy.destroy()
+    return @cy?.destroy()
 
 # # # # #
 
