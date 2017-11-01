@@ -42,12 +42,10 @@ class ArchiveForm extends Mn.LayoutView
       @flashError()
 
     else
-
       # Flashes success message
       @flashSuccess()
 
       # Enables submitButton
-      # TODO - validate presence of inputs
       @enableSubmit()
 
   # onSubmit (from SubmitButton behavior)

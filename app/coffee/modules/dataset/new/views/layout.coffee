@@ -22,11 +22,11 @@ class ImportSelectorView extends require 'lib/views/nav'
   navOptions:
     pills: true
 
+  archive: ->
+    @contentRegion.show new ArchiveForm({ model: @model, creator: @options.creator, importer: @options.importer })
+
   json: ->
     @contentRegion.show new JsonForm({ model: @model, creator: @options.creator })
-
-  archive: -> # TODO - pass ArchiveImporter to this view
-    @contentRegion.show new ArchiveForm({ model: @model, creator: @options.creator, importer: @options.importer })
 
   rdf: -> # TODO - pass RDFImporter to this view
     @contentRegion.show new RdfForm({ model: @model, creator: @options.creator })
