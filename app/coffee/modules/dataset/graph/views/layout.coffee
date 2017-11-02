@@ -6,68 +6,46 @@ class GraphDatasetLayout extends require 'lib/views/dagre'
 
   # TODO - abstract this into a separate view class
   onRender: ->
+
+    # Elements object passed into the @renderGraph method
     elements = {
     	nodes: []
     	edges: []
     }
 
+    # Fetch datapoints from the Dataset model
     @model.fetchDatapoints().then (datapoints) =>
 
+      # Just the important stuff
       datapoints = datapoints.pluck('data')
 
+      # Iterate over each datapoint
       _.each(datapoints, (n) =>
-        elements.nodes.push({ data: { id: n['@id'], label: n['rdfs:label'] } })
-        for k, v of n
-        	if _.isObject(v) && v['@id'] && v['@id'] != 'root'
-        		elements.edges.push({ data: { source: n['@id'], target: v['@id'] } })
-      )
 
-      console.log elements
+        # Folders only, for now
+        return if n['@type'].split('.').pop() != 'nfo:Folder'
+
+        # Defines new node
+        newNode = { data: { id: n['@id'], label: n['rdfs:label'] + "\n" + n['@type'] } }
+
+        # Handle edges, labels
+        for k, v of n
+          if _.isObject(v)
+
+            # Adds new edge
+            if v['@id'] && v['@id'] != 'root'
+              elements.edges.push({ data: { source: n['@id'], target: v['@id'], label: k } })
+
+          # else
+          #   newNode.data.label += "\n#{v}"
+
+        # Attaches new node
+        elements.nodes.push(newNode)
+
+      )
 
       # Renders the graph elements
       @renderGraph(elements)
-
-  renderGraph: (elements) ->
-    cy = window.cytoscape({
-      container: document.getElementById('cy'),
-
-      boxSelectionEnabled: false,
-      autounselectify: true,
-
-      layout: {
-        name: 'dagre'
-        nodeSep: 10, # the separation between adjacent nodes in the same rank
-        edgeSep: 50, # the separation between adjacent edges in the same rank
-        rankSep: 200, # the separation between adjacent nodes in the same rank
-        rankDir: 'BT', # 'TB' for top to bottom flow, 'LR' for left to right,
-      },
-
-      style: [
-        {
-          selector: 'node',
-          style: {
-            'content': 'data(id)',
-            'text-opacity': 0.5,
-            'text-valign': 'center',
-            'text-halign': 'right',
-            'background-color': '#11479e'
-          }
-        },
-
-        {
-          selector: 'edge',
-          style: {
-            'curve-style': 'bezier',
-            'width': 4,
-            'target-arrow-shape': 'triangle',
-            'line-color': '#9dbaea',
-            'target-arrow-color': '#9dbaea'
-          }
-        }
-      ],
-
-      elements: elements
-    })
 
 # # # # #
 

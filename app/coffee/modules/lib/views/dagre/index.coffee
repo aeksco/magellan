@@ -16,13 +16,25 @@ class DagreGraph extends Mn.LayoutView
         edgeSep: 50, # the separation between adjacent edges in the same rank
         rankSep: 200, # the separation between adjacent nodes in the same rank
         rankDir: 'BT', # 'TB' for top to bottom flow, 'LR' for left to right,
+        nodeDimensionsIncludeLabels: true
       },
 
       style: [
         {
           selector: 'node',
           style: {
-            'content': 'data(id)',
+            'content': 'data(label)',
+            'text-opacity': 0.5,
+            'text-valign': 'center',
+            'text-halign': 'right',
+            'background-color': '#11479e'
+          }
+        },
+        {
+          selector: 'node',
+          style: {
+            'label': 'data(label)',
+            'text-wrap': 'wrap',
             'text-opacity': 0.5,
             'text-valign': 'center',
             'text-halign': 'right',
@@ -33,6 +45,7 @@ class DagreGraph extends Mn.LayoutView
         {
           selector: 'edge',
           style: {
+            'content': 'data(label)',
             'curve-style': 'bezier',
             'width': 4,
             'target-arrow-shape': 'triangle',
@@ -40,10 +53,20 @@ class DagreGraph extends Mn.LayoutView
             'target-arrow-color': '#9dbaea'
           }
         }
+
       ],
 
       elements: elements
+
     })
+
+    # Ready event handler
+    @cy.ready (event) => @onCytoscapeReady()
+
+  # onCytoscapeReady
+  # Hides the loading message
+  onCytoscapeReady: ->
+    console.log 'CYTOSCAPE READY'
 
   # onBeforeDestroy
   # Destroyes the Cytoscape.js graph
