@@ -30,6 +30,11 @@ class GraphDatasetLayout extends require 'lib/views/dagre'
         for k, v of n
           if _.isObject(v)
 
+            # TODO - ensure root is working
+            # if v['@id'] == 'root'
+            #   console.log 'ROOT'
+            #   console.log v
+
             # Adds new edge
             if v['@id'] && v['@id'] != 'root'
               elements.edges.push({ data: { source: n['@id'], target: v['@id'], label: k } })
