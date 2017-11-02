@@ -10,12 +10,14 @@ class ExportView extends Mn.LayoutView
         message:  'Successfully exported dataset for analysis.'
 
   ui:
-    exportJSON: '[data-export=json]'
-    exportCSV:  '[data-export=csv]'
+    exportJSON:     '[data-export=json]'
+    exportEnhanced: '[data-export=enhanced]'
+    exportCSV:      '[data-export=csv]'
 
   events:
-    'click @ui.exportJSON': 'exportJSON'
-    'click @ui.exportCSV':  'exportCSV'
+    'click @ui.exportJSON':     'exportJSON'
+    'click @ui.exportCSV':      'exportCSV'
+    'click @ui.exportEnhanced': 'exportEnhanced'
 
   # Generates unique filename for the KnowledgeRule export
   generateFilename: (extension) ->
@@ -39,6 +41,23 @@ class ExportView extends Mn.LayoutView
     @flashSuccess()
 
   exportJSON: ->
+    @preExport()
+
+    # Fetches datapoints
+    # TODO - datapoints should be sorted by some arbitrary attribute, @id?
+    @model.fetchDatapoints().then (datapoints) =>
+
+      # Filename and filetype
+      filename  = @generateFilename('json')
+      filetype  = 'application/json'
+
+      # Downloads File
+      @downloadFile({ content: JSON.stringify(datapoints.pluck('raw'), null, 2), type: filetype, filename: filename })
+      @postExport()
+
+  # Exports Knowledge-Enhanced JSON-LD
+  exportEnhanced: ->
+
     @preExport()
 
     # Fetches datapoints
