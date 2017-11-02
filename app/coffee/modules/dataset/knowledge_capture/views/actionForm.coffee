@@ -3,7 +3,8 @@ class ActionTypeForm extends Mn.LayoutView
   className: 'row'
 
   templateMap:
-    block:                  require './templates/action_type_block'
+    # block:                  require './templates/action_type_block'
+    filter:                 require './templates/action_type_filter'
     replace:                require './templates/action_type_replace'
     literal:                require './templates/action_type_literal'
     clone:                  require './templates/action_type_clone'
@@ -39,7 +40,8 @@ class ActionForm extends Mn.LayoutView
 
   availableActions: [
     { action: 'literal',                icon: 'fa-quote-right',   text: 'Literal', default: true }
-    { action: 'block',                  icon: 'fa-hand-stop-o',   text: 'Blocking' }
+    # { action: 'block',                  icon: 'fa-hand-stop-o',   text: 'Blocking' }
+    { action: 'filter',                 icon: 'fa-filter',        text: 'Filter' }
     { action: 'replace',                icon: 'fa-strikethrough', text: 'Replace' }
     { action: 'clone',                  icon: 'fa-copy',          text: 'Clone' }
     { action: 'index_from_split',       icon: 'fa-code-fork',     text: 'Split and Index' }

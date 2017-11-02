@@ -25,7 +25,8 @@ class DefinitionModel extends Backbone.RelationalModel
   # BIG TODO - 'block' esentially means 'filter' - it continues ONLY if the constraint is met.
   # We need an opposite? Continues ONLY if the constraint is false?
   isBlocking: ->
-    return @get('action') == 'block'
+    # return @get('action') == 'block'
+    return @get('action') in ['filter', 'block'] # TODO - DEPRECATED
 
   # evaluateAction
   # Evaluates the DefinitionModel's action and assigns the result to the target model
@@ -35,12 +36,17 @@ class DefinitionModel extends Backbone.RelationalModel
     target_object_data = target.get(target_object)
 
     # Block
+    # TODO - deprecated!!
     if @get('action') == 'block'
+      return
+
+    # Filter
+    if @get('action') == 'filter'
       return
 
     # Literal
     if @get('action') == 'literal'
-      target_object_data[target_property] = @get('literal_text')
+      target_object_data[target_property] = @get('literal_text') # TODO - CHECK IF REFERENCES_NODE
       target.set(target_object, target_object_data)
       return
 
@@ -54,7 +60,7 @@ class DefinitionModel extends Backbone.RelationalModel
       result          = replace_source.replace(replace_text, replace_with)
 
       # Sets value
-      target_object_data[target_property] = result
+      target_object_data[target_property] = result # TODO - CHECK IF REFERENCES_NODE
       target.set(target_object, target_object_data)
       return
 
@@ -66,7 +72,7 @@ class DefinitionModel extends Backbone.RelationalModel
 
       # Sets value
       if result
-        target_object_data[target_property] = result
+        target_object_data[target_property] = result # TODO - CHECK IF REFERENCES_NODE
         target.set(target_object, target_object_data)
 
       return
@@ -84,7 +90,7 @@ class DefinitionModel extends Backbone.RelationalModel
 
       # Assigns
       if result && result[index]
-        target_object_data[target_property] = result[index]
+        target_object_data[target_property] = result[index] # TODO - CHECK IF REFERENCES_NODE
         target.set(target_object, target_object_data)
         return
 

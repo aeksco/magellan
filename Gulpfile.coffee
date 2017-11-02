@@ -88,6 +88,7 @@ paths =
       nodeModules + 'bootstrap-switch/dist/js/bootstrap-switch.min.js'
       nodeModules + 'select2/dist/js/select2.full.js'
       nodeModules + 'cornerstone/dist/cornerstone.min.js'
+      nodeModules + 'cytoscape/dist/cytoscape.min.js'
 
     ]
 

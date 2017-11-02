@@ -71,7 +71,7 @@ class ArchiveImporter
         '@id':                    dir
         '@type':                  'nfo:Folder'
         'rdfs:label':             dir
-        'nfo:belongsToContainer': belongsTo
+        'nfo:belongsToContainer': { '@id': belongsTo }
 
       # Adds directory to knowledge graph
       @output['@graph'].push(dirElement)
@@ -108,7 +108,7 @@ class ArchiveImporter
       '@id':                    filepath
       '@type':                  @getType(label)
       'rdfs:label':             label
-      'nfo:belongsToContainer': belongsTo
+      'nfo:belongsToContainer': { '@id': belongsTo }
       # 'nfo:size':               file.size
       # 'nfo:lastModified':       file.lastModified
 

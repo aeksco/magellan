@@ -9,7 +9,7 @@ jsonVis.default(d3)
 # # # # #
 
 class JsonLDGraphView extends Mn.LayoutView
-  template: require './templates/graph'
+  template: require './templates/json_graph'
   className: 'card card-body'
 
   graphOptions:
@@ -19,7 +19,7 @@ class JsonLDGraphView extends Mn.LayoutView
     transitionDuration: 250
     transitionEase:     'cubic-in-out'
     minRadius:          5
-    scalingFactor:      1.5
+    scalingFactor:      0.5
 
   onRender: ->
     setTimeout(@initJsonChart, 100)
@@ -27,8 +27,8 @@ class JsonLDGraphView extends Mn.LayoutView
   # TODO - graph elements contaminate each other
   initJsonChart: =>
     # el = @$('[data-display=graph]')
-    # d3.jsonldVis(@model.toJSON(), el[0], @graphOptions)
-
+    # d3.jsonldVis(@model.toJSON(), el[0], @graphOptions)	
+    
     json = @options.json
 
     if Array.isArray(json)

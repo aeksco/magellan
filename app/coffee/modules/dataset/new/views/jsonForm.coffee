@@ -11,6 +11,12 @@ class NewDatasetLayout extends Mn.LayoutView
   behaviors:
     ModelEvents: {}
     SubmitButton: {}
+    Flashes:
+      success:
+        message:  'Successfully opened JSON-LD graph'
+      error:
+        message:  'Error parsing JSON-LD graph'
+
 
   regions:
     uploadRegion: '[data-region=upload]'
@@ -27,12 +33,25 @@ class NewDatasetLayout extends Mn.LayoutView
   # Invoked as a callback when a JSON file has
   onJsonUpload: (uploadedText) =>
 
-    # Parses JSON from upload
-    @parsedJson = JSON.parse(uploadedText)
+    # Ensures that the file uploaded is valid JSON
+    try
 
-    # Enables submitButton
-    # TODO - validations
-    @enableSubmit()
+      # Parses JSON from upload
+      @parsedJson = JSON.parse(uploadedText)
+
+      # Displays success message
+      @flashSuccess()
+
+      # Enables submitButton
+      @enableSubmit()
+
+    catch
+
+      # Displays Error message
+      @flashError()
+
+      # Disables submitButton
+      @disableSubmit()
 
   # onSubmit (from SubmitButton behavior)
   onSubmit: ->
