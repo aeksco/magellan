@@ -73,8 +73,6 @@ class ArchiveImporter
         'rdfs:label':             dir
         'nfo:belongsToContainer': { '@id': belongsTo }
 
-      console.log dirElement
-
       # Adds directory to knowledge graph
       @output['@graph'].push(dirElement)
 

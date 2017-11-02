@@ -1,10 +1,8 @@
 
 class GraphDatasetLayout extends require 'lib/views/dagre'
   className: 'container'
+  template: require './templates/layout'
 
-  # # # # #
-
-  # TODO - abstract this into a separate view class
   onRender: ->
 
     # Elements object passed into the @renderGraph method

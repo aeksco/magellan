@@ -12,8 +12,8 @@ class DagreGraph extends Mn.LayoutView
 
       layout: {
         name: 'dagre'
-        nodeSep: 10, # the separation between adjacent nodes in the same rank
-        edgeSep: 50, # the separation between adjacent edges in the same rank
+        nodeSep: 50, # the separation between adjacent nodes in the same rank
+        edgeSep: 100, # the separation between adjacent edges in the same rank
         rankSep: 200, # the separation between adjacent nodes in the same rank
         rankDir: 'BT', # 'TB' for top to bottom flow, 'LR' for left to right,
         nodeDimensionsIncludeLabels: true
