@@ -11,6 +11,24 @@ class DatasetModel extends Backbone.Model
     label:    ''
     context:  {}
 
+  # export
+  # Exports the dataset with or without knowledge enhancement
+  export: (opts={}) ->
+
+    # Fetches datapoints
+    # TODO - datapoints should be sorted by some arbitrary attribute, @id?
+    @fetchDatapoints().then (datapoints) =>
+
+      # Returns graph + knowledge enhancement
+      if opts.enhanced
+        return { '@context': @get('context'), '@graph': datapoints.pluck('data') }
+
+      # Returns graph without knowledge enhancement
+      else
+        return { '@context': @get('context'), '@graph': datapoints.pluck('raw') }
+
+      return ""
+
   # Overwritten save method
   save: ->
     Backbone.Radio.channel('dataset').request('save', @)
