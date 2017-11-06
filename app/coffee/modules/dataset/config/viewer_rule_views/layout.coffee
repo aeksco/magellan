@@ -18,7 +18,6 @@ class RuleLayout extends KnowledgeRuleLayout
 
   # showRuleForm
   # Shows the form to create or edit a Definer rule instance
-  # RENAME TO - SHOW RULE FORM
   showRuleForm: (model) ->
 
     # HACK - assigns null if showRuleForm was invoked via jQuery event
