@@ -11,22 +11,39 @@ class ExportForm extends Mn.LayoutView
       success:
         message:  'Successfully exported Knowledge Capture.'
 
+  # Sets default exportType flag
+  # Used when subclassing this view to apply to both Knowledge Rules and Smart Rendering rules
+  initialize: (options) ->
+    options.exportType ||= 'knowledge'
+    return
+
   onCancel: ->
     @trigger 'cancel'
 
   # Generates unique filename for the KnowledgeRule export
   generateFilename: ->
+
+    # Dataset label
     label = @model.get('label')
     label = label.toLowerCase().replace(/\s/g, '_')
-    date  = new Date().toJSON().slice(0,10).replace(/-/g, '_')
-    filename = [label, '_magellan_kn_rules_', date, '.json' ]
+
+    # Export type label
+    exportType = '_magellan_knowledge_rules'
+    exportType = '_magellan_smart_rendering_rules' if @options.exportType == 'smart_rendering'
+
+    # Assembles filename
+    filename = [label, exportType, '.json']
     return filename.join('')
 
+  fetchRules: ->
+    return @model.fetchViewerRules() if @options.exportType == 'smart_rendering'
+    return @model.fetchKnowledgeRules()
+
   onSubmit: ->
-    @model.fetchKnowledgeRules().then (knowledgeRuleCollection) =>
+    @fetchRules().then (ruleCollection) =>
 
       # Content and filename
-      content   = JSON.stringify(knowledgeRuleCollection.toJSON(), null, 2)
+      content   = JSON.stringify(ruleCollection.toJSON(), null, 2)
       filename  = @generateFilename()
       filetype  = 'applicaton/json'
 
