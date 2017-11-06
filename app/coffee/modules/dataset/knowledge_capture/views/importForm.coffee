@@ -12,10 +12,16 @@ class ImportForm extends Mn.LayoutView
     DownloadFile: {}
     Flashes:
       success:
-        message:  'Successfully imported Knowledge Capture.'
+        message:  'Successfully imported Knowledge Rules.'
 
   regions:
     uploadRegion: '[data-region=upload]'
+
+  # Sets default importType flag
+  # Used when subclassing this view to apply to both Knowledge Rules and Smart Rendering rules
+  initialize: (options) ->
+    options.importType ||= 'knowledge'
+    return
 
   onCancel: ->
     @trigger 'cancel'
@@ -36,17 +42,21 @@ class ImportForm extends Mn.LayoutView
     # Enables submitButton
     @enableSubmit()
 
+  fetchRules: ->
+    return @model.fetchViewerRules() if @options.importType == 'smart_rendering'
+    return @model.fetchKnowledgeRules()
+
   # TODO - most of this logic should be managed by a KnowledgeRule importer class
   onSubmit: ->
 
-    # Fetches existing KnowledgeRules
-    @model.fetchKnowledgeRules().then (knowledgeRuleCollection) =>
+    # Fetches existing Rules
+    @fetchRules().then (ruleCollection) =>
 
       # # # # #
       # Updates @importedRules to be compatible with this dataset
 
       # Order
-      order = knowledgeRuleCollection.length + 1
+      order = ruleCollection.length + 1
 
       # Updates importedRules to be associated with the present Dataset model
       for rule in @importedRules
@@ -72,7 +82,7 @@ class ImportForm extends Mn.LayoutView
       buildNewRule = (rule) ->
 
         # Instantiates new KnowledgeRule model
-        importedRule = new knowledgeRuleCollection.model(rule)
+        importedRule = new ruleCollection.model(rule)
 
         # Persists new KnowledgeRule to DB (returns a Promise)
         return importedRule.save()
@@ -82,7 +92,7 @@ class ImportForm extends Mn.LayoutView
       .then () =>
 
         # Adds the imported rules to the existing collection
-        knowledgeRuleCollection.add(@importedRules)
+        ruleCollection.add(@importedRules)
 
         # Shows success message
         @flashSuccess()
