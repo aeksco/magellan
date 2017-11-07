@@ -21,7 +21,7 @@ class GraphDatasetLayout extends require 'lib/views/dagre'
       _.each(datapoints, (n) =>
 
         # Folders only, for now
-        return if n['@type'].split('.').pop() != 'nfo:Folder'
+        # return if n['@type'].split('.').pop() != 'nfo:Folder'
 
         # Defines new node
         newNode = { data: { id: n['@id'], label: n['rdfs:label'] + "\n" + n['@type'] } }
