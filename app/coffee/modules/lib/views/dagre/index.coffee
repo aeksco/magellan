@@ -45,7 +45,7 @@ class DagreGraph extends Mn.LayoutView
         {
           selector: 'edge',
           style: {
-            # 'content': 'data(label)',
+            'content': 'data(label)',
             'curve-style': 'bezier',
             'width': 4,
             'target-arrow-shape': 'triangle',

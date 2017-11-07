@@ -26,8 +26,10 @@ class Application extends Marionette.Service
   # starts Backbone.history (enables routing), and initializes sidebar module
   onReady: ->
 
-    Backbone.Radio.channel('ontology').request('ensure:bundled')
-    .then () =>
+    # Populates DexieDB with default ontologies
+    Backbone.Radio.channel('ontology').request('ensure:bundled').then () =>
+
+      # TODO - Populate DexieDB with default datasets
 
       # Hides loading message
       Backbone.Radio.channel('loading').trigger('hide')

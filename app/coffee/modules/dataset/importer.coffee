@@ -46,6 +46,7 @@ class ArchiveImporter
   # TODO - files must be split to find their parent directories
 
   # Stores the IDs of the directories found
+  # TODO - this should be blanked before each import
   directoryIDs: []
 
   # collectDirectory
