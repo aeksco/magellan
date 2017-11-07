@@ -1,7 +1,7 @@
 ## Magellan CLI
 #### Magellan Command Line Interface
 
-##Built with:
+## Built with:
 
 - [Blessed](https://github.com/chjj/blessed)
 
