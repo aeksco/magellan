@@ -1,5 +1,7 @@
 KnowledgeRuleLayout = require '../../knowledge_capture/views/layout'
 KnowledgeRuleForm = require '../../knowledge_capture/views/ruleForm'
+ExportForm = require '../../knowledge_capture/views/exportForm'
+ImportForm = require '../../knowledge_capture/views/importForm'
 
 # # # # #
 
@@ -18,7 +20,6 @@ class RuleLayout extends KnowledgeRuleLayout
 
   # showRuleForm
   # Shows the form to create or edit a Definer rule instance
-  # RENAME TO - SHOW RULE FORM
   showRuleForm: (model) ->
 
     # HACK - assigns null if showRuleForm was invoked via jQuery event
@@ -47,6 +48,22 @@ class RuleLayout extends KnowledgeRuleLayout
 
       # Shows the form inside the content region
       @contentRegion.show(formView)
+
+  # showExportForm
+  # Shows the view to export SmartRendering rules (rather than KnowledgeRule default)
+  showExportForm: ->
+    exportForm = new ExportForm({ model: @model, exportType: 'smart_rendering' })
+    exportForm.on 'cancel', => @showRuleList()
+    exportForm.on 'success', => @showRuleList()
+    @contentRegion.show(exportForm)
+
+  # showImportForm
+  # Shows the view to import KnowledgeRules
+  showImportForm: ->
+    importForm = new ImportForm({ model: @model, importType: 'smart_rendering' })
+    importForm.on 'cancel', => @showRuleList()
+    importForm.on 'success', => @showRuleList()
+    @contentRegion.show(importForm)
 
 # # # # #
 

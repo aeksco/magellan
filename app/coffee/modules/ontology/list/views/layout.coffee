@@ -98,12 +98,42 @@ class OntologyDagre extends require 'lib/views/dagre'
     # Nodes to be added to the graph
     datapoints = @model.get('graph')
 
+    # Finds root node in Ontology
+    # TODO - not sure if this will be needed
+    # rootNode = null
+    # for n in datapoints
+    #   if n['@type'] == 'owl:Ontology'
+    #     rootNode = n
+    #     break
+
     # Gets the nodes and edges
     _.each(datapoints, (n) =>
-      elements.nodes.push({ data: { id: n['@id'], label: n['rdfs:label'] } })
+
+      # Debug
+      # console.log n
+
+      # Pushes each node into the list
+      elements.nodes.push({ data: { id: n['@id'], label: n['rdfs:label'] || n['dc:title'] || n['@id'] } })
+
+      # Iterates over each node's attributes
       for k, v of n
-        if _.isObject(v) && v['@id'] && v['@id'] != 'root'
-          elements.edges.push({ data: { source: n['@id'], target: v['@id'] } })
+
+        # Adds `prop: { '@id': 'xyz' }` elements
+        if _.isObject(v) && v['@id']
+          elements.edges.push({ data: { label: k, source: n['@id'], target: v['@id'] } })
+
+        # Handles Arrays of `prop: [{ '@id': 'xyz' }, ...]` elements
+        if Array.isArray(v)
+          for each in v
+            if each['@id']
+              elements.edges.push({ data: { label: k, source: n['@id'], target: each['@id'] } })
+
+        # Handles Lists ('@list')
+        if _.isObject(v) && v['@list']
+          for each in v['@list']
+            if each['@id']
+              elements.edges.push({ data: { label: k, source: n['@id'], target: each['@id'] } })
+
     )
 
     # Renders the graph

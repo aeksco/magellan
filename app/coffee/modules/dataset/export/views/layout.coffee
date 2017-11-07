@@ -23,8 +23,9 @@ class ExportView extends Mn.LayoutView
   generateFilename: (extension) ->
     label = @model.get('label')
     label = label.toLowerCase().replace(/\s/g, '_')
-    date  = new Date().toJSON().slice(0,10).replace(/-/g, '_')
-    filename = [label, '_magellan_analysis_export_', date, '.', extension ]
+    # date  = new Date().toJSON().slice(0,10).replace(/-/g, '_')
+    # filename = [label, '_magellan_dataset_', date, '.', extension ]
+    filename = [label, '_magellan_dataset', '.', extension ]
     return filename.join('')
 
   preExport: ->
@@ -40,36 +41,31 @@ class ExportView extends Mn.LayoutView
     # Shows success message
     @flashSuccess()
 
+  # exportJson
+  # Exports the JSON graph without knowledge enhanacement
   exportJSON: ->
-    @preExport()
+    @exportJsonGraph()
 
-    # Fetches datapoints
-    # TODO - datapoints should be sorted by some arbitrary attribute, @id?
-    @model.fetchDatapoints().then (datapoints) =>
-
-      # Filename and filetype
-      filename  = @generateFilename('json')
-      filetype  = 'application/json'
-
-      # Downloads File
-      @downloadFile({ content: JSON.stringify(datapoints.pluck('raw'), null, 2), type: filetype, filename: filename })
-      @postExport()
-
+  # exportEnhanced
   # Exports Knowledge-Enhanced JSON-LD
   exportEnhanced: ->
+    @exportJsonGraph({ enhanced: true })
 
+  exportJsonGraph: (opts={}) ->
+
+    # Shows 'Exporting...' messsage
     @preExport()
 
     # Fetches datapoints
     # TODO - datapoints should be sorted by some arbitrary attribute, @id?
-    @model.fetchDatapoints().then (datapoints) =>
+    @model.export(opts).then (exported_graph) =>
 
       # Filename and filetype
       filename  = @generateFilename('json')
       filetype  = 'application/json'
 
       # Downloads File
-      @downloadFile({ content: JSON.stringify(datapoints.pluck('data'), null, 2), type: filetype, filename: filename })
+      @downloadFile({ content: JSON.stringify(exported_graph, null, 2), type: filetype, filename: filename })
       @postExport()
 
   # TODO - this should be mostly be contained inside a model method

@@ -66,7 +66,8 @@ class DagreGraph extends Mn.LayoutView
   # onCytoscapeReady
   # Hides the loading message
   onCytoscapeReady: ->
-    console.log 'CYTOSCAPE READY'
+    # console.log 'CYTOSCAPE READY'
+    return true
 
   # onBeforeDestroy
   # Destroyes the Cytoscape.js graph
