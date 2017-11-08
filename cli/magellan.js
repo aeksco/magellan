@@ -20,7 +20,7 @@ const Colors = {
 // Stores string literals used to populate the InfoBox prompt
 const Messages = {
   default:          'Command Line Utility',
-  selectDirectory:  'Use "Enter" key to select a directory. \nUse "R" key to run Magellan against the current directory.',
+  selectDirectory:  'Use "Enter" key to set the current directory. \nUse "R" key to run Magellan against the current directory.',
   running:          'Magellan is working...',
   done:             'Magellan is finished - press the "ESC" key to exit.'
 }
