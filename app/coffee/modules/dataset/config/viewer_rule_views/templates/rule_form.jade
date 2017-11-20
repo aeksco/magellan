@@ -4,7 +4,7 @@ include ../../../../base/partials/form_helpers
 
   .row
     .col-lg-12
-      +formSelect({ label: 'Viewer Type', name: 'target_property', options: [['img', 'Image Viewer'], ['pdf', 'PDF Viewer'], ['csv', 'CSV Viewer'], ['download', 'Download Link']] })
+      +formSelect({ label: 'Viewer Type', name: 'target_property', options: [['img', 'Image Viewer'], ['pdf', 'PDF Viewer'], ['csv', 'CSV Viewer'], ['download_url', 'Download Link']] })
 
   button.btn.btn-outline-primary.w-100.mb-2( data-click='add' )
     i.fa.fa-fw.fa-plus-circle

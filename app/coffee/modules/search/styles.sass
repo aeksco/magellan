@@ -6,6 +6,9 @@
   .nav-link
     padding: 0.25rem 0.5rem
 
+// body::-webkit-scrollbar
+//   width: 0
+
 // FacetSearch Styles
 .facetsearch
   @extend .card
@@ -15,12 +18,19 @@
   // Active
   &.active
     h3.facettitle
+      border-bottom: 2px solid #dddddd
+      z-index: 10
       i.icon
         @extend .fa-chevron-down
 
+    .facetlist::-webkit-scrollbar
+      width: .5rem
+
     .facetlist
+      max-height: 18rem
+      overflow-y: scroll
       .facetitem
-        display: inherit
+        display: block
 
   // Non-active
   .facettitle
@@ -69,7 +79,7 @@
       &.activefacet
         background-color: #dff0d8 !important
         @extend .list-group-item-success
-        display: inherit
+        display: block
 
 .bottomline
   @extend .card

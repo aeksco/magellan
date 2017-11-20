@@ -17,8 +17,9 @@ class ResultDetailView extends Mn.LayoutView
   onImageIn: (e) =>
     @trigger 'show:underlay'
     return @drift.enable() if @drift
-    @drift = new Drift(document.querySelector('img'), {
+    @drift = new Drift(@$('img')[0], {
       containInline: true
+      showWhitespaceAtEdges: true
       inlinePane: 200
       paneContainer: $('.drift-content')[0] # TODO - overlay should be a region, perhaps?
       zoomFactor: 5
@@ -40,7 +41,7 @@ class ResultDetailView extends Mn.LayoutView
     return @loadDicom() if @model.get('views').dicom
 
     # STL Viewer
-    @viewerRegion.show new STLViewer({ model: @model }) if @model.get('views').stl
+    # @viewerRegion.show new STLViewer({ model: @model }) if @model.get('views').stl
 
     # TODO - abstract this elsewhere.
     # TODO - overlay should be a region

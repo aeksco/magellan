@@ -315,7 +315,7 @@ createFacetUI = ->
     # ABSTRACTION
     # This is where we should collect the GROUPS of facets
     # This MAY be accessible outside this little engine, passed in as settings.facets
-    console.log(facetItem);
+    # console.log(facetItem);
 
     facetItemHtml = $(titletemplate(facetItem))
     facetHtml.append facetItemHtml
