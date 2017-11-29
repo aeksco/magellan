@@ -8686,8 +8686,16 @@ a.text-dark:focus, a.text-dark:hover {
 
 .facetsearch {
   margin-bottom: 0.5rem; }
-  .facetsearch.active .facetlist .facetitem {
-    display: inherit; }
+  .facetsearch.active h3.facettitle {
+    border-bottom: 2px solid #dddddd;
+    z-index: 10; }
+  .facetsearch.active .facetlist::-webkit-scrollbar {
+    width: .5rem; }
+  .facetsearch.active .facetlist {
+    max-height: 18rem;
+    overflow-y: scroll; }
+    .facetsearch.active .facetlist .facetitem {
+      display: block; }
   .facetsearch .facettitle {
     cursor: pointer;
     font-size: 75%;
@@ -8714,7 +8722,7 @@ a.text-dark:focus, a.text-dark:hover {
       font-style: italic; }
     .facetsearch .facetlist .facetitem.activefacet {
       background-color: #dff0d8 !important;
-      display: inherit; }
+      display: block; }
 
 .list-group.record-list-group .list-group-item.active, .facetsearch .record-list-group.facetlist .list-group-item.active, .list-group.record-list-group .facetsearch .active.facettitle, .facetsearch .list-group.record-list-group .active.facettitle, .facetsearch .record-list-group.facetlist .active.facettitle, .list-group.record-list-group .facetsearch .facetlist .active.facetitem, .facetsearch .facetlist .list-group.record-list-group .active.facetitem, .facetsearch .record-list-group.facetlist .active.facetitem {
   z-index: 0 !important; }
